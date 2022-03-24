@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Reimplementation of cat-herder",
   "scripts": {
-    "shared": "cd shared && npm i && npm build",
+    "shared": "cd shared && npm i && npm run build",
     "setup-be": "cd be && npm i",
     "setup-fe": "cd fe && yarn install",
     "setup": "npm-run-all shared setup-be setup-fe",
