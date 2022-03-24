@@ -10,15 +10,20 @@ export function ScheduleUser(props: {
   onCancel(): void;
 }) {
   return (
-    <div style={{ display: 'flex', }}>
-      <div>
-        {props.user.name}
-      </div>
-      {props.events.map(e => (
-        <div key={e.eid}>
-          <AttendenceIcon attendence={getAttendence(e, props.user)} />
+    <tr>
+      <td>
+        <div>
+          {props.user.name}
         </div>
+      </td>
+      {props.events.map(e => (
+        <td key={e.eid}>
+          <AttendenceIcon attendence={getAttendence(e, props.user)} />
+        </td>
       ))}
-    </div>
+      <td>
+        <button onClick={props.onEdit}>EDIT</button>
+      </td>
+    </tr>
   )
 }

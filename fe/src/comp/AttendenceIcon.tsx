@@ -5,8 +5,8 @@ export function AttendenceIcon(props: {
 }) {
   const icon = {
     [Attendence.No]: '❌',
-    [Attendence.Yes]: '✔️',
-    [Attendence.Maybe]: '❔',
+    [Attendence.Yes]: '✔',
+    [Attendence.Maybe]: '?',
     [Attendence.Undefined]: '-',
   }[props.attendence];
   const color = {

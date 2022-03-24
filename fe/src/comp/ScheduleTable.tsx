@@ -1,5 +1,22 @@
 import { ScheduleUser } from "./ScheduleUser";
 import { Schedule, User } from "../lib/types";
+import { getDateStrings } from "../lib/time";
+
+function RenderDate(props: {
+  date: Date;
+}) {
+  const {dayOfWeek, dd, mm} = getDateStrings(props.date);
+  return (
+    <div>
+      <div>
+        {dayOfWeek}
+      </div>
+      <div>
+        {dd}/{mm}
+      </div>
+    </div>
+  );
+}
 
 export function ScheduleTable(props: {
   data: Schedule,
@@ -20,9 +37,12 @@ export function ScheduleTable(props: {
           </th>
           {events.map(event => (
             <th key={event.eid}>
-              {event.start.toLocaleString()}
+              <RenderDate date={event.start} />
             </th>
           ))}
+          <th>
+            Update?
+          </th>
         </tr>
       </thead>
       <tbody>

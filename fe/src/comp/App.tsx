@@ -1,6 +1,7 @@
 import { getThisWeek } from "../lib/time";
 import { AttendenceOrder, EventTime, Schedule } from "../lib/types"
 import { ScheduleTable } from "./ScheduleTable";
+import './App.css';
 
 export function App(props: {}) {
   // todo get from api
@@ -17,11 +18,20 @@ export function App(props: {}) {
   const data: Schedule = {
     events,
     users: [{
-      uid: '123',
+      uid: '1',
       name: 'Bob',
       events: events.map((et, ei) => ({
         event: et.eid,
         status: AttendenceOrder[ei % AttendenceOrder.length],
+      })),
+      created: new Date(),
+      updated: new Date(),
+    },{
+      uid: '2',
+      name: 'Alice',
+      events: events.map((et, ei) => ({
+        event: et.eid,
+        status: AttendenceOrder[(ei + 1) % AttendenceOrder.length],
       })),
       created: new Date(),
       updated: new Date(),
