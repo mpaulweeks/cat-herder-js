@@ -5,7 +5,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -13,16 +12,22 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: fe install
-      run: cd fe && yarn install
+      - name: fe install
+        run: cd fe && yarn install
+
+      - name: fe test
+        run: |
+          cd fe
+          yarn build
+          yarn test
 
     # - name: be install
     #   run: cd be && npm install
