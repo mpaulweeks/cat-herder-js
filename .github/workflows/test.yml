@@ -20,14 +20,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: fe install
-        run: cd fe && yarn install
+      - name: Install
+        run: npm run install
 
-      - name: fe test
-        run: |
-          cd fe
-          yarn build
-          yarn test
+      - name: Build
+        run: npm run build
 
-    # - name: be install
-    #   run: cd be && npm install
+      - name: Test
+        run: npm run test

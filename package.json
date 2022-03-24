@@ -1,0 +1,29 @@
+{
+  "name": "cat-herder-js",
+  "version": "1.0.0",
+  "description": "Reimplementation of cat-herder",
+  "scripts": {
+    "install-be": "cd be && npm i",
+    "install-fe": "cd fe && yarn install",
+    "install": "npm-run-all install-be install-fe",
+    "build-be": "cd be && npm run build",
+    "build-fe": "cd fe && yarn build",
+    "build": "npm-run-all build-be build-fe",
+    "test-be": "cd be && npm run test",
+    "test-fe": "cd fe && yarn test",
+    "test": "npm-run-all test-be test-fe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpaulweeks/cat-herder-js.git"
+  },
+  "author": "mpaulweeks",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mpaulweeks/cat-herder-js/issues"
+  },
+  "homepage": "https://github.com/mpaulweeks/cat-herder-js#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
