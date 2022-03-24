@@ -12,27 +12,31 @@ export function ScheduleTable(props: {
   console.log(events);
 
   return (
-    <div>
-      <div style={{ display: 'flex', }}>
-        <div>
-          &nbsp;
-        </div>
-        {events.map(event => (
-          <div key={event.eid}>
-            {event.start.toLocaleString()}
-          </div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            &nbsp;
+          </th>
+          {events.map(event => (
+            <th key={event.eid}>
+              {event.start.toLocaleString()}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {users.map(u => (
+          <ScheduleUser
+            key={u.uid}
+            events={events}
+            user={u}
+            onEdit={() => props.onEdit(u)}
+            onSave={() => props.onSave(u)}
+            onCancel={() => props.onCancel(u)}
+          />
         ))}
-      </div>
-      {users.map(u => (
-        <ScheduleUser
-          key={u.uid}
-          events={events}
-          user={u}
-          onEdit={() => props.onEdit(u)}
-          onSave={() => props.onSave(u)}
-          onCancel={() => props.onCancel(u)}
-        />
-      ))}
-    </div>
+      </tbody>
+    </table>
   )
 }
