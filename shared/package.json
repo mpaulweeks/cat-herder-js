@@ -1,12 +1,10 @@
 {
-  "name": "cat-be",
+  "name": "cat-shared",
   "version": "0.1.0",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"
-  },
-  "dependencies": {
-    "express": "^4.17.3"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
