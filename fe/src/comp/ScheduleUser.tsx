@@ -1,6 +1,5 @@
 import { AttendenceIcon } from "./AttendenceIcon";
-import { EventTime, User } from "../lib/types";
-import { getAttendence } from "../lib/util";
+import { getAttendence, EventTime, User } from "@mpaulweeks/cat-shared";
 
 export function ScheduleUser(props: {
   events: EventTime[];

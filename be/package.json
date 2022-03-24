@@ -1,5 +1,5 @@
 {
-  "name": "cat-be",
+  "name": "@mpaulweeks/cat-be",
   "version": "0.1.0",
   "scripts": {
     "build": "tsc",

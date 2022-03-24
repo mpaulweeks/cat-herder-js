@@ -1,6 +1,5 @@
 import { ScheduleUser } from "./ScheduleUser";
-import { Schedule, User } from "../lib/types";
-import { getDateStrings } from "../lib/time";
+import { getDateStrings,  Schedule, User } from "@mpaulweeks/cat-shared";
 
 function RenderDate(props: {
   date: Date;

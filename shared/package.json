@@ -1,7 +1,8 @@
 {
-  "name": "cat-shared",
+  "name": "@mpaulweeks/cat-shared",
   "version": "0.1.0",
   "main": "dist/index.js",
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "test": "jest"

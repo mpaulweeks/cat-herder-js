@@ -1,4 +1,4 @@
-import { Attendence } from "../lib/types";
+import { Attendence } from "@mpaulweeks/cat-shared";
 
 export function AttendenceIcon(props: {
   attendence: Attendence,

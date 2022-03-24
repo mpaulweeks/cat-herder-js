@@ -1,5 +1,4 @@
-import { getThisWeek } from "../lib/time";
-import { AttendenceOrder, EventTime, Schedule } from "../lib/types"
+import { getThisWeek, AttendenceOrder, EventTime, Schedule } from "@mpaulweeks/cat-shared"
 import { ScheduleTable } from "./ScheduleTable";
 import './App.css';
 
