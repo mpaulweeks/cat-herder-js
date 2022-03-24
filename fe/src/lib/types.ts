@@ -10,6 +10,11 @@ export enum Attendence {
   Maybe = 'm',
   Undefined = '?',
 }
+export const AttendenceOrder = [
+  Attendence.No,
+  Attendence.Yes,
+  Attendence.Maybe,
+];
 export interface EventAttendence {
   event: EventKey;
   status: Attendence;
