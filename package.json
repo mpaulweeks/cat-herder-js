@@ -12,7 +12,7 @@
     "build": "npm-run-all shared build-be build-fe",
     "test-shared": "cd shared && npm run test",
     "test-be": "cd be && npm run test",
-    "test-fe": "cd fe && yarn test",
+    "test-fe": "cd fe && yarn test-ci",
     "test": "npm-run-all test-shared test-be test-fe"
   },
   "repository": {
