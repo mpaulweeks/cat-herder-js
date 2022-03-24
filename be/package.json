@@ -6,6 +6,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@mpaulweeks/cat-shared": "file:../shared",
     "express": "^4.17.3"
   },
   "devDependencies": {
