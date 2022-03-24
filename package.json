@@ -4,9 +4,9 @@
   "description": "Reimplementation of cat-herder",
   "scripts": {
     "shared": "cd shared && npm i && npm build",
-    "install-be": "cd be && npm i",
-    "install-fe": "cd fe && yarn install",
-    "install": "npm-run-all shared install-be install-fe",
+    "setup-be": "cd be && npm i",
+    "setup-fe": "cd fe && yarn install",
+    "setup": "npm-run-all shared setup-be setup-fe",
     "build-be": "cd be && npm run build",
     "build-fe": "cd fe && yarn build",
     "build": "npm-run-all shared build-be build-fe",
