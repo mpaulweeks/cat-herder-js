@@ -9,7 +9,7 @@
     "setup": "npm-run-all shared setup-be setup-fe",
     "build-be": "cd be && npm run build",
     "build-fe": "cd fe && yarn build",
-    "build": "npm-run-all shared build-fe build-be",
+    "build": "npm-run-all setup build-fe build-be",
     "test-shared": "cd shared && npm run test",
     "test-be": "cd be && npm run test",
     "test-fe": "cd fe && yarn test-ci",
