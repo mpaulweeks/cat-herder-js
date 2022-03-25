@@ -1,5 +1,6 @@
 import { isMonday, RequestPost, ResponseGet } from '@mpaulweeks/cat-shared';
 import express from 'express';
+import path from 'path';
 
 export class Server {
   private app = express();
@@ -7,6 +8,7 @@ export class Server {
     const router = express.Router();
 
     router.get('/api/:group/:date', async (req, res) => {
+      console.log('GET success');
       const { group, date } = req.params;
       const data: ResponseGet = {
         data: {
@@ -34,17 +36,25 @@ export class Server {
       });
     });
 
-    // first use takes priority over future ones
-    this.app.use(express.json);
+    // middleware
+    this.app.use((req, res, next) => {
+      console.log(req.path);
+      next();
+    });
+    this.app.use(express.json());
+
+    // first try routes, then assets
     this.app.use(router);
-    this.app.use(express.static('public'));
-    this.app.use(async (req, res) => {
+    this.app.use(express.static(path.join(__dirname, 'public')));
+
+    // catch all
+    this.app.use("/*", async (req, res) => {
       res.status(404).send({
         error: `Not found: ${req.path}`,
       });
-  });
+    });
 
-    // todo send emails
+    // todo cron to send emails
   }
 
   listen(port: number) {
