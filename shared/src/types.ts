@@ -1,3 +1,5 @@
+// biz logic
+
 export type EventKey = string;
 export interface EventTime {
   eid: EventKey;
@@ -29,4 +31,13 @@ export interface User {
 export interface Schedule {
   events: EventTime[];
   users: User[];
+}
+
+// network
+
+export interface ResponseGet {
+  data: Schedule;
+}
+export interface RequestPost {
+  user: User;
 }
