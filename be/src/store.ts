@@ -1,7 +1,7 @@
 import { Schedule } from "@mpaulweeks/cat-shared";
 
 export class Store {
-  async get(sid: string): Promise<Schedule | void> {
+  async get(sid: string): Promise<Schedule | undefined> {
     // todo
     return {
       events: [],
