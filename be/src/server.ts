@@ -1,39 +1,56 @@
 import { isMonday, RequestPost, ResponseGet } from '@mpaulweeks/cat-shared';
 import express from 'express';
 import path from 'path';
+import { Manager } from './manager';
 
 export class Server {
   private app = express();
-  constructor() {
+  constructor(
+    private readonly manager = new Manager(),
+  ) {
     const router = express.Router();
 
     router.get('/api/:group/:date', async (req, res) => {
       console.log('GET success');
       const { group, date } = req.params;
-      const data: ResponseGet = {
-        data: {
-          events: [],
-          users: [],
-        },
+      const sid = this.manager.sid(group, date);
+      const data = await this.manager.get(sid);
+      if (!data) {
+        return res.status(404).send({});
+      }
+      const resBody: ResponseGet = {
+        data,
       };
       res.send({
-        ...data,
+        ...resBody,
         params: req.params,
         isMonday: isMonday(date),
       });
     });
     router.post('/api/:group/:date', async (req, res) => {
-      const data: RequestPost = req.body;
-      console.log(data);
-      // todo merge data and persist to store
-      res.send(data);
+      const { group, date } = req.params;
+      const sid = this.manager.sid(group, date);
+      const reqBody: RequestPost = req.body;
+      const data = await this.manager.update(sid, reqBody.user);
+      if (!data) {
+        return res.status(404).send({});
+      }
+      const resBody: ResponseGet = {
+        data,
+      };
+      res.send(resBody);
     });
     router.delete('/api/:group/:date/:uid', async (req, res) => {
       const { group, date, uid } = req.params;
-      res.send({
-        params: req.params,
-        data: 'todo',
-      });
+      const sid = this.manager.sid(group, date);
+      const data = await this.manager.delete(sid, uid);
+      if (!data) {
+        return res.status(404).send({});
+      }
+      const resBody: ResponseGet = {
+        data,
+      };
+      res.send(resBody);
     });
 
     // middleware
