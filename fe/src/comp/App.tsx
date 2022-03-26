@@ -4,16 +4,6 @@ import './App.css';
 
 export function App(props: {}) {
   // todo get from api
-  const week = getThisWeek(new Date(), {
-    hours: 18,
-    minutes: 0,
-    seconds: 0,
-  });
-  const events: EventTime[] = week.map(d => ({
-    eid: d.getTime().toString(),
-    start: d,
-    durationHours: 4,
-  }));
   const data: Schedule = {
     events,
     users: [{

@@ -1,5 +1,6 @@
 {
   "files.trimTrailingWhitespace": true,
+  "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "[yaml]": {
     "editor.formatOnSave": true,

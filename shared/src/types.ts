@@ -29,15 +29,29 @@ export interface User {
   updated: Date;
 }
 export interface Schedule {
+  sid: string;
+  name: string;
+  description: string;
   events: EventTime[];
   users: User[];
 }
 
 // network
 
-export interface ResponseGet {
-  data: Schedule;
+export interface GetScheduleResponse {
+  schedule: Schedule;
 }
-export interface RequestPost {
+
+export interface PostScheduleRequest {
+  schedule: Schedule;
+}
+export interface PostScheduleResponse {
+  schedule: Schedule;
+}
+
+export interface PutScheduleRequest {
   user: User;
+}
+export interface PutScheduleResponse {
+  schedule: Schedule;
 }
