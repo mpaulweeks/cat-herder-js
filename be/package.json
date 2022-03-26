@@ -2,6 +2,7 @@
   "name": "@mpaulweeks/cat-be",
   "version": "0.1.0",
   "scripts": {
+    "setup": "npm i",
     "compile": "tsc",
     "static": "cp -r ../fe/build public",
     "build": "npm-run-all compile static",
