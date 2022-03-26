@@ -18,7 +18,7 @@ export class EventDate {
   getPreviousMonday() {
     const newDate = new Date(this.date);
     newDate.setDate(this.date.getDate() - (this.date.getDay() + 6) % 7);
-    return newDate;
+    return EventDate.fromDate(newDate);
   }
   getDateAtHour(args: TimeArgs) {
     const newDate = new Date(this.date);

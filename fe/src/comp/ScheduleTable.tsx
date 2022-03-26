@@ -12,7 +12,7 @@ function RenderDate(props: {
         {dayOfWeek}
       </div>
       <div>
-        {dd}/{mm}
+        {mm}/{dd}
       </div>
     </div>
   );

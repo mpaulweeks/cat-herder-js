@@ -11,8 +11,9 @@ export function createSchedule(args?: {
 
 export function scheduleByGroup(group: string, ed: EventDate): Schedule {
   if (group === 'edh') {
+    const monday = ed.getPreviousMonday();
     const events = range(7).map(i => {
-      const newDate = new Date(ed.date);
+      const newDate = new Date(monday);
       newDate.setDate(newDate.getDate() + i);
       const newEd = EventDate.fromDate(newDate);
       return newEd.getDateAtHour({
