@@ -1,4 +1,4 @@
-import { DraftSchedule, EventDate, range } from "@mpaulweeks/cat-shared";
+import { DraftSchedule, EventDate, EventTime, range } from "@mpaulweeks/cat-shared";
 
 export function createSchedule(args: {
   group: string;
@@ -11,7 +11,7 @@ export function createSchedule(args: {
 export function scheduleByGroup(group: string, ed: EventDate): DraftSchedule {
   if (group === 'edh') {
     const monday = ed.getPreviousMonday();
-    const events = range(7).map(i => {
+    const events = range(7).map<EventDate>(i => {
       const newDate = new Date(monday.date);
       newDate.setDate(newDate.getDate() + i);
       const newEd = EventDate.fromDate(newDate);
@@ -19,9 +19,9 @@ export function scheduleByGroup(group: string, ed: EventDate): DraftSchedule {
         hours: 18,
         minutes: 0,
       });
-    }).map(date => ({
-      eid: date.getTime().toString(),
-      start: date,
+    }).map<EventTime>(ed => ({
+      eid: ed.date.getTime().toString(),
+      startIso: ed.dateIso,
       durationHours: 4,
     }));
     return {

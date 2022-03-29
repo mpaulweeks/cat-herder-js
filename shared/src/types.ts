@@ -3,7 +3,7 @@
 export type EventKey = string;
 export interface EventTime {
   eid: EventKey;
-  start: Date;
+  startIso: string;
   durationHours: number;
 }
 export enum Attendence {
@@ -25,8 +25,8 @@ export interface User {
   uid: string;
   name: string;
   events: EventAttendence[];
-  created: Date;
-  updated: Date;
+  createdIso: string;
+  updatedIso: string;
 }
 export interface Schedule {
   sid: string;

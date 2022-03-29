@@ -1,11 +1,12 @@
 import { ScheduleUser } from "./ScheduleUser";
-import { Schedule, User } from "@mpaulweeks/cat-shared";
+import { EventDate, Schedule, User } from "@mpaulweeks/cat-shared";
 import { getDateStrings } from "./display";
 
 function RenderDate(props: {
-  date: Date;
+  dateIso: string;
 }) {
-  const {dayOfWeek, dd, mm} = getDateStrings(props.date);
+  const eventDate = EventDate.fromIso(props.dateIso);
+  const {dayOfWeek, dd, mm} = getDateStrings(eventDate);
   return (
     <div>
       <div>
@@ -37,7 +38,7 @@ export function ScheduleTable(props: {
           </th>
           {events.map(event => (
             <th key={event.eid}>
-              <RenderDate date={event.start} />
+              <RenderDate dateIso={event.startIso} />
             </th>
           ))}
           <th>

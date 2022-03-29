@@ -18,7 +18,7 @@ export function ScheduleView(props: {
       }
       // else
       const draft = createSchedule(props);
-      const eventDate = EventDate.fromDate(draft.events[0].start);
+      const eventDate = EventDate.fromIso(draft.events[0].startIso);
       return await API.create({
         group: props.group,
         dateStr: eventDate.dateStr,

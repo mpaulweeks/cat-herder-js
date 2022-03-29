@@ -10,23 +10,24 @@ export class EventDate {
   ) {}
 
   get date(): Date { return this._date; }
+  get dateIso(): string { return this._date.toISOString(); }
   get dateStr(): string { return this._dateStr; }
 
   isMonday() {
     return 'Monday' === this.date.toLocaleDateString('en-US', { weekday: 'long' });
   }
-  getPreviousMonday() {
+  getPreviousMonday(): EventDate {
     const newDate = new Date(this.date);
     newDate.setDate(this.date.getDate() - (this.date.getDay() + 6) % 7);
     return EventDate.fromDate(newDate);
   }
-  getDateAtHour(args: TimeArgs) {
+  getDateAtHour(args: TimeArgs): EventDate {
     const newDate = new Date(this.date);
     args.hours !== undefined && newDate.setHours(args.hours);
     args.minutes !== undefined && newDate.setMinutes(args.minutes);
     newDate.setSeconds(0);
     newDate.setMilliseconds(0);
-    return newDate;
+    return EventDate.fromDate(newDate);
   }
 
   static now() {
@@ -39,6 +40,10 @@ export class EventDate {
       date.getDate().toString().padStart(2, '0'),
     ].join('');;
     return new EventDate(date, dateStr);
+  }
+  static fromIso(dateIso: string) {
+    const date = new Date(dateIso);
+    return new EventDate(date, dateIso);
   }
   static fromStr(dateStr: string) {
     const yyyy = Number(dateStr.slice(0, 4));

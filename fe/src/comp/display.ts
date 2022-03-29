@@ -1,4 +1,7 @@
-export function getDateStrings(date: Date) {
+import { EventDate } from "@mpaulweeks/cat-shared";
+
+export function getDateStrings(ed: EventDate) {
+  const { date } = ed;
   const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
   const yyyy = date.getFullYear().toString();
   const mm = (date.getMonth() + 1).toString().padStart(2, '0');
