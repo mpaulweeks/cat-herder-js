@@ -9,6 +9,7 @@ export function ScheduleView(props: {
   dateStr: string;
 }) {
   const [schedule, setSchedule] = useState<Schedule | undefined>();
+  const [error, setError] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -24,8 +25,17 @@ export function ScheduleView(props: {
         dateStr: eventDate.dateStr,
         draft,
       });
-    })().then(schedule => setSchedule(schedule));
+    })()
+      .then(schedule => setSchedule(schedule))
+      .catch(err => {
+        console.log(err);
+        setError(err.toString())
+      });
   }, [props]);
+
+  if (error) {
+    return <h2>{error}</h2>;
+  }
 
   if (!schedule) {
     return <h1>loading...</h1>;
