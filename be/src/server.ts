@@ -1,4 +1,4 @@
-import { isMonday, RequestPost, ResponseGet } from '@mpaulweeks/cat-shared';
+import { GetScheduleResponse, PutScheduleRequest, PutScheduleResponse } from '@mpaulweeks/cat-shared';
 import express from 'express';
 import path from 'path';
 import { Manager } from './manager';
@@ -14,29 +14,25 @@ export class Server {
       console.log('GET success');
       const { group, date } = req.params;
       const sid = this.manager.sid(group, date);
-      const data = await this.manager.get(sid);
-      if (!data) {
+      const schedule = await this.manager.get(sid);
+      if (!schedule) {
         return res.status(404).send({});
       }
-      const resBody: ResponseGet = {
-        data,
+      const resBody: GetScheduleResponse = {
+        schedule,
       };
-      res.send({
-        ...resBody,
-        params: req.params,
-        isMonday: isMonday(date),
-      });
+      res.send(resBody);
     });
     router.post('/api/:group/:date', async (req, res) => {
       const { group, date } = req.params;
       const sid = this.manager.sid(group, date);
-      const reqBody: RequestPost = req.body;
-      const data = await this.manager.update(sid, reqBody.user);
-      if (!data) {
+      const reqBody: PutScheduleRequest = req.body;
+      const schedule = await this.manager.update(sid, reqBody.user);
+      if (!schedule) {
         return res.status(404).send({});
       }
-      const resBody: ResponseGet = {
-        data,
+      const resBody: PutScheduleResponse = {
+        schedule,
       };
       res.send(resBody);
     });
@@ -47,10 +43,7 @@ export class Server {
       if (!data) {
         return res.status(404).send({});
       }
-      const resBody: ResponseGet = {
-        data,
-      };
-      res.send(resBody);
+      res.send({});
     });
 
     // middleware

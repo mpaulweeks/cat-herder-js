@@ -4,6 +4,9 @@ export class Store {
   async get(sid: string): Promise<Schedule | undefined> {
     // todo
     return {
+      sid,
+      name: 'name',
+      description: 'description',
       events: [],
       users: [],
     };
