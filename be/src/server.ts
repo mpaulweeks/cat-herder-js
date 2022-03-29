@@ -1,4 +1,5 @@
 import { GetScheduleResponse, PostScheduleRequest, PostScheduleResponse, PutScheduleRequest, PutScheduleResponse, Schedule } from '@mpaulweeks/cat-shared';
+import cors from 'cors';
 import express from 'express';
 import path from 'path';
 import { Manager } from './manager';
@@ -28,8 +29,12 @@ export class Server {
       const sid = this.manager.sid(group, date);
       const reqBody: PostScheduleRequest = req.body;
       const schedule: Schedule = {
-        ...reqBody.draft,
         sid,
+        group,
+        scheduleDate: date,
+        name: reqBody.draft.name,
+        description: reqBody.draft.description,
+        events: reqBody.draft.events,
         users: [],
       };
       await this.manager.create(schedule);
@@ -66,6 +71,20 @@ export class Server {
       console.log(req.path);
       next();
     });
+    this.app.use(cors({
+      origin: (origin, callback) => {
+        const origins = [
+          'http://localhost:3000',
+          'https://cat-herder.mpaulweeks.com',
+          'https://cat-herder-js.mpaulweeks.com',
+        ];
+        if (origins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error(`Not allowed by CORS: ${origin}`));
+        }
+      }
+    }));
     this.app.use(express.json());
 
     // first try routes, then assets

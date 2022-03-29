@@ -1,16 +1,16 @@
-import { ScheduleTable } from "./ScheduleTable";
 import './App.css';
-import { createSchedule } from "../lib/schedule";
+import { EventDate } from "@mpaulweeks/cat-shared";
+import { ScheduleView } from "./ScheduleView";
 
-export function App(props: {}) {
-  // todo get from api
-  const data = createSchedule();
+export function App() {
+  // todo derive from url
+  const group = 'edh';
+  const dateStr = EventDate.now().getPreviousMonday().dateStr;
+
   return (
-    <ScheduleTable
-      data={data}
-      onEdit={() => { }}
-      onSave={() => { }}
-      onCancel={() => { }}
+    <ScheduleView
+      group={group}
+      dateStr={dateStr}
     />
-  )
+  );
 }

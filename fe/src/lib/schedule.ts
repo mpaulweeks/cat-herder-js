@@ -1,19 +1,18 @@
-import { EventDate, range, Schedule } from "@mpaulweeks/cat-shared";
+import { DraftSchedule, EventDate, range } from "@mpaulweeks/cat-shared";
 
-export function createSchedule(args?: {
+export function createSchedule(args: {
   group: string;
-  dateStr: string;
-}): Schedule {
-  const group = args?.group ?? 'edh';
+  dateStr?: string;
+}) {
   const ed = args?.dateStr ? EventDate.fromStr(args.dateStr) : EventDate.now();
-  return scheduleByGroup(group, ed);
+  return scheduleByGroup(args.group, ed);
 }
 
-export function scheduleByGroup(group: string, ed: EventDate): Schedule {
+export function scheduleByGroup(group: string, ed: EventDate): DraftSchedule {
   if (group === 'edh') {
     const monday = ed.getPreviousMonday();
     const events = range(7).map(i => {
-      const newDate = new Date(monday);
+      const newDate = new Date(monday.date);
       newDate.setDate(newDate.getDate() + i);
       const newEd = EventDate.fromDate(newDate);
       return newEd.getDateAtHour({
@@ -26,11 +25,9 @@ export function scheduleByGroup(group: string, ed: EventDate): Schedule {
       durationHours: 4,
     }));
     return {
-      sid: ed.dateStr,
       name: 'EDH',
-      description: '',
+      description: 'test group',
       events,
-      users: [],
     }
   }
   // else

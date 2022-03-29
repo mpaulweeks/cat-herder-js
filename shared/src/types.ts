@@ -30,6 +30,8 @@ export interface User {
 }
 export interface Schedule {
   sid: string;
+  group: string;
+  scheduleDate: string;
   name: string;
   description: string;
   events: EventTime[];

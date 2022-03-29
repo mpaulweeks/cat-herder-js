@@ -10,7 +10,7 @@ export interface IStore {
 export class LocalFileStore implements IStore {
   private readonly localFilePath = 'tmp';
   private getPath(sid: string) {
-    return `${this.localFilePath}/${sid}`;
+    return `${this.localFilePath}/${sid}.json`;
   }
   private stringify(schedule: Schedule) {
     return JSON.stringify(schedule, null, 2);
@@ -29,7 +29,9 @@ export class LocalFileStore implements IStore {
   }
   async update(schedule: Schedule): Promise<void> {
     try {
-      await fs.promises.writeFile(this.getPath(schedule.sid), this.stringify(schedule));
+      const path = this.getPath(schedule.sid);
+      await fs.promises.mkdir(path.split('/').slice(0, -1).join('/'), { recursive: true, });
+      await fs.promises.writeFile(path, this.stringify(schedule));
     } catch (err) {
       throw err;
     }
