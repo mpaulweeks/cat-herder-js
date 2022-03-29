@@ -1,4 +1,18 @@
-import { DraftSchedule, EventDate, EventTime, range } from "@mpaulweeks/cat-shared";
+import { Attendence, DraftSchedule, EventAttendence, EventDate, EventTime, range, User } from "@mpaulweeks/cat-shared";
+
+export function defaultUser(eventTimes: EventTime[]): User {
+  const now = EventDate.now();
+  return {
+    uid: now.date.getTime().toString(),
+    name: '',
+    events: eventTimes.map<EventAttendence>(et => ({
+      event: et.eid,
+      status: Attendence.No,
+    })),
+    createdIso: now.dateIso,
+    updatedIso: now.dateIso,
+  };
+}
 
 export function createSchedule(args: {
   group: string;

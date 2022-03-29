@@ -1,5 +1,5 @@
-import { EventDate, Schedule } from "@mpaulweeks/cat-shared";
-import { useEffect, useState } from "react";
+import { EventDate, Schedule, User } from "@mpaulweeks/cat-shared";
+import { useCallback, useEffect, useState } from "react";
 import { API } from "../lib/api";
 import { createSchedule } from "../lib/schedule";
 import { ScheduleTable } from "./ScheduleTable";
@@ -33,6 +33,22 @@ export function ScheduleView(props: {
       });
   }, [props]);
 
+  const onSave = useCallback((user: User) => {
+    (async () => {
+      if (!schedule) { return; }
+      return await API.update({
+        group: schedule.group,
+        dateStr: schedule.scheduleDate,
+        user,
+      });
+    })()
+      .then(schedule => setSchedule(schedule))
+      .catch(err => {
+        console.log(err);
+        setError(err.toString())
+      });
+  }, [schedule, setSchedule]);
+
   if (error) {
     return <h2>{error}</h2>;
   }
@@ -44,9 +60,7 @@ export function ScheduleView(props: {
   return (
     <ScheduleTable
       schedule={schedule}
-      onEdit={() => { }}
-      onSave={() => { }}
-      onCancel={() => { }}
+      onSave={user => onSave(user)}
     />
   )
 }

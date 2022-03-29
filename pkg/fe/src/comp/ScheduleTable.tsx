@@ -1,6 +1,8 @@
 import { ScheduleUser } from "./ScheduleUser";
 import { EventDate, Schedule, User } from "@mpaulweeks/cat-shared";
 import { getDateStrings } from "./display";
+import { useState } from "react";
+import { defaultUser } from "../lib/schedule";
 
 function RenderDate(props: {
   dateIso: string;
@@ -21,13 +23,17 @@ function RenderDate(props: {
 
 export function ScheduleTable(props: {
   schedule: Schedule,
-  onEdit(user: User): void;
   onSave(user: User): void;
-  onCancel(user: User): void;
 }) {
   const events = props.schedule.events; // todo sort by event.date.getTime()
-  const users = props.schedule.users; // todo sort by user.created
-  console.log(events);
+
+  const [toEdit, setToEdit] = useState<User | undefined>();
+  const [temp, setTemp] = useState<User>(defaultUser(events));
+
+  const users = [ // todo sort by user.created
+    ...props.schedule.users.filter(u => u.uid !== toEdit?.uid),
+    ...(toEdit ? [toEdit] : []),
+  ];
 
   return (
     <table>
@@ -52,11 +58,28 @@ export function ScheduleTable(props: {
             key={u.uid}
             events={events}
             user={u}
-            onEdit={() => props.onEdit(u)}
-            onSave={() => props.onSave(u)}
-            onCancel={() => props.onCancel(u)}
+            isEditing={u.uid === toEdit?.uid}
+            isTemp={false}
+            onEdit={() => setToEdit(u)}
+            onSave={user => {
+              setToEdit(undefined);
+              props.onSave(user);
+            }}
+            onCancel={() => setToEdit(undefined)}
           />
         ))}
+        <ScheduleUser
+          events={events}
+          user={temp}
+          isEditing={true}
+          isTemp={true}
+          onEdit={() => {}}
+          onSave={user => {
+            setTemp(defaultUser(events));
+            props.onSave(user);
+          }}
+          onCancel={() => setTemp(defaultUser(events))}
+        />
       </tbody>
     </table>
   )
