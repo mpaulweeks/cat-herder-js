@@ -1,9 +1,13 @@
 import { Schedule } from "@mpaulweeks/cat-shared";
 import { Manager } from '../manager';
+import { IStore } from "../store";
 
-class FakeStore {
+class FakeStore implements IStore {
   get(sid: string) {
     return Promise.resolve(undefined);
+  }
+  create(schedule: Schedule) {
+    return Promise.resolve();
   }
   update(schedule: Schedule) {
     return Promise.resolve();

@@ -35,6 +35,11 @@ export interface Schedule {
   events: EventTime[];
   users: User[];
 }
+export interface DraftSchedule {
+  name: string;
+  description: string;
+  events: EventTime[];
+}
 
 // network
 
@@ -43,7 +48,7 @@ export interface GetScheduleResponse {
 }
 
 export interface PostScheduleRequest {
-  schedule: Schedule;
+  draft: DraftSchedule;
 }
 export interface PostScheduleResponse {
   schedule: Schedule;

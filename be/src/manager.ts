@@ -1,9 +1,9 @@
 import { Schedule, User } from "@mpaulweeks/cat-shared";
-import { Store } from "./store";
+import { IStore, LocalFileStore } from "./store";
 
 export class Manager {
   constructor(
-    private readonly store = new Store(),
+    private readonly store: IStore = new LocalFileStore(),
   ) { }
 
   sid(group: string, date: string) {
@@ -11,6 +11,9 @@ export class Manager {
   }
   async get(sid: string) {
     return this.store.get(sid);
+  }
+  async create(schedule: Schedule): Promise<void> {
+    await this.store.create(schedule);
   }
   async update(sid: string, user: User): Promise<Schedule | void> {
     const data = await this.store.get(sid);

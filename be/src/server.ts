@@ -1,4 +1,4 @@
-import { GetScheduleResponse, PutScheduleRequest, PutScheduleResponse } from '@mpaulweeks/cat-shared';
+import { GetScheduleResponse, PostScheduleRequest, PostScheduleResponse, PutScheduleRequest, PutScheduleResponse, Schedule } from '@mpaulweeks/cat-shared';
 import express from 'express';
 import path from 'path';
 import { Manager } from './manager';
@@ -24,6 +24,21 @@ export class Server {
       res.send(resBody);
     });
     router.post('/api/:group/:date', async (req, res) => {
+      const { group, date } = req.params;
+      const sid = this.manager.sid(group, date);
+      const reqBody: PostScheduleRequest = req.body;
+      const schedule: Schedule = {
+        ...reqBody.draft,
+        sid,
+        users: [],
+      };
+      await this.manager.create(schedule);
+      const resBody: PostScheduleResponse = {
+        schedule,
+      };
+      res.send(resBody);
+    });
+    router.put('/api/:group/:date', async (req, res) => {
       const { group, date } = req.params;
       const sid = this.manager.sid(group, date);
       const reqBody: PutScheduleRequest = req.body;
