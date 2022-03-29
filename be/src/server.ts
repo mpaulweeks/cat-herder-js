@@ -74,6 +74,7 @@ export class Server {
     this.app.use(cors({
       origin: (origin, callback) => {
         const origins = [
+          undefined, // self localhost
           'http://localhost:3000',
           'https://cat-herder.mpaulweeks.com',
           'https://cat-herder-js.mpaulweeks.com',
@@ -92,7 +93,7 @@ export class Server {
     this.app.use(express.static(path.join(__dirname, 'public')));
 
     // catch all
-    this.app.use("/*", async (req, res) => {
+    this.app.use(async (req, res) => {
       res.status(404).send({
         error: `Not found: ${req.path}`,
       });

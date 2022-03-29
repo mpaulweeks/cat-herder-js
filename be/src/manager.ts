@@ -39,7 +39,7 @@ export class Manager {
         found = true;
         u.name = user.name;
         u.events = user.events;
-        u.updated = user.updated;
+        u.updatedIso = user.updatedIso;
       }
     });
     if (!found) {
