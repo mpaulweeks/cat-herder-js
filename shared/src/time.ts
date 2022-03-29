@@ -30,6 +30,14 @@ export class EventDate {
     return EventDate.fromDate(newDate);
   }
 
+  equals(other: EventDate) {
+    return (
+      (this.date.getTime() === other.date.getTime()) &&
+      (this.dateIso === other.dateIso) &&
+      (this.dateStr === other.dateStr)
+    )
+  }
+
   static now() {
     return this.fromDate(new Date());
   }
@@ -42,8 +50,7 @@ export class EventDate {
     return new EventDate(date, dateStr);
   }
   static fromIso(dateIso: string) {
-    const date = new Date(dateIso);
-    return new EventDate(date, dateIso);
+    return this.fromDate(new Date(dateIso));
   }
   static fromStr(dateStr: string) {
     const yyyy = Number(dateStr.slice(0, 4));

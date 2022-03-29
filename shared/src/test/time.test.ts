@@ -1,12 +1,14 @@
-import { getThisWeek } from "../time";
+import { EventDate } from "../time";
 
-describe('time.ts', () => {
-  test('getWeek has 7 entries', () => {
-    const week = getThisWeek(new Date(), {
-      hours: 18,
-      minutes: 0,
-      seconds: 0,
-    });
-    expect(week.length).toBe(7);
+describe('EventDate', () => {
+  test('dateIso', () => {
+    const ed = EventDate.now();
+    expect(ed.dateIso).toBe(ed.date.toISOString());
+    expect(ed.equals(EventDate.fromIso(ed.dateIso))).toBe(true);
+  });
+
+  test('dateStr', () => {
+    const ed = EventDate.fromIso('2022-03-29T17:45:51.007Z');
+    expect(ed.dateStr).toBe('20220329');
   });
 });
