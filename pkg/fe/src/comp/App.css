@@ -1,10 +1,28 @@
+.Schedule {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 table {
   border-collapse: collapse;
 }
+table input {
+  padding: 0.4em;
+}
+table button {
+  margin: 0.2em;
+}
+tr {
+  height: 3.5em;
+}
 
 th {
-  width: 5em;
   border-bottom: 2px solid grey;
+}
+th.EventTime {
+  width: 5em;
 }
 td {
   border-top: 1px solid grey;

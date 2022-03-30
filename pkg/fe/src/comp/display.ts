@@ -12,6 +12,8 @@ export function getDateStrings(ed: EventDate) {
 }
 
 export const CssClass = {
+  Schedule: 'Schedule',
+  EventTime: 'EventTime',
   Attendence: 'Attendence',
   Clickable: 'Clickable',
 }

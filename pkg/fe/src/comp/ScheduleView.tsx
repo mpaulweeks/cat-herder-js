@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { API } from "../lib/api";
 import { createSchedule } from "../lib/schedule";
 import { ScheduleTable } from "./ScheduleTable";
+import { CssClass } from './display';
 
 export function ScheduleView(props: {
   group: string;
@@ -50,13 +51,12 @@ export function ScheduleView(props: {
   }, [schedule, setSchedule]);
 
   return (
-    <div>
-      <h1>{props.group} / {props.dateStr}</h1>
+    <div className={CssClass.Schedule}>
       {error && <h2>{error}</h2>}
       {!error && !schedule && <h1>loading...</h1>}
       {!error && schedule && (
         <>
-          <h2>{schedule.name}</h2>
+          <h1>{schedule.name}</h1>
           <h3>{schedule.description}</h3>
           <ScheduleTable
             schedule={schedule}

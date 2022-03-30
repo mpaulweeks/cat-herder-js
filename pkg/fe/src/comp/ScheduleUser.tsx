@@ -53,7 +53,7 @@ export function ScheduleUser(props: {
       ))}
       {props.isEditing ? (
         <td>
-          <div>
+          <div style={{ flexDirection: 'row', }}>
             <button onClick={() => props.onSave(draft)}>SAVE</button>
             <button onClick={props.onCancel}>{props.isTemp ? 'RESET' : 'CANCEL'}</button>
           </div>

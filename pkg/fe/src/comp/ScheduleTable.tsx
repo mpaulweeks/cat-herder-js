@@ -1,6 +1,6 @@
 import { ScheduleUser } from "./ScheduleUser";
 import { EventDate, Schedule, User } from "@mpaulweeks/cat-shared";
-import { getDateStrings } from "./display";
+import { CssClass, getDateStrings } from "./display";
 import { useState } from "react";
 import { defaultUser } from "../lib/schedule";
 
@@ -40,10 +40,10 @@ export function ScheduleTable(props: {
       <thead>
         <tr>
           <th>
-            &nbsp;
+            Name
           </th>
           {events.map(event => (
-            <th key={event.eid}>
+            <th key={event.eid} className={CssClass.EventTime}>
               <RenderDate dateIso={event.startIso} />
             </th>
           ))}
