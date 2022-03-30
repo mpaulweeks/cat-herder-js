@@ -1,5 +1,6 @@
 import { Schedule } from "@mpaulweeks/cat-shared";
 import fs from 'fs';
+import path from "path";
 
 export interface IStore {
   get(sid: string): Promise<Schedule | undefined>;
@@ -8,7 +9,7 @@ export interface IStore {
 }
 
 export class LocalFileStore implements IStore {
-  private readonly localFilePath = 'tmp';
+  private readonly localFilePath = path.join(__dirname, '../tmp');
   private getPath(sid: string) {
     return `${this.localFilePath}/${sid}.json`;
   }

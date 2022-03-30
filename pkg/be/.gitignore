@@ -1,4 +1,6 @@
-dist/
 node_modules/
+
+# be app
+dist/
 public/
 tmp/

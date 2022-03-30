@@ -10,6 +10,8 @@
     "build-be": "cd pkg/be && npm run build",
     "build-fe": "cd pkg/fe && yarn build",
     "build": "npm-run-all setup build-fe build-be",
+    "prestart": "npm-run-all build",
+    "start": "node pkg/be/dist/index.js",
     "test-shared": "cd pkg/shared && npm run test",
     "test-be": "cd pkg/be && npm run test",
     "test-fe": "cd pkg/fe && yarn test-ci",

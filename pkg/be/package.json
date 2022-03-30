@@ -4,7 +4,7 @@
   "scripts": {
     "setup": "npm i",
     "compile": "tsc",
-    "static": "cp -r ../fe/build public",
+    "static": "rm -rf public && cp -r ../fe/build public",
     "build": "npm-run-all compile static",
     "prestart": "npm-run-all build",
     "start": "node dist/index.js",
