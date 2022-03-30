@@ -18,7 +18,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "setup": "yarn install && yarn upgrade @mpaulweeks/cat-shared",
+    "setup": "rm -rf node_modules/@mpaulweeks/cat-shared && yarn install --check-files",
     "test-ci": "yarn test --watchAll=false",
     "start": "react-scripts start",
     "build": "react-scripts build",
