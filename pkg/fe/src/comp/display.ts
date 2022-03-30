@@ -1,14 +1,17 @@
-import { EventDate } from "@mpaulweeks/cat-shared";
+import { EventDate, EventTime, Schedule } from "@mpaulweeks/cat-shared";
+import { google } from 'calendar-link';
 
 export function getDateStrings(ed: EventDate) {
   const { date } = ed;
-  const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
-  const month = date.toLocaleString('default', { month: 'long' });
-  const day = (date.getDate()).toString()
-  const yyyy = date.getFullYear().toString();
-  const mm = (date.getMonth() + 1).toString().padStart(2, '0');
-  const dd = (date.getDate()).toString().padStart(2, '0');
-  return { dayOfWeek, month, day, dd, mm, yyyy, };
+  return {
+    time: date.toLocaleString('en-US', { hour: 'numeric', hour12: true }),
+    dayOfWeek: date.toLocaleDateString('en-US', { weekday: 'long' }),
+    month: date.toLocaleString('default', { month: 'long' }),
+    day: (date.getDate()).toString(),
+    yyyy: date.getFullYear().toString(),
+    mm: (date.getMonth() + 1).toString().padStart(2, '0'),
+    dd: (date.getDate()).toString().padStart(2, '0'),
+  };
 }
 
 export const CssClass = {
@@ -17,4 +20,13 @@ export const CssClass = {
   Update: 'Update',
   Attendence: 'Attendence',
   Clickable: 'Clickable',
+}
+
+export function createGcal(schedule: Schedule, et: EventTime) {
+  return google({
+    title: schedule.name,
+    description: schedule.description,
+    start: et.startIso,
+    duration: [et.durationHours, "hour"],
+  });
 }

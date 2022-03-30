@@ -1,23 +1,30 @@
 import { ScheduleUser } from "./ScheduleUser";
-import { EventDate, Schedule, User } from "@mpaulweeks/cat-shared";
-import { CssClass, getDateStrings } from "./display";
+import { EventDate, EventTime, Schedule, User } from "@mpaulweeks/cat-shared";
+import { createGcal, CssClass, getDateStrings } from "./display";
 import { useState } from "react";
 import { defaultUser } from "../lib/schedule";
 
 function RenderDate(props: {
-  dateIso: string;
+  schedule: Schedule;
+  eventTime: EventTime;
 }) {
-  const eventDate = EventDate.fromIso(props.dateIso);
-  const {dayOfWeek, dd, mm} = getDateStrings(eventDate);
+  const eventDate = EventDate.fromIso(props.eventTime.startIso);
+  const gcal = createGcal(props.schedule, props.eventTime);
+  const {dayOfWeek, dd, mm, time} = getDateStrings(eventDate);
   return (
-    <div>
+    <a href={gcal}>
       <div>
-        {dayOfWeek}
+        <div>
+          {dayOfWeek}
+        </div>
+        <div>
+          {mm}/{dd}
+        </div>
+        <div>
+          {time}
+        </div>
       </div>
-      <div>
-        {mm}/{dd}
-      </div>
-    </div>
+    </a>
   );
 }
 
@@ -44,7 +51,7 @@ export function ScheduleTable(props: {
           </th>
           {events.map(event => (
             <th key={event.eid} className={CssClass.EventTime}>
-              <RenderDate dateIso={event.startIso} />
+              <RenderDate schedule={props.schedule} eventTime={event} />
             </th>
           ))}
           <th className={CssClass.Update}>

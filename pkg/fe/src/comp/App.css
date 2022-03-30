@@ -27,6 +27,10 @@ th.EventTime {
 th.Update {
   width: 10em;
 }
+th a {
+  color: initial;
+  text-decoration: initial;
+}
 td {
   border-top: 1px solid grey;
 }
