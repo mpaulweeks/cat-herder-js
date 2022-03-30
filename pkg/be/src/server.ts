@@ -21,6 +21,8 @@ export class Server {
       const data = {
         gitHash,
         started: new Date(updater.startedAt),
+        bashBuild: updater.settings.bashBuild,
+        nodeScript: updater.settings.nodeScript,
       };
       res.send(data);
     })
