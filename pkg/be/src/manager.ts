@@ -6,8 +6,8 @@ export class Manager {
     private readonly store: IStore = new LocalFileStore(),
   ) { }
 
-  sid(group: string, date: string) {
-    return `${group}/${date}`;
+  sid(group: string, dateStr: string) {
+    return `${group}_${dateStr}`;
   }
   async get(sid: string) {
     return this.store.get(sid);

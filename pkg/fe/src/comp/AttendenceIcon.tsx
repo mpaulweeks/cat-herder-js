@@ -1,5 +1,6 @@
 import { Attendence, AttendenceOrder } from "@mpaulweeks/cat-shared";
 import { useCallback } from "react";
+import { CssClass } from "./display";
 
 export function AttendenceIcon(props: {
   attendence: Attendence;
@@ -9,7 +10,7 @@ export function AttendenceIcon(props: {
   const icon = {
     [Attendence.No]: '❌',
     [Attendence.Yes]: '✔',
-    [Attendence.Maybe]: '?',
+    [Attendence.Maybe]: '???',
     [Attendence.Undefined]: '-',
   }[props.attendence];
   const color = {
@@ -24,9 +25,13 @@ export function AttendenceIcon(props: {
     props.onUpdate(next);
   }, [props]);
 
+  const className = [
+    CssClass.Attendence,
+    ...(props.isEditing ? [CssClass.Clickable] : []),
+  ].join(' ');
   return (
-    <div style={{ color, }} onClick={onClick}>
-      {icon}
+    <div className={className} style={{ color, }} onClick={onClick}>
+      <div>{icon}</div>
     </div>
   );
 }

@@ -49,18 +49,21 @@ export function ScheduleView(props: {
       });
   }, [schedule, setSchedule]);
 
-  if (error) {
-    return <h2>{error}</h2>;
-  }
-
-  if (!schedule) {
-    return <h1>loading...</h1>;
-  }
-
   return (
-    <ScheduleTable
-      schedule={schedule}
-      onSave={user => onSave(user)}
-    />
-  )
+    <div>
+      <h1>{props.group} / {props.dateStr}</h1>
+      {error && <h2>{error}</h2>}
+      {!error && !schedule && <h1>loading...</h1>}
+      {!error && schedule && (
+        <>
+          <h2>{schedule.name}</h2>
+          <h3>{schedule.description}</h3>
+          <ScheduleTable
+            schedule={schedule}
+            onSave={user => onSave(user)}
+          />
+        </>
+      )}
+    </div>
+  );
 }

@@ -35,28 +35,34 @@ export function ScheduleUser(props: {
       </td>
       {props.events.map(et => (
         <td key={et.eid}>
-          <AttendenceIcon
-            attendence={getAttendence(et, draft)}
-            isEditing={props.isEditing}
-            onUpdate={attendence => {
-              const newUser = { ...draft, };
-              newUser.events = newUser.events.map(ea => ({
-                ...ea,
-                status: ea.event === et.eid ? attendence : ea.status,
-              }));
-              setDraft(newUser);
-            }}
-          />
+          <div>
+            <AttendenceIcon
+              attendence={getAttendence(et, draft)}
+              isEditing={props.isEditing}
+              onUpdate={attendence => {
+                const newUser = { ...draft, };
+                newUser.events = newUser.events.map(ea => ({
+                  ...ea,
+                  status: ea.event === et.eid ? attendence : ea.status,
+                }));
+                setDraft(newUser);
+              }}
+            />
+          </div>
         </td>
       ))}
       {props.isEditing ? (
         <td>
-          <button onClick={() => props.onSave(draft)}>SAVE</button>
-          <button onClick={props.onCancel}>{props.isTemp ? 'RESET' : 'CANCEL'}</button>
+          <div>
+            <button onClick={() => props.onSave(draft)}>SAVE</button>
+            <button onClick={props.onCancel}>{props.isTemp ? 'RESET' : 'CANCEL'}</button>
+          </div>
         </td>
       ) : (
         <td>
-          <button onClick={props.onEdit}>EDIT</button>
+          <div>
+            <button onClick={props.onEdit}>EDIT</button>
+          </div>
         </td>
       )}
     </tr>

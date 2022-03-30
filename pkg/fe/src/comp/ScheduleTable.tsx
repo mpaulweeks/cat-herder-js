@@ -48,7 +48,9 @@ export function ScheduleTable(props: {
             </th>
           ))}
           <th>
-            Update?
+            <div>
+              Update?
+            </div>
           </th>
         </tr>
       </thead>

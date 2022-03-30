@@ -1,4 +1,5 @@
 import { Attendence, DraftSchedule, EventAttendence, EventDate, EventTime, range, User } from "@mpaulweeks/cat-shared";
+import { getDateStrings } from "../comp/display";
 
 export function defaultUser(eventTimes: EventTime[]): User {
   const now = EventDate.now();
@@ -38,9 +39,10 @@ export function scheduleByGroup(group: string, ed: EventDate): DraftSchedule {
         durationHours: 4,
       };
     });
+    const { day, month, yyyy } = getDateStrings(monday);
     return {
       name: 'EDH',
-      description: 'test group',
+      description: `Week of ${month} ${day}, ${yyyy}`,
       events,
     }
   }
