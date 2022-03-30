@@ -47,7 +47,7 @@ export function ScheduleTable(props: {
               <RenderDate dateIso={event.startIso} />
             </th>
           ))}
-          <th>
+          <th className={CssClass.Update}>
             <div>
               Update?
             </div>

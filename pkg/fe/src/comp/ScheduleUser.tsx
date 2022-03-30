@@ -1,5 +1,5 @@
 import { AttendenceIcon } from "./AttendenceIcon";
-import { getAttendence, EventTime, User } from "@mpaulweeks/cat-shared";
+import { getAttendence, EventTime, User, deepCopy } from "@mpaulweeks/cat-shared";
 import { useEffect, useState } from "react";
 
 export function ScheduleUser(props: {
@@ -11,11 +11,11 @@ export function ScheduleUser(props: {
   onSave(user: User): void;
   onCancel(): void;
 }) {
-  const [draft, setDraft] = useState<User>({ ...props.user });
+  const [draft, setDraft] = useState<User>(deepCopy(props.user));
 
   useEffect(() => {
-    setDraft({ ...props.user, });
-  }, [props.user]);
+    setDraft(deepCopy(props.user));
+  }, [props.user, props.isEditing]);
 
   return (
     <tr>

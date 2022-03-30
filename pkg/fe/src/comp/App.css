@@ -24,6 +24,9 @@ th {
 th.EventTime {
   width: 5em;
 }
+th.Update {
+  width: 10em;
+}
 td {
   border-top: 1px solid grey;
 }
@@ -46,9 +49,9 @@ td > div {
   cursor: pointer;
 }
 .Attendence {
-  width: 2em;
-  height: 2em;
-  border-radius: 1em;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10rem;
   box-sizing: border-box;
 
   display: flex;

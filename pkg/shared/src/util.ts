@@ -11,3 +11,7 @@ export function range(length: number): number[] {
   }
   return out;
 }
+
+export function deepCopy<T>(data: T): T {
+  return JSON.parse(JSON.stringify(data));
+}
