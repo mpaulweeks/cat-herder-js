@@ -1,4 +1,5 @@
 import { GetScheduleResponse, PostScheduleRequest, PostScheduleResponse, PutScheduleRequest, PutScheduleResponse, Schedule } from '@mpaulweeks/cat-shared';
+import { Updater } from '@toughlovearena/updater';
 import cors from 'cors';
 import express from 'express';
 import path from 'path';
@@ -7,9 +8,22 @@ import { Manager } from './manager';
 export class Server {
   private app = express();
   constructor(
+    updater: Updater,
     private readonly manager = new Manager(),
   ) {
     const router = express.Router();
+
+    router.get('/api', (req, res) => {
+      res.redirect('/api/health');
+    });
+    router.get('/api/health', async (req, res) => {
+      const gitHash = await updater.gitter.hash();
+      const data = {
+        gitHash,
+        started: new Date(updater.startedAt),
+      };
+      res.send(data);
+    })
 
     router.get('/api/:group/:date', async (req, res) => {
       console.log('GET success');

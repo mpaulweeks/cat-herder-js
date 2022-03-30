@@ -1,6 +1,9 @@
+import { Updater } from '@toughlovearena/updater';
 import { Server } from './server';
 
-export * from './util';
-
-// todo add updater
-new Server().listen(8000);
+(async () => {
+  // start leaderboard server
+  const updater = new Updater();
+  new Server(updater).listen(8000);
+  updater.cron();
+})();
