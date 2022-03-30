@@ -74,8 +74,9 @@ export class Server {
     this.app.use(cors({
       origin: (origin, callback) => {
         const origins = [
-          undefined, // self localhost
-          'http://localhost:3000',
+          undefined, // npm run start
+          'http://localhost:3000', // fe dev
+          'http://localhost:8000', // built script
           'https://cat-herder.mpaulweeks.com',
           'https://cat-herder-js.mpaulweeks.com',
         ];
@@ -90,7 +91,7 @@ export class Server {
 
     // first try routes, then assets
     this.app.use(router);
-    this.app.use(express.static(path.join(__dirname, 'public')));
+    this.app.use(express.static(path.join(__dirname, '../public')));
 
     // catch all
     this.app.use(async (req, res) => {
