@@ -31,6 +31,7 @@ export function createSchedule(init: EventLookup): EventScheduleData {
         label: newEd.date.getTime().toString(),
         isoStart: newEd.dateIso,
         durationHours: 4,
+        highlight: false,
       };
     });
     const { day, month, yyyy } = getDateStrings(monday);

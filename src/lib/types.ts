@@ -28,6 +28,7 @@ export type EventOptionData = {
   label: string;
   isoStart: string;
   durationHours: number;
+  highlight: boolean;
 }
 
 export type UserDraft = Omit<UserData, 'created' | 'uid'>;

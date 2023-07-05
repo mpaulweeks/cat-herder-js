@@ -2,7 +2,7 @@ import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import * as FB from "firebase/database";
 import { FirebaseConfig } from "./config";
-import { EventLookup, EventScheduleData, UserData } from "./types";
+import { EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
 
 export type EventUpdate = (data: EventScheduleData) => void;
 
@@ -17,6 +17,11 @@ export class FirebaseApi {
   database = FB.getDatabase(this.app);
   private constructor() {}
 
+
+  async updateOptions(init: EventLookup, options: EventOptionData[]): Promise<void> {
+    const optionsRef = FB.ref(this.database, `db/${init.category}/${init.eventID}/options`);
+    await FB.set(optionsRef, options);
+  }
 
   async removeUser(init: EventLookup, user: UserData): Promise<void> {
     const userRef = FB.ref(this.database, `db/${init.category}/${init.eventID}/user/${user.uid}`);
@@ -42,6 +47,9 @@ export class FirebaseApi {
         ...defaultEvent, // prefill default incase users is empty
         ...data,
       };
+      safeEvent.options.forEach(opt => {
+        opt.highlight = !!opt.highlight;
+      });
       Object.values(safeEvent.user).forEach(u => {
         u.attending = u.attending ?? [];
         u.maybe = u.maybe ?? [];

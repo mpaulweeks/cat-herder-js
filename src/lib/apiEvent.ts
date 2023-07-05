@@ -1,6 +1,6 @@
 import { EventUpdate, FirebaseApi } from "./apiFirebase";
 import { createSchedule } from "./schedule";
-import { EventLookup, EventScheduleData, UserData, UserDraft } from "./types";
+import { EventLookup, EventOptionData, EventScheduleData, UserData, UserDraft } from "./types";
 
 export class EventApi {
   constructor(readonly init: EventLookup) {}
@@ -8,20 +8,24 @@ export class EventApi {
   connect(cb: EventUpdate) {
     return FirebaseApi.instance.connect(this.init, this.defaultEvent, cb);
   }
-  remove(user: UserData) {
+  removeUser(user: UserData) {
     return FirebaseApi.instance.removeUser(this.init, user);
   }
-  update(user: UserData) {
+  updateUser(user: UserData) {
     return FirebaseApi.instance.updateUser(this.init, user);
   }
-  create(draft: UserDraft) {
+  createUser(draft: UserDraft) {
     const now = Date.now();
     const user: UserData = {
       ...draft,
       created: now,
       uid: `user-${Math.floor(now % 10000).toString().padStart(4, '0')}`,
     };
-    return this.update(user);
+    return this.updateUser(user);
+  }
+
+  updateOptions(options: EventOptionData[]) {
+    return FirebaseApi.instance.updateOptions(this.init, options);
   }
 
   get defaultEvent(): EventScheduleData {
