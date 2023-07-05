@@ -1,6 +1,6 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { get, getDatabase, onValue, ref, set, Unsubscribe } from "firebase/database";
+import * as FB from "firebase/database";
 import { FirebaseConfig } from "./config";
 import { EventLookup, EventScheduleData, UserData } from "./types";
 
@@ -14,28 +14,39 @@ export class FirebaseApi {
 
   app = initializeApp(FirebaseConfig);
   analytics = getAnalytics(this.app);
-  database = getDatabase(this.app);
+  database = FB.getDatabase(this.app);
   private constructor() {}
 
-  async updateUser(init: EventLookup, user: UserData): Promise<void> {
-    const userRef = ref(this.database, `db/${init.category}/${init.eventID}/user/${user.uid}`);
-    await set(userRef, user);
+
+  async removeUser(init: EventLookup, user: UserData): Promise<void> {
+    const userRef = FB.ref(this.database, `db/${init.category}/${init.eventID}/user/${user.uid}`);
+    await FB.remove(userRef);
   }
 
-  async connect(init: EventLookup, defaultEvent: EventScheduleData, cb: EventUpdate): Promise<Unsubscribe> {
-    const eventRef = ref(this.database,  `db/${init.category}/${init.eventID}`);
+  async updateUser(init: EventLookup, user: UserData): Promise<void> {
+    const userRef = FB.ref(this.database, `db/${init.category}/${init.eventID}/user/${user.uid}`);
+    await FB.set(userRef, user);
+  }
 
-    const event = await get(eventRef);
+  async connect(init: EventLookup, defaultEvent: EventScheduleData, cb: EventUpdate): Promise<FB.Unsubscribe> {
+    const eventRef = FB.ref(this.database,  `db/${init.category}/${init.eventID}`);
+
+    const event = await FB.get(eventRef);
     if (!event.exists()) {
-      await set(eventRef, defaultEvent);
+      await FB.set(eventRef, defaultEvent);
     }
 
-    const unsub = onValue(eventRef, snapshot => {
+    const unsub = FB.onValue(eventRef, snapshot => {
       const data: EventScheduleData = snapshot.val();
-      cb({
+      const safeEvent = {
         ...defaultEvent, // prefill default incase users is empty
         ...data,
-      });
+      };
+      Object.values(safeEvent.user).forEach(u => {
+        u.attending = u.attending ?? [];
+        u.maybe = u.maybe ?? [];
+      })
+      cb(safeEvent);
     });
     return unsub;
   }

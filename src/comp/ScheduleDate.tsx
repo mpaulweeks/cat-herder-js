@@ -1,5 +1,5 @@
-import { createGcal, getDateStrings } from "./display";
-import { EventScheduleData, EventDate, EventOptionData } from "../lib";
+import { createGcal } from "./display";
+import { EventScheduleData, EventDate, EventOptionData, getDateStrings } from "../lib";
 
 export function ScheduleDate(props: {
   schedule: EventScheduleData;

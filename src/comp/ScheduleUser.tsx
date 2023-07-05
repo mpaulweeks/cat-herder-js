@@ -8,11 +8,13 @@ export function ScheduleUser(props: {
   isEditing: boolean;
   isTemp: boolean;
   onEdit(): void;
+  onDelete(): void;
   onSave(user: UserData): void;
   onCancel(): void;
 }) {
   const [draft, setDraft] = useState<UserData>(deepCopy(props.user));
 
+  // reset draft whenever editing is toggled
   useEffect(() => {
     setDraft(deepCopy(props.user));
   }, [props.user, props.isEditing]);
@@ -55,13 +57,14 @@ export function ScheduleUser(props: {
         <td>
           <div style={{ flexDirection: 'row', }}>
             <button onClick={() => props.onSave(draft)}>SAVE</button>
-            <button onClick={props.onCancel}>{props.isTemp ? 'RESET' : 'CANCEL'}</button>
+            <button onClick={props.onCancel}>{props.isTemp ? 'RESET' : 'BACK'}</button>
           </div>
         </td>
       ) : (
         <td>
-          <div>
+          <div style={{ flexDirection: 'row', }}>
             <button onClick={props.onEdit}>EDIT</button>
+            <button onClick={props.onDelete}>DEL</button>
           </div>
         </td>
       )}

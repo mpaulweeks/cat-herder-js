@@ -1,7 +1,19 @@
-import { getDateStrings } from "../comp/display";
-import { EventDate } from "./time";
-import { EventLookup, EventOptionData, EventScheduleData } from "./types";
+import { EventDate, getDateStrings } from "./time";
+import { EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
 import { range } from './util';
+
+export function emptyUser(): UserData {
+  return {
+    // will be overridden
+    created: 0,
+    uid: '0',
+
+    // empty
+    label: 'todo',
+    attending: [],
+    maybe: [],
+  }
+}
 
 export function createSchedule(init: EventLookup): EventScheduleData {
   const ed = EventDate.fromStr(init.eventID);

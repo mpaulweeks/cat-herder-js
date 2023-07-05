@@ -8,6 +8,9 @@ export class EventApi {
   connect(cb: EventUpdate) {
     return FirebaseApi.instance.connect(this.init, this.defaultEvent, cb);
   }
+  remove(user: UserData) {
+    return FirebaseApi.instance.removeUser(this.init, user);
+  }
   update(user: UserData) {
     return FirebaseApi.instance.updateUser(this.init, user);
   }
@@ -16,7 +19,7 @@ export class EventApi {
     const user: UserData = {
       ...draft,
       created: now,
-      uid: `user-${now}`,
+      uid: `user-${Math.floor(now % 10000).toString().padStart(4, '0')}`,
     };
     return this.update(user);
   }

@@ -1,21 +1,8 @@
 import { ScheduleUser } from "./ScheduleUser";
 import { CssClass } from "./display";
 import { useState } from "react";
-import { EventApi, EventScheduleData, UserData } from "../lib";
+import { EventApi, EventScheduleData, UserData, emptyUser } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
-
-function emptyUser(): UserData {
-  return {
-    // will be overridden
-    created: 0,
-    uid: '0',
-
-    // empty
-    label: 'todo',
-    attending: [],
-    maybe: [],
-  }
-}
 
 export function ScheduleTable(props: {
   schedule: EventScheduleData;
@@ -23,14 +10,10 @@ export function ScheduleTable(props: {
 }) {
   const options = props.schedule.options;
 
-  const [toEdit, setToEdit] = useState<UserData | undefined>();
+  const [editing, setEditing] = useState<string | undefined>();
   const [temp, setTemp] = useState<UserData>(emptyUser());
 
-  const scheduleUsers = Object.values(props.schedule.user).sort((a, b) => a.uid < b.uid ? -1 : 1);
-  const users = [
-    ...scheduleUsers.filter(u => u.uid !== toEdit?.uid),
-    ...(toEdit ? [toEdit] : []),
-  ];
+  const users = Object.values(props.schedule.user).sort((a, b) => a.created < b.created ? -1 : 1);
 
   return (
     <table>
@@ -57,14 +40,15 @@ export function ScheduleTable(props: {
             key={u.uid}
             events={options}
             user={u}
-            isEditing={u.uid === toEdit?.uid}
+            isEditing={u.uid === editing}
             isTemp={false}
-            onEdit={() => setToEdit(u)}
+            onEdit={() => setEditing(u.uid)}
+            onDelete={() => props.api.remove(u)}
             onSave={user => {
-              setToEdit(undefined);
+              setEditing(undefined);
               props.api.update(user);
             }}
-            onCancel={() => setToEdit(undefined)}
+            onCancel={() => setEditing(undefined)}
           />
         ))}
         <ScheduleUser
@@ -72,7 +56,8 @@ export function ScheduleTable(props: {
           user={temp}
           isEditing={true}
           isTemp={true}
-          onEdit={() => {}}
+          onEdit={() => {}} // inaccessible
+          onDelete={() => {}} // inaccessible
           onSave={user => {
             setTemp(emptyUser());
             props.api.create(user);

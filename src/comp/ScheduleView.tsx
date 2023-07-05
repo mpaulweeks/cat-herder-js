@@ -7,6 +7,7 @@ export function ScheduleView(props: {
   api: EventApi;
 }) {
   const [schedule, setSchedule] = useState<EventScheduleData | undefined>();
+  (window as any).schedule = schedule;
 
   useEffect(() => {
     const promise = props.api.connect(ed => setSchedule(ed));
