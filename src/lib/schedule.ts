@@ -1,4 +1,5 @@
-import { EventDate, getDateStrings } from "./time";
+import { getDateStrings } from "./dates";
+import { EventDate } from "./time";
 import { EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
 import { range } from './util';
 
