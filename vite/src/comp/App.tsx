@@ -1,16 +1,16 @@
 import './App.css';
-import { EventDate } from "../shared";
 import { ScheduleView } from "./ScheduleView";
-import { EventLookup } from '../lib/newTypes';
+import { EventApi, EventDate, EventLookup } from '../lib';
 
 export function App() {
   // todo derive from url
   const eventLookup: EventLookup = {
     category: 'edh',
-    event: EventDate.now().getPreviousMonday().dateStr,
+    eventID: EventDate.now().getPreviousMonday().dateStr,
   };
+  const api = new EventApi(eventLookup);
 
   return (
-    <ScheduleView eventLookup={eventLookup} />
+    <ScheduleView api={api} />
   );
 }

@@ -1,44 +1,34 @@
 import { ScheduleUser } from "./ScheduleUser";
-import { EventDate, EventTime, Schedule, User } from "../shared";
-import { createGcal, CssClass, getDateStrings } from "./display";
+import { CssClass } from "./display";
 import { useState } from "react";
-import { defaultUser } from "../lib/schedule";
+import { EventApi, EventScheduleData, UserData } from "../lib";
+import { ScheduleDate } from "./ScheduleDate";
 
-function RenderDate(props: {
-  schedule: Schedule;
-  eventTime: EventTime;
-}) {
-  const eventDate = EventDate.fromIso(props.eventTime.startIso);
-  const gcal = createGcal(props.schedule, props.eventTime);
-  const {dayOfWeek, dd, mm, time} = getDateStrings(eventDate);
-  return (
-    <a href={gcal}>
-      <div>
-        <div>
-          {dayOfWeek}
-        </div>
-        <div>
-          {mm}/{dd}
-        </div>
-        <div>
-          {time}
-        </div>
-      </div>
-    </a>
-  );
+function emptyUser(): UserData {
+  return {
+    // will be overridden
+    created: 0,
+    uid: '0',
+
+    // empty
+    label: 'todo',
+    attending: [],
+    maybe: [],
+  }
 }
 
 export function ScheduleTable(props: {
-  schedule: Schedule,
-  onSave(user: User): void;
+  schedule: EventScheduleData;
+  api: EventApi;
 }) {
-  const events = props.schedule.events; // todo sort by event.date.getTime()
+  const options = props.schedule.options; // todo sort by event.date.getTime()
 
-  const [toEdit, setToEdit] = useState<User | undefined>();
-  const [temp, setTemp] = useState<User>(defaultUser(events));
+  const [toEdit, setToEdit] = useState<UserData | undefined>();
+  const [temp, setTemp] = useState<UserData>(emptyUser());
 
-  const users = [ // todo sort by user.created
-    ...props.schedule.users.filter(u => u.uid !== toEdit?.uid),
+  const scheduleUsers = Object.values(props.schedule.user).sort((a, b) => a.uid < b.uid ? -1 : 1);
+  const users = [
+    ...scheduleUsers.filter(u => u.uid !== toEdit?.uid),
     ...(toEdit ? [toEdit] : []),
   ];
 
@@ -49,9 +39,9 @@ export function ScheduleTable(props: {
           <th>
             Name
           </th>
-          {events.map(event => (
-            <th key={event.eid} className={CssClass.EventTime}>
-              <RenderDate schedule={props.schedule} eventTime={event} />
+          {options.map(option => (
+            <th key={option.isoStart} className={CssClass.EventTime}>
+              <ScheduleDate schedule={props.schedule} option={option} />
             </th>
           ))}
           <th className={CssClass.Update}>
@@ -65,29 +55,29 @@ export function ScheduleTable(props: {
         {users.map(u => (
           <ScheduleUser
             key={u.uid}
-            events={events}
+            events={options}
             user={u}
             isEditing={u.uid === toEdit?.uid}
             isTemp={false}
             onEdit={() => setToEdit(u)}
             onSave={user => {
               setToEdit(undefined);
-              props.onSave(user);
+              props.api.update(user);
             }}
             onCancel={() => setToEdit(undefined)}
           />
         ))}
         <ScheduleUser
-          events={events}
+          events={options}
           user={temp}
           isEditing={true}
           isTemp={true}
           onEdit={() => {}}
           onSave={user => {
-            setTemp(defaultUser(events));
-            props.onSave(user);
+            setTemp(emptyUser());
+            props.api.create(user);
           }}
-          onCancel={() => setTemp(defaultUser(events))}
+          onCancel={() => setTemp(emptyUser())}
         />
       </tbody>
     </table>

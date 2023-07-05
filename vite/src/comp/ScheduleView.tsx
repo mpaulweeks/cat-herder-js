@@ -1,65 +1,27 @@
-import { EventDate, Schedule, User } from "../shared";
-import { useCallback, useEffect, useState } from "react";
-import { createSchedule } from "../lib/schedule";
+import { useEffect, useState } from "react";
 import { ScheduleTable } from "./ScheduleTable";
 import { CssClass } from './display';
-import { EventLookup } from "../lib/newTypes";
+import { EventApi, EventScheduleData } from "../lib";
 
 export function ScheduleView(props: {
-  eventLookup: EventLookup;
+  api: EventApi;
 }) {
-  const [schedule, setSchedule] = useState<Schedule | undefined>();
-  const [error, setError] = useState('');
+  const [schedule, setSchedule] = useState<EventScheduleData | undefined>();
 
   useEffect(() => {
-    (async () => {
-      const existing = await API.get(props);
-      if (existing) {
-        return existing;
-      }
-      // else
-      const draft = createSchedule(props);
-      const eventDate = EventDate.fromIso(draft.events[0].startIso);
-      return await API.create({
-        group: props.group,
-        dateStr: eventDate.dateStr,
-        draft,
-      });
-    })()
-      .then(schedule => setSchedule(schedule))
-      .catch(err => {
-        console.log(err);
-        setError(err.toString())
-      });
+    const promise = props.api.connect(ed => setSchedule(ed));
+    return () => { promise.then(unsub => unsub()) };
   }, [props]);
-
-  const onSave = useCallback((user: User) => {
-    (async () => {
-      if (!schedule) { return; }
-      return await API.update({
-        group: schedule.group,
-        dateStr: schedule.scheduleDate,
-        user,
-      });
-    })()
-      .then(schedule => setSchedule(schedule))
-      .catch(err => {
-        console.log(err);
-        setError(err.toString())
-      });
-  }, [schedule, setSchedule]);
 
   return (
     <div className={CssClass.Schedule}>
-      {error && <h2>{error}</h2>}
-      {!error && !schedule && <h1>loading...</h1>}
-      {!error && schedule && (
+      {schedule === undefined ? <h1>loading...</h1> : (
         <>
           <h1>{schedule.name}</h1>
           <h3>{schedule.description}</h3>
           <ScheduleTable
             schedule={schedule}
-            onSave={user => onSave(user)}
+            api={props.api}
           />
         </>
       )}

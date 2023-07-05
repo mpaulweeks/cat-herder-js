@@ -1,17 +1,17 @@
+import { Attendence, EventOptionData, UserData, deepCopy, getAttendence } from "../lib";
 import { AttendenceIcon } from "./AttendenceIcon";
-import { getAttendence, EventTime, User, deepCopy } from "../shared";
 import { useEffect, useState } from "react";
 
 export function ScheduleUser(props: {
-  events: EventTime[];
-  user: User;
+  events: EventOptionData[];
+  user: UserData;
   isEditing: boolean;
   isTemp: boolean;
   onEdit(): void;
-  onSave(user: User): void;
+  onSave(user: UserData): void;
   onCancel(): void;
 }) {
-  const [draft, setDraft] = useState<User>(deepCopy(props.user));
+  const [draft, setDraft] = useState<UserData>(deepCopy(props.user));
 
   useEffect(() => {
     setDraft(deepCopy(props.user));
@@ -22,29 +22,29 @@ export function ScheduleUser(props: {
       <td>
         <div>
           {props.isEditing ? (
-            <input value={draft.name} onChange={evt => setDraft({
+            <input value={draft.label} onChange={evt => setDraft({
               ...draft,
-              name: evt.target.value,
+              label: evt.target.value,
             })} />
             ) : (
             <span>
-              {draft.name}
+              {draft.label}
             </span>
           )}
         </div>
       </td>
       {props.events.map(et => (
-        <td key={et.eid}>
+        <td key={et.isoStart}>
           <div>
             <AttendenceIcon
               attendence={getAttendence(et, draft)}
               isEditing={props.isEditing}
               onUpdate={attendence => {
                 const newUser = { ...draft, };
-                newUser.events = newUser.events.map(ea => ({
-                  ...ea,
-                  status: ea.event === et.eid ? attendence : ea.status,
-                }));
+                newUser.attending = newUser.attending.filter(iso => iso !== et.isoStart);
+                newUser.maybe = newUser.maybe.filter(iso => iso !== et.isoStart);
+                if (attendence === Attendence.Yes) { newUser.attending.push(et.isoStart); }
+                if (attendence === Attendence.Maybe) { newUser.maybe.push(et.isoStart); }
                 setDraft(newUser);
               }}
             />

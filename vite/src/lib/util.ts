@@ -1,7 +1,9 @@
-import { Attendence, EventTime, User } from "./types";
+import { Attendence, EventOptionData, UserData } from "./types";
 
-export function getAttendence(event: EventTime, user: User): Attendence {
-  return user.events.filter(e => e.event === event.eid)[0]?.status ?? Attendence.Undefined;
+export function getAttendence(event: EventOptionData, user: UserData): Attendence {
+  if (user.attending.includes(event.isoStart)) { return Attendence.Yes; }
+  if (user.maybe.includes(event.isoStart)) { return Attendence.Maybe; }
+  return Attendence.No;
 }
 
 export function range(length: number): number[] {

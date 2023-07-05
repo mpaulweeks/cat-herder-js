@@ -1,5 +1,5 @@
 import { google } from 'calendar-link';
-import { EventDate, EventTime, Schedule } from "../shared";
+import { EventDate, EventOptionData, EventScheduleData } from '../lib';
 
 export function getDateStrings(ed: EventDate) {
   const { date } = ed;
@@ -22,11 +22,11 @@ export const CssClass = {
   Clickable: 'Clickable',
 }
 
-export function createGcal(schedule: Schedule, et: EventTime) {
+export function createGcal(schedule: EventScheduleData, et: EventOptionData) {
   return google({
     title: schedule.name,
     description: schedule.description,
-    start: et.startIso,
+    start: et.isoStart,
     duration: [et.durationHours, "hour"],
   });
 }

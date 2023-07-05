@@ -1,4 +1,4 @@
-import { Attendence, AttendenceOrder } from "../shared";
+import { Attendence, AttendenceOrder } from "../lib";
 import { useCallback } from "react";
 import { CssClass } from "./display";
 

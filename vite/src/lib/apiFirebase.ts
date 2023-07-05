@@ -1,10 +1,10 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { get, getDatabase, onValue, ref, set } from "firebase/database";
+import { get, getDatabase, onValue, ref, set, Unsubscribe } from "firebase/database";
 import { FirebaseConfig } from "./config";
-import { EventLookup, PlanningData, UserData } from "./newTypes.ts";
+import { EventLookup, EventScheduleData, UserData } from "./types";
 
-export type EventUpdate = (data: PlanningData) => void;
+export type EventUpdate = (data: EventScheduleData) => void;
 
 export class FirebaseApi {
   private static _instance: FirebaseApi | undefined;
@@ -18,23 +18,25 @@ export class FirebaseApi {
   private constructor() {}
 
   async updateUser(init: EventLookup, user: UserData): Promise<void> {
-    const userRef = ref(this.database, `db/${init.category}/${init.event}/user/${user.uid}`);
+    const userRef = ref(this.database, `db/${init.category}/${init.eventID}/user/${user.uid}`);
     await set(userRef, user);
   }
 
-  async connect(init: EventLookup, cb: EventUpdate): Promise<void> {
-    const eventRef = ref(this.database,  `db/${init.category}/${init.event}`);
+  async connect(init: EventLookup, defaultEvent: EventScheduleData, cb: EventUpdate): Promise<Unsubscribe> {
+    const eventRef = ref(this.database,  `db/${init.category}/${init.eventID}`);
 
     const event = await get(eventRef);
     if (!event.exists()) {
-      const eventData: PlanningData = {
-        options: [], // todo
-        user: {},
-      }
-      await set(eventRef, eventData);
+      await set(eventRef, defaultEvent);
     }
-    onValue(eventRef, snapshot => {
-      cb(snapshot.val());
+
+    const unsub = onValue(eventRef, snapshot => {
+      const data: EventScheduleData = snapshot.val();
+      cb({
+        ...defaultEvent, // prefill default incase users is empty
+        ...data,
+      });
     });
+    return unsub;
   }
 }
