@@ -1,4 +1,5 @@
 import { EventUpdate, FirebaseApi } from "./apiFirebase";
+import { createSchedule } from "./schedule";
 import { EventLookup, EventScheduleData, UserData, UserDraft } from "./types";
 
 export class EventApi {
@@ -21,16 +22,6 @@ export class EventApi {
   }
 
   get defaultEvent(): EventScheduleData {
-    // todo vary by init
-    return {
-      name: this.init.category,
-      description: 'todo',
-      options: [{
-        label: 'Monday',
-        isoStart: new Date().toISOString(),
-        durationHours: 2,
-      }],
-      user: {},
-    };
+    return createSchedule(this.init);
   }
 }

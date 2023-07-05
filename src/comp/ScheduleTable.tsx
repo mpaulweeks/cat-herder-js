@@ -21,7 +21,7 @@ export function ScheduleTable(props: {
   schedule: EventScheduleData;
   api: EventApi;
 }) {
-  const options = props.schedule.options; // todo sort by event.date.getTime()
+  const options = props.schedule.options;
 
   const [toEdit, setToEdit] = useState<UserData | undefined>();
   const [temp, setTemp] = useState<UserData>(emptyUser());

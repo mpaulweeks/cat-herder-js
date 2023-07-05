@@ -1,32 +1,13 @@
 import { getDateStrings } from "../comp/display";
-import { Attendence, DraftSchedule, EventAttendence, EventDate, EventTime, range, User } from "../shared";
+import { EventDate } from "./time";
+import { EventLookup, EventOptionData, EventScheduleData } from "./types";
+import { range } from './util';
 
-export function defaultUser(eventTimes: EventTime[]): User {
-  const now = EventDate.now();
-  return {
-    uid: now.date.getTime().toString(),
-    name: '',
-    events: eventTimes.map<EventAttendence>(et => ({
-      event: et.eid,
-      status: Attendence.No,
-    })),
-    createdIso: now.dateIso,
-    updatedIso: now.dateIso,
-  };
-}
-
-export function createSchedule(args: {
-  group: string;
-  dateStr?: string;
-}) {
-  const ed = args?.dateStr ? EventDate.fromStr(args.dateStr) : EventDate.now();
-  return scheduleByGroup(args.group, ed);
-}
-
-export function scheduleByGroup(group: string, ed: EventDate): DraftSchedule {
-  if (group === 'edh') {
+export function createSchedule(init: EventLookup): EventScheduleData {
+  const ed = EventDate.fromStr(init.eventID);
+  if (init.category === 'edh') {
     const monday = ed.getPreviousMonday();
-    const events = range(7).map<EventTime>(i => {
+    const options: EventOptionData[] = range(7).map(i => {
       const newDate = new Date(monday.date);
       newDate.setDate(newDate.getDate() + i);
       const newEd = EventDate.fromDate(newDate).getDateAtHour({
@@ -34,8 +15,8 @@ export function scheduleByGroup(group: string, ed: EventDate): DraftSchedule {
         minutes: 0,
       });
       return {
-        eid: newEd.date.getTime().toString(),
-        startIso: newEd.dateIso,
+        label: newEd.date.getTime().toString(),
+        isoStart: newEd.dateIso,
         durationHours: 4,
       };
     });
@@ -43,7 +24,8 @@ export function scheduleByGroup(group: string, ed: EventDate): DraftSchedule {
     return {
       name: 'EDH',
       description: `Week of ${month} ${day}, ${yyyy}`,
-      events,
+      options,
+      user: {},
     }
   }
   // else
