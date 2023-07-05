@@ -4,6 +4,7 @@ import { useState } from "react";
 import { EventApi, EventOptionData, EventScheduleData, UserData, emptyUser } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
 import { useKeyboard } from "./hooks/useKeyboard";
+import { STORAGE } from "./helper";
 
 export function ScheduleTable(props: {
   schedule: EventScheduleData;
@@ -58,9 +59,12 @@ export function ScheduleTable(props: {
             isTemp={false}
             onEdit={() => setEditing(u.uid)}
             onDelete={() => props.api.removeUser(u)}
-            onSave={user => {
+            onSave={newUser => {
               setEditing(undefined);
-              props.api.updateUser(user);
+              if (u.label !== newUser.label) {
+                STORAGE.userLabel.set(newUser.label);
+              }
+              props.api.updateUser(newUser);
             }}
             onCancel={() => setEditing(undefined)}
           />
