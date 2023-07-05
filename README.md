@@ -6,9 +6,6 @@ Now with VITE!
 
 TODO
 
-- Fork existing version to new branch, then merge into main
-- Add deploy
-- Add ability to mark time as chosen
 - Polish gcal
 - Adjust CSS for desktop and mobile
 - Figure out automated emailer
