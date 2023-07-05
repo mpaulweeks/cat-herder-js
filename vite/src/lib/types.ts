@@ -1,28 +1,64 @@
-export type Database = {
-  category: {
-    [category: string]: {
-      [event: string]: PlanningData;
-    },
-  },
+// biz logic
+
+export type EventKey = string;
+export interface EventTime {
+  eid: EventKey;
+  startIso: string;
+  durationHours: number;
+}
+export enum Attendence {
+  No = 'n',
+  Yes = 'y',
+  Maybe = 'm',
+  Undefined = '?',
+}
+export const AttendenceOrder = [
+  Attendence.No,
+  Attendence.Yes,
+  Attendence.Maybe,
+];
+export interface EventAttendence {
+  event: EventKey;
+  status: Attendence;
+}
+export interface User {
+  uid: string;
+  name: string;
+  events: EventAttendence[];
+  createdIso: string;
+  updatedIso: string;
+}
+export interface Schedule {
+  sid: string;
+  group: string;
+  scheduleDate: string;
+  name: string;
+  description: string;
+  events: EventTime[];
+  users: User[];
+}
+export interface DraftSchedule {
+  name: string;
+  description: string;
+  events: EventTime[];
 }
 
-export type EventListEntry = {
-  category: string;
-  event: string;
+// network
+
+export interface GetScheduleResponse {
+  schedule: Schedule;
 }
 
-export type PlanningData = {
-  options: OptionData[];
-  participants: ParticipantData[];
+export interface PostScheduleRequest {
+  draft: DraftSchedule;
+}
+export interface PostScheduleResponse {
+  schedule: Schedule;
 }
 
-export type OptionData = {
-  label: string;
-  iso: string;
+export interface PutScheduleRequest {
+  user: User;
 }
-
-export type ParticipantData = {
-  label: string;
-  attending: string[]; // matches iso
-  maybe: string[]; // matches iso
+export interface PutScheduleResponse {
+  schedule: Schedule;
 }

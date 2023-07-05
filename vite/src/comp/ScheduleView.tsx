@@ -1,13 +1,12 @@
 import { EventDate, Schedule, User } from "../shared";
 import { useCallback, useEffect, useState } from "react";
-import { API } from "../lib/api";
 import { createSchedule } from "../lib/schedule";
 import { ScheduleTable } from "./ScheduleTable";
 import { CssClass } from './display';
+import { EventLookup } from "../lib/newTypes";
 
 export function ScheduleView(props: {
-  group: string;
-  dateStr: string;
+  eventLookup: EventLookup;
 }) {
   const [schedule, setSchedule] = useState<Schedule | undefined>();
   const [error, setError] = useState('');

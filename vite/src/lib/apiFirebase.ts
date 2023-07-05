@@ -1,9 +1,10 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { get, getDatabase, onDisconnect, onValue, ref, remove, set, update } from "firebase/database";
+import { get, getDatabase, onValue, ref, set } from "firebase/database";
 import { FirebaseConfig } from "./config";
-import { getStorageName } from "./localStorage";
-import { EventListEntry } from "./types";
+import { EventLookup, PlanningData, UserData } from "./newTypes.ts";
+
+export type EventUpdate = (data: PlanningData) => void;
 
 export class FirebaseApi {
   private static _instance: FirebaseApi | undefined;
@@ -16,81 +17,23 @@ export class FirebaseApi {
   database = getDatabase(this.app);
   private constructor() {}
 
-  async getEventList(): Promise<EventListEntry[]> {
-    const categoryRef = ref(this.database, `category`);
-    const categories = await get(categoryRef);
-    // todo
+  async updateUser(init: EventLookup, user: UserData): Promise<void> {
+    const userRef = ref(this.database, `db/${init.category}/${init.event}/user/${user.uid}`);
+    await set(userRef, user);
   }
 
-  async getRooms(): Promise<RoomState[]> {
-    const roomsRef = ref(this.database, `rooms`);
-    const rooms = await get(roomsRef);
-    const lookup: { [key: string]: RoomState } | undefined = rooms.val();
-    const states = Object.values(lookup ?? {});
-    return states;
-  }
+  async connect(init: EventLookup, cb: EventUpdate): Promise<void> {
+    const eventRef = ref(this.database,  `db/${init.category}/${init.event}`);
 
-  async removeEmptyRooms() {
-    const rooms = await this.getRooms();
-    for (const room of rooms) {
-      const users = room.users ?? {};
-      if (Object.keys(users).length === 0) {
-        const roomRef = ref(this.database, `rooms/${room.rid}`);
-        await remove(roomRef);
+    const event = await get(eventRef);
+    if (!event.exists()) {
+      const eventData: PlanningData = {
+        options: [], // todo
+        user: {},
       }
+      await set(eventRef, eventData);
     }
-  }
-
-  async resetRoom(init: RoomInit): Promise<void> {
-    const roomRef = ref(this.database, `rooms/${init.rid}`);
-    const room: RoomState = (await get(roomRef)).val();
-    const users: UserState[] = Object.values(room.users ?? {});
-    users.forEach(u => u.vote = null);
-    await this.updateRoom(init, {
-      users: room.users,
-      reveal: false,
-    });
-  }
-
-  async updateRoom(init: RoomInit, room: Partial<RoomState>): Promise<void> {
-    const roomRef = ref(this.database, `rooms/${init.rid}`);
-    await update(roomRef, room);
-  }
-
-  async updateUser(init: RoomInit, user: Partial<UserState>): Promise<void> {
-    const userRef = ref(this.database, `rooms/${init.rid}/users/${init.uid}`);
-    await update(userRef, user);
-  }
-
-  async connect(init: RoomInit, cb: RoomUpdate): Promise<void> {
-    await this.removeEmptyRooms();
-
-    const user: UserState = {
-      uid: init.uid,
-      name: getStorageName(),
-      spectate: false,
-      vote: null,
-    };
-
-    const roomRef = ref(this.database, `rooms/${init.rid}`);
-    const userRef = ref(this.database, `rooms/${init.rid}/users/${init.uid}`);
-    onDisconnect(userRef).remove();
-
-    const room = await get(roomRef);
-    if (room.exists()) {
-      await set(userRef, user);
-    } else {
-      const newRoom: RoomState = {
-        rid: init.rid,
-        options: init.options,
-        reveal: false,
-        users: {
-          [init.uid]: user,
-        },
-      };
-      await set(roomRef, newRoom);
-    }
-    onValue(roomRef, snapshot => {
+    onValue(eventRef, snapshot => {
       cb(snapshot.val());
     });
   }
