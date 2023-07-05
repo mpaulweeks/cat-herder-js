@@ -2,31 +2,29 @@ name: Unit Tests
 
 on:
   push:
+    branches-ignore: main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: .nvmrc
 
-      - name: Install
-        run: |
-          npm install
-          npm run setup
+      - name: npm install
+        run: npm install
 
-      - name: Build
+      - name: Build site
+        env:
+          CI: false
         run: npm run build
 
-      - name: Test
+      - name: Run tests
         run: npm run test

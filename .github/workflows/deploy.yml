@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,8 +32,8 @@ jobs:
           CI: false
         run: npm run build
 
-      # - name: Run tests
-      #   run: npm run test
+      - name: Run tests
+        run: npm run test
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
