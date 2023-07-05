@@ -1,36 +1,30 @@
 {
-  "name": "cat-herder-js",
-  "version": "1.0.0",
-  "description": "Reimplementation of cat-herder",
+  "name": "cat-herder-vite",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "shared": "cd pkg/shared && npm i && npm run build",
-    "setup-be": "cd pkg/be && npm run setup",
-    "setup-fe": "cd pkg/fe && yarn setup",
-    "setup": "npm-run-all shared setup-be setup-fe",
-    "build-be": "cd pkg/be && npm run build",
-    "build-fe": "cd pkg/fe && yarn build",
-    "build": "npm-run-all setup build-fe build-be",
-    "prestart": "npm-run-all build",
-    "start": "node pkg/be/dist/index.js",
-    "bg": "npx @toughlovearena/updater",
-    "kill": "forever stop pkg/be/dist/index.js",
-    "test-shared": "cd pkg/shared && npm run test",
-    "test-be": "cd pkg/be && npm run test",
-    "test-fe": "cd pkg/fe && yarn test-ci",
-    "test": "npm-run-all test-shared test-be test-fe"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mpaulweeks/cat-herder-js.git"
+  "dependencies": {
+    "calendar-link": "^2.4.0",
+    "firebase": "^9.23.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
-  "author": "mpaulweeks",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mpaulweeks/cat-herder-js/issues"
-  },
-  "homepage": "https://github.com/mpaulweeks/cat-herder-js#readme",
   "devDependencies": {
-    "@toughlovearena/updater": "^2.1.4",
-    "npm-run-all": "^4.1.5"
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.9"
   }
 }
