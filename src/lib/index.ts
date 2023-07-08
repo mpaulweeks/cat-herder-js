@@ -1,5 +1,6 @@
 export * from './apiEvent';
 export * from './dates';
+export * from './gcal';
 export * from './localStorage';
 export * from './schedule';
 export * from './time';

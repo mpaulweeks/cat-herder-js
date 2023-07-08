@@ -1,5 +1,5 @@
 import { google } from 'calendar-link';
-import { EventOptionData, EventScheduleData } from '../lib';
+import { EventOptionData, EventScheduleData } from '.';
 
 export function createGcal(schedule: EventScheduleData, et: EventOptionData) {
   return google({
