@@ -22,7 +22,7 @@ jobs:
         shell: bash
         env:
           VITE_ENV: ${{ secrets.ENV }}
-        run: echo "$VITE_ENV" > .env
+        run: echo "$VITE_ENV" > .env.local
 
       - name: npm install
         run: npm install
