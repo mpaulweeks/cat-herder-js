@@ -1,69 +1,57 @@
-.Schedule {
+.ScheduleView {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 }
 
-table {
+table.ScheduleTable {
   border-collapse: collapse;
 }
-table input {
+
+table.ScheduleTable input {
   padding: 0.4em;
 }
-table button {
+
+table.ScheduleTable button {
   margin: 0.2em;
 }
-tr {
+
+table.ScheduleTable tr {
   height: 3.5em;
 }
 
-th {
+table.ScheduleTable th {
   border-bottom: 2px solid grey;
 }
-th.EventTime {
+
+table.ScheduleTable th.EventTime {
   width: 5em;
 }
-th.Update {
+
+table.ScheduleTable th.Update {
   width: 10em;
 }
-th a {
+
+table.ScheduleTable th a {
   color: initial;
   text-decoration: initial;
 }
-td {
+
+table.ScheduleTable td {
   border-top: 1px solid grey;
 }
 
-th,
-td {
+table.ScheduleTable th,
+table.ScheduleTable td {
   padding: 0.5em;
   box-sizing: border-box;
 }
 
-th > div,
-td > div {
+table.ScheduleTable th>div,
+table.ScheduleTable td>div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.Clickable {
-  cursor: pointer;
-}
-.Attendence {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 10rem;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.Attendence.Clickable {
-  font-size: 0.8em;
-  border: 1px solid grey;
 }

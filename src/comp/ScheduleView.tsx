@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ScheduleTable } from "./ScheduleTable";
-import { CssClass } from './display';
 import { EventApi, EventScheduleData } from "../lib";
+import styles from './Schedule.module.css';
 
 export function ScheduleView(props: {
   api: EventApi;
@@ -15,7 +15,7 @@ export function ScheduleView(props: {
   }, [props]);
 
   return (
-    <div className={CssClass.Schedule}>
+    <div className={styles.ScheduleView}>
       {schedule === undefined ? <h1>loading...</h1> : (
         <>
           <h1>{schedule.name}</h1>

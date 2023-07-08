@@ -1,6 +1,6 @@
 import { Attendence, AttendenceOrder } from "../lib";
 import { useCallback } from "react";
-import { CssClass } from "./display";
+import styles from './AttendenceIcon.module.css';
 
 export function AttendenceIcon(props: {
   attendence: Attendence;
@@ -36,8 +36,8 @@ export function AttendenceIcon(props: {
   }, [props]);
 
   const className = [
-    CssClass.Attendence,
-    ...(props.isEditing ? [CssClass.Clickable] : []),
+    styles.Attendence,
+    ...(props.isEditing ? [styles.Clickable] : []),
   ].join(' ');
   return (
     <div className={className} onClick={onClick}>

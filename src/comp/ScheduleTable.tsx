@@ -1,10 +1,10 @@
 import { ScheduleUser } from "./ScheduleUser";
-import { CssClass } from "./display";
 import { useState } from "react";
 import { EventApi, EventOptionData, EventScheduleData, UserData, emptyUser } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
 import { useKeyboard } from "./hooks/useKeyboard";
 import { STORAGE } from "./helper";
+import styles from './Schedule.module.css';
 
 export function ScheduleTable(props: {
   schedule: EventScheduleData;
@@ -26,14 +26,14 @@ export function ScheduleTable(props: {
   };
 
   return (
-    <table>
+    <table className={styles.ScheduleTable}>
       <thead>
         <tr>
           <th>
             Name
           </th>
           {options.map(option => (
-            <th key={option.isoStart} className={CssClass.EventTime}>
+            <th key={option.isoStart} className={styles.EventTime}>
               <ScheduleDate
                 schedule={props.schedule}
                 option={option}
@@ -42,7 +42,7 @@ export function ScheduleTable(props: {
               />
             </th>
           ))}
-          <th className={CssClass.Update}>
+          <th className={styles.Update}>
             <div>
               Update?
             </div>

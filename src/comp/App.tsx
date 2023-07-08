@@ -1,4 +1,3 @@
-import './App.css';
 import { ScheduleView } from "./ScheduleView";
 import { EventApi, EventDate, EventLookup } from '../lib';
 
