@@ -17,7 +17,10 @@ export function GroupView(props: {
   useTitle(group);
   useEffect(() => {
     FirebaseApi.instance.listGroupEvents(group)
-      .then(setEvents)
+      .then(rawEvents => {
+        const sorted = rawEvents.concat().sort();
+        setEvents(sorted);
+      })
       .catch(err => setError(err));
   }, [group, setEvents]);
 
@@ -26,7 +29,7 @@ export function GroupView(props: {
       <h1>{group}</h1>
       {!error && !events && 'loading...'}
       {events && (
-        events.map(eventID => (
+        events.reverse().map(eventID => (
           <div key={eventID}>
             <GroupEventLink {...props} eventLookup={{ group: group, eventID }} />
           </div>

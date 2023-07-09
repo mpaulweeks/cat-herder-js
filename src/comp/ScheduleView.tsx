@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScheduleTable } from "./ScheduleTable";
-import { EventApi, EventLookup, EventScheduleData, generateUrl } from "../lib";
+import { EventApi, EventDate, EventLookup, EventScheduleData, generateUrl } from "../lib";
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "./hooks/useTitle";
@@ -32,7 +32,12 @@ export function ScheduleView(props: {
               onClick={() => props.setEventLookup(parentLookup)}
             >{schedule.name}</SmartLink>
           </h1>
-          <h3>{schedule.description}</h3>
+          <h3>
+            <div>{schedule.description}</div>
+            <div style={{ color: '#444' }}>
+              Today is {EventDate.now().datePretty}
+            </div>
+          </h3>
           <ScheduleTable
             schedule={schedule}
             api={props.api}
