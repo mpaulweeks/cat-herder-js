@@ -5,4 +5,5 @@ export * from './localStorage';
 export * from './schedule';
 export * from './time';
 export * from './types';
+export * from './url';
 export * from './util';

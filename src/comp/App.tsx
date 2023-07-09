@@ -1,15 +1,20 @@
 import { ScheduleView } from "./ScheduleView";
-import { EventApi, EventDate, EventLookup } from '../lib';
+import { EventApi, parseQueryParams } from '../lib';
+import { useState } from "react";
 
 export function App() {
-  // todo derive from url
-  const eventLookup: EventLookup = {
-    category: 'edh',
-    eventID: EventDate.now().getPreviousMonday().dateStr,
-  };
-  const api = new EventApi(eventLookup);
+  const [eventLookup, setEventLookup] = useState(parseQueryParams(window.location.search));
 
-  return (
-    <ScheduleView api={api} />
-  );
+  if (eventLookup.category && eventLookup.eventID) {
+    const api = new EventApi({ category: eventLookup.category, eventID: eventLookup.eventID, });
+    return (
+      <ScheduleView api={api} />
+    );
+  }
+  // if (eventLookup.category) {
+  //   return <CategoryView category={category} />;
+  // }
+  // // else
+  // return <BrowserView />;
+  return 'todo';
 }

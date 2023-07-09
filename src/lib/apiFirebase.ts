@@ -2,7 +2,7 @@ import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import * as FB from "firebase/database";
 import { FirebaseConfig } from "./config";
-import { EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
+import { CategoryData, DatabaseData, EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
 
 export type EventUpdate = (data: EventScheduleData) => void;
 
@@ -17,6 +17,28 @@ export class FirebaseApi {
   database = FB.getDatabase(this.app);
   private constructor() {}
 
+  async listEmails(category: string): Promise<string[]> {
+    const categoryRef = FB.ref(this.database, `email/${category}`);
+    const categorySnapshot = await FB.get(categoryRef);
+    const categoryData: CategoryData = await categorySnapshot.val();
+    return Object.keys(categoryData);
+  }
+
+  // todo re-org db
+  async listCategories(): Promise<string[]> {
+    const dbRef = FB.ref(this.database, `db`);
+    const dbSnapshot = await FB.get(dbRef);
+    const dbData: DatabaseData = await dbSnapshot.val();
+    return Object.keys(dbData);
+  }
+
+  // todo re-org db
+  async listCategoryEvents(category: string): Promise<string[]> {
+    const categoryRef = FB.ref(this.database, `db/${category}`);
+    const categorySnapshot = await FB.get(categoryRef);
+    const categoryData: CategoryData = await categorySnapshot.val();
+    return Object.keys(categoryData);
+  }
 
   async updateOptions(init: EventLookup, options: EventOptionData[]): Promise<void> {
     const optionsRef = FB.ref(this.database, `db/${init.category}/${init.eventID}/options`);

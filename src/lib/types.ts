@@ -5,9 +5,10 @@ Event = a specific combo of category and time
 
 /* Shape of DB
 db: {
-  [category: string]: {
-    [event: string]: EventData;
-  },
+  [category: string]: Category
+}
+email: {
+  [category: string]: string[]
 }
 */
 
@@ -16,6 +17,9 @@ export type EventLookup = {
   category: string;
   eventID: string;
 }
+
+export type DatabaseData = Record<string, CategoryData>;
+export type CategoryData = Record<string, EventScheduleData>;
 export type EventScheduleData = {
   name: string;
   description: string;
