@@ -54,3 +54,10 @@ export const AttendenceOrder = [
   Attendence.Yes,
   Attendence.Maybe,
 ];
+
+// errors
+export type ErrorMessage = string;
+export type ErrorNotification = {
+  created: number;
+  message: ErrorMessage;
+}

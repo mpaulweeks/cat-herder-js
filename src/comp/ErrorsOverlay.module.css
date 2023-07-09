@@ -11,15 +11,39 @@
 }
 
 .ErrorBox {
-  cursor: pointer;
-  width: 200px;
+  position: relative;
+  width: 300px;
   min-height: 80px;
+  padding: 1em 2em;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  background-color: salmon;
+  border-radius: 1em;
+}
+
+.ErrorBoxClose {
+  cursor: pointer;
+  user-select: none;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5em;
+  height: 1.5em;
+  transform: translate(30%, -30%);
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  background-color: salmon;
-  border-radius: 1em;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 100%;
 }

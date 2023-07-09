@@ -1,13 +1,9 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { ErrorMessage, ErrorNotification } from "../lib";
 
 // inspired by context + reducer but simplified
 // https://react.dev/learn/scaling-up-with-reducer-and-context
 
-type ErrorMessage = string;
-type ErrorNotification = {
-  created: number;
-  message: ErrorMessage;
-}
 type ErrorReporter = {
   reportError(err: ErrorMessage): void;
 }

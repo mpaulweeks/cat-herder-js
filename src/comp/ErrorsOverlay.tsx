@@ -1,5 +1,18 @@
+import { ErrorNotification } from "../lib";
 import { useErrorsApi } from "./ErrorsContext";
 import styles from './ErrorsOverlay.module.css';
+
+function ErrorBoxClose(props: {
+  err: ErrorNotification;
+  onClose(): void;
+}) {
+  return (
+    <div
+      className={styles.ErrorBoxClose}
+      onClick={props.onClose}
+    >✖</div>
+  );
+}
 
 export function ErrorsOverlay() {
   const errorsApi = useErrorsApi();
@@ -15,9 +28,10 @@ export function ErrorsOverlay() {
         <div
           key={err.created} // todo add id
           className={styles.ErrorBox}
-          onClick={() => errorsApi.remove(err)}
         >
-          {err.message}
+          <div><b>ERROR</b></div>
+          <div>{err.message}</div>
+          <ErrorBoxClose err={err} onClose={() => errorsApi.remove(err)} />
         </div>
       ))}
     </div>
