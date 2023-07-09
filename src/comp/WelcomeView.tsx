@@ -12,7 +12,7 @@ export function WelcomeView(props: {
   useTitle();
 
   return (
-    <div className={styles.Main}>
+    <div className={styles.BasicView}>
       <h1>Cat Herder</h1>
       <div>a tool for herding cats</div>
       <br/>
