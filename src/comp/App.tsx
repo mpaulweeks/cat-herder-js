@@ -10,11 +10,11 @@ export function App() {
   if (category && eventID) {
     const api = new EventApi({ category, eventID, });
     return (
-      <ScheduleView api={api} />
+      <ScheduleView api={api} setEventLookup={setEventLookup} />
     );
   }
   if (category) {
-    return <CategoryView category={category} setLookup={setEventLookup} />;
+    return <CategoryView category={category} setEventLookup={setEventLookup} />;
   }
   // // else
   // return <BrowserView />;
