@@ -2,7 +2,7 @@ import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import * as FB from "firebase/database";
 import { FirebaseConfig } from "./config";
-import { CategoryData, DatabaseData, EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
+import { CategoryData, EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
 
 export type EventUpdate = (data: EventScheduleData) => void;
 
@@ -20,16 +20,8 @@ export class FirebaseApi {
   async listEmails(category: string): Promise<string[]> {
     const categoryRef = FB.ref(this.database, `email/${category}`);
     const categorySnapshot = await FB.get(categoryRef);
-    const categoryData: CategoryData = await categorySnapshot.val();
-    return Object.keys(categoryData);
-  }
-
-  // todo re-org db
-  async listCategories(): Promise<string[]> {
-    const dbRef = FB.ref(this.database, `db`);
-    const dbSnapshot = await FB.get(dbRef);
-    const dbData: DatabaseData = await dbSnapshot.val();
-    return Object.keys(dbData);
+    const categoryData: string[] = await categorySnapshot.val();
+    return Object.values(categoryData); // works on both array and record
   }
 
   // todo re-org db
