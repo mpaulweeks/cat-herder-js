@@ -3,6 +3,7 @@ import { FirebaseApi } from "../lib/apiFirebase";
 import { EventDate, EventLookup, generateUrl } from "../lib";
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "./hooks/useTitle";
+import styles from './App.module.css';
 
 function CategoryViewEventLink(props: {
   eventLookup: EventLookup;
@@ -34,7 +35,7 @@ export function CategoryView(props: {
   }, [category, setEvents]);
 
   return (
-    <div>
+    <div className={styles.Main}>
       <h1>{category}</h1>
       {!error && !events && 'loading...'}
       {events && (

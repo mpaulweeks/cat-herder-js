@@ -24,7 +24,8 @@ export class FirebaseApi {
     return Object.values(categoryData); // works on both array and record
   }
 
-  // todo re-org db
+  // this loads all events for that category
+  // not ideal but better than denormalizing for now
   async listCategoryEvents(category: string): Promise<string[]> {
     const categoryRef = FB.ref(this.database, `db/${category}`);
     const categorySnapshot = await FB.get(categoryRef);
