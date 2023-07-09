@@ -20,7 +20,7 @@ export function createSchedule(init: EventLookup): EventScheduleData {
   const ed = EventDate.fromStr(init.eventID);
   if (init.group === 'edh') {
     const monday = ed.getPreviousMonday();
-    const options: EventOptionData[] = range(7).map(i => {
+    const options = range(7).map<EventOptionData>(i => {
       const newDate = new Date(monday.date);
       newDate.setDate(newDate.getDate() + i);
       const newEd = EventDate.fromDate(newDate).getDateAtHour({
@@ -28,7 +28,6 @@ export function createSchedule(init: EventLookup): EventScheduleData {
         minutes: 0,
       });
       return {
-        label: newEd.date.getTime().toString(),
         isoStart: newEd.dateIso,
         durationHours: 4,
         highlight: false,

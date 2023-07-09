@@ -29,7 +29,6 @@ export type EventScheduleData = {
   };
 }
 export type EventOptionData = {
-  label: string;
   isoStart: string;
   durationHours: number;
   highlight: boolean;
