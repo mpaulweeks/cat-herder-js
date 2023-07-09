@@ -1,11 +1,11 @@
 import { ScheduleView } from "./ScheduleView";
 import { EventApi, EventLookup, parseQueryParams } from '../lib';
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
 import { AdminView } from "./AdminView";
 import { ErrorsOverlay } from "./ErrorsOverlay";
-import { ErrorMessage, ErrorNotification, ErrorReportContext, ErrorReporter, ErrorsApi, ErrorsApiContext, useErrorsProvider } from "./ErrorsContext";
+import { ErrorsProvider } from "./ErrorsContext";
 
 const AppSwitcher = React.memo((props: {
   initialEventLookup: Partial<EventLookup>;
@@ -32,46 +32,11 @@ const AppSwitcher = React.memo((props: {
 
 export function App() {
   const initialEventLookup = useMemo(() => parseQueryParams(window.location.search), []);
-  const [errors, setErrors] = useState<ErrorNotification[]>([]);
-  const reportError = useCallback((err: ErrorMessage) => {
-    setErrors(old => old.concat({
-      created: Date.now(),
-      message: err,
-    }));
-  }, [setErrors]);
-  const remove = useCallback((err: ErrorNotification) => {
-    setErrors(old => old.filter(elm => elm.created != err.created));
-  }, [setErrors]);
-
-  const reporter: ErrorReporter = useMemo<ErrorReporter>(
-    () => ({ reportError }),
-    [reportError]
-  );
-  const api: ErrorsApi = { reportError, errors, remove };
 
   return (
-    <>
-      <ErrorReportContext.Provider value={reporter}>
-        <ErrorsApiContext.Provider value={api}>
-          <AppSwitcher initialEventLookup={initialEventLookup} />
-          <ErrorsOverlay />
-        </ErrorsApiContext.Provider>
-      </ErrorReportContext.Provider>
-    </>
+    <ErrorsProvider>
+      <AppSwitcher initialEventLookup={initialEventLookup} />
+      <ErrorsOverlay />
+    </ErrorsProvider>
   );
-
-  // const {
-  //   ErrorReporterProvider,
-  //   ErrorsApiProvider,
-  // } = useErrorsProvider();
-  // return (
-  //   <>
-  //     <ErrorReporterProvider>
-  //       <AppSwitcher />
-  //     </ErrorReporterProvider>
-  //     <ErrorsApiProvider>
-  //       <ErrorsOverlay />
-  //     </ErrorsApiProvider>
-  //   </>
-  // );
 }
