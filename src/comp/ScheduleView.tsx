@@ -3,6 +3,7 @@ import { ScheduleTable } from "./ScheduleTable";
 import { EventApi, EventLookup, EventScheduleData, generateUrl } from "../lib";
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
+import { useTitle } from "./hooks/useTitle";
 
 export function ScheduleView(props: {
   api: EventApi;
@@ -11,6 +12,7 @@ export function ScheduleView(props: {
   const [schedule, setSchedule] = useState<EventScheduleData | undefined>();
   (window as any).schedule = schedule;
 
+  useTitle(schedule?.name);
   useEffect(() => {
     const promise = props.api.connect(ed => setSchedule(ed));
     return () => { promise.then(unsub => unsub()) };

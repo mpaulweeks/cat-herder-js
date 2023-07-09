@@ -3,6 +3,7 @@ function isModifiedEvent(evt: React.MouseEvent) {
 }
 
 export function SmartLink(props: React.PropsWithChildren<{
+  title?: string;
   href: string;
   onClick(): void;
 }>) {

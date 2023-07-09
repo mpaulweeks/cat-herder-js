@@ -2,6 +2,7 @@ import { ScheduleView } from "./ScheduleView";
 import { EventApi, parseQueryParams } from '../lib';
 import { useState } from "react";
 import { CategoryView } from "./CategoryView";
+import { WelcomeView } from "./WelcomeView";
 
 export function App() {
   const [eventLookup, setEventLookup] = useState(parseQueryParams(window.location.search));
@@ -13,10 +14,11 @@ export function App() {
       <ScheduleView api={api} setEventLookup={setEventLookup} />
     );
   }
+
   if (category) {
     return <CategoryView category={category} setEventLookup={setEventLookup} />;
   }
+
   // // else
-  // return <BrowserView />;
-  return 'todo';
+  return <WelcomeView setEventLookup={setEventLookup} />
 }
