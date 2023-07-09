@@ -25,7 +25,7 @@ export function WelcomeView(props: {
         <input
           placeholder="enter group name"
           value={input}
-          onChange={evt => setInput(evt.target.value)}
+          onChange={evt => setInput(evt.target.value.toLowerCase())}
         />
         <button type="submit">submit</button>
       </form>
