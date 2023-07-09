@@ -10,7 +10,7 @@ export function emptyUser(): UserData {
     uid: '0',
 
     // empty
-    label: 'todo',
+    label: '',
     attending: [],
     maybe: [],
   }

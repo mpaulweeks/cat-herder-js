@@ -19,7 +19,7 @@ export class EventApi {
     const user: UserData = {
       ...draft,
       created: now,
-      uid: `user-${Math.floor(now % 10000).toString().padStart(4, '0')}`,
+      uid: `user-${now}`,
     };
     return this.updateUser(user);
   }

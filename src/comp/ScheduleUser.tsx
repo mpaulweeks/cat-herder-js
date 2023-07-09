@@ -24,11 +24,15 @@ export function ScheduleUser(props: {
       <td>
         <div>
           {props.isEditing ? (
-            <input value={draft.label} onChange={evt => setDraft({
-              ...draft,
-              label: evt.target.value,
-            })} />
-            ) : (
+            <input
+              placeholder="your name here"
+              value={draft.label}
+              onChange={evt => setDraft({
+                ...draft,
+                label: evt.target.value,
+              })}
+            />
+          ) : (
             <span>
               {draft.label}
             </span>
