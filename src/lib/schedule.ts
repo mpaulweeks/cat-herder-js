@@ -18,7 +18,7 @@ export function emptyUser(): UserData {
 
 export function createSchedule(init: EventLookup): EventScheduleData {
   const ed = EventDate.fromStr(init.eventID);
-  if (init.category === 'edh') {
+  if (init.group === 'edh') {
     const monday = ed.getPreviousMonday();
     const options: EventOptionData[] = range(7).map(i => {
       const newDate = new Date(monday.date);

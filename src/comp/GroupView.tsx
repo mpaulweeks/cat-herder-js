@@ -4,31 +4,31 @@ import { EventLookup, generateUrl } from "../lib";
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "./hooks/useTitle";
 import styles from './App.module.css';
-import { CategoryEventLink } from "./CategoryEventLink";
+import { GroupEventLink } from "./GroupEventLink";
 
-export function CategoryView(props: {
-  category: string;
+export function GroupView(props: {
+  group: string;
   setEventLookup(newLookup: Partial<EventLookup>): void;
 }) {
-  const { category, setEventLookup } = props;
+  const { group, setEventLookup } = props;
   const [events, setEvents] = useState<string[] | undefined>();
   const [error, setError] = useState<Error | undefined>();
 
-  useTitle(category);
+  useTitle(group);
   useEffect(() => {
-    FirebaseApi.instance.listCategoryEvents(category)
+    FirebaseApi.instance.listGroupEvents(group)
       .then(setEvents)
       .catch(err => setError(err));
-  }, [category, setEvents]);
+  }, [group, setEvents]);
 
   return (
     <div className={styles.BasicView}>
-      <h1>{category}</h1>
+      <h1>{group}</h1>
       {!error && !events && 'loading...'}
       {events && (
         events.map(eventID => (
           <div key={eventID}>
-            <CategoryEventLink {...props} eventLookup={{ category, eventID }} />
+            <GroupEventLink {...props} eventLookup={{ group: group, eventID }} />
           </div>
         ))
       )}

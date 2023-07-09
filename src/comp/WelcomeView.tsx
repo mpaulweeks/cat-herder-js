@@ -18,7 +18,7 @@ export function WelcomeView(props: {
       <br/>
       <form onSubmit={evt => {
         evt.preventDefault();
-        const lookup: Partial<EventLookup> = { category: input, };
+        const lookup: Partial<EventLookup> = { group: input, };
         window.history.pushState(null, '', generateUrl(lookup));
         props.setEventLookup(lookup);
       }}>

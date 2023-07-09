@@ -19,7 +19,7 @@ export function ScheduleView(props: {
   }, [props]);
 
   const parentLookup: Partial<EventLookup> = {
-    category: props.api.init.category,
+    group: props.api.init.group,
   };
 
   return (

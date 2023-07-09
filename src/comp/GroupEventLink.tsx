@@ -1,7 +1,7 @@
 import { EventDate, EventLookup, generateUrl } from "../lib";
 import { SmartLink } from "./SmartLink";
 
-export function CategoryEventLink(props: {
+export function GroupEventLink(props: {
   eventLookup: EventLookup;
   setEventLookup(newLookup: Partial<EventLookup>): void;
 }) {

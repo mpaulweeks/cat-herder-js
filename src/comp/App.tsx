@@ -1,22 +1,22 @@
 import { ScheduleView } from "./ScheduleView";
 import { EventApi, parseQueryParams } from '../lib';
 import { useState } from "react";
-import { CategoryView } from "./CategoryView";
+import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
 
 export function App() {
   const [eventLookup, setEventLookup] = useState(parseQueryParams(window.location.search));
-  const { category, eventID } = eventLookup;
+  const { group, eventID } = eventLookup;
 
-  if (category && eventID) {
-    const api = new EventApi({ category, eventID, });
+  if (group && eventID) {
+    const api = new EventApi({ group: group, eventID, });
     return (
       <ScheduleView api={api} setEventLookup={setEventLookup} />
     );
   }
 
-  if (category) {
-    return <CategoryView category={category} setEventLookup={setEventLookup} />;
+  if (group) {
+    return <GroupView group={group} setEventLookup={setEventLookup} />;
   }
 
   // // else

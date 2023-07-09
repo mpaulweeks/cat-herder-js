@@ -1,25 +1,25 @@
 /* VOCAB
-Category = a type of gathering with its own schedule
-Event = a specific combo of category and time
+Group = a type of gathering with its own schedule
+Event = a specific combo of group and time
 /*
 
 /* Shape of DB
 db: {
-  [category: string]: Category
+  [group: string]: Group
 }
 email: {
-  [category: string]: string[]
+  [group: string]: string[]
 }
 */
 
 export type EventKey = string;
 export type EventLookup = {
-  category: string;
+  group: string;
   eventID: string;
 }
 
-export type DatabaseData = Record<string, CategoryData>;
-export type CategoryData = Record<string, EventScheduleData>;
+export type DatabaseData = Record<string, GroupData>;
+export type GroupData = Record<string, EventScheduleData>;
 export type EventScheduleData = {
   name: string;
   description: string;
