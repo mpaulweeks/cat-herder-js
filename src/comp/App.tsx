@@ -14,7 +14,7 @@ export function App() {
   }
 
   if (group && eventID) {
-    const api = new EventApi({ group: group, eventID, });
+    const api = new EventApi({ group, eventID, });
     return <ScheduleView api={api} setEventLookup={setEventLookup} />;
   }
 

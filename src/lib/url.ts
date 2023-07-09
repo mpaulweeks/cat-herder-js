@@ -17,17 +17,17 @@ export function parseQueryParams(urlSearch: string): Partial<EventLookup> {
   const id = query.get(UrlQueryParams.ID);
   if (id && id.split('-').length === 2) {
     const [group, eventID] = id.split('-');
-    return { group: group, eventID };
+    return { group, eventID };
   }
 
   const group = query.get(UrlQueryParams.Group);
   if (group) {
     const eventID = query.get(UrlQueryParams.EventID);
     if (eventID) {
-      return { group: group, eventID };
+      return { group, eventID };
     }
     // else
-    return { group: group };
+    return { group };
   }
 
   return {};
