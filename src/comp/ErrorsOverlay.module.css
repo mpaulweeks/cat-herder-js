@@ -1,0 +1,25 @@
+.ErrorOverlay {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.ErrorBox {
+  cursor: pointer;
+  width: 200px;
+  min-height: 80px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: salmon;
+  border-radius: 1em;
+}

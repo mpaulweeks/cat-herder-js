@@ -4,11 +4,15 @@ import { PropsWithChildren, createContext, useCallback, useContext, useState } f
 // https://react.dev/learn/scaling-up-with-reducer-and-context
 
 export type ErrorMessage = string;
+export type ErrorNotification = {
+  created: number;
+  message: ErrorMessage;
+}
 
 type ErrorsApi = {
-  errors: ErrorMessage[];
+  errors: ErrorNotification[];
   add(err: ErrorMessage): void;
-  remove(err: ErrorMessage): void;
+  remove(err: ErrorNotification): void;
 }
 
 const ErrorsContext = createContext<ErrorsApi>({
@@ -22,12 +26,15 @@ export function useErrors() {
 }
 
 export function ErrorsProvider(props: PropsWithChildren) {
-  const [errors, setErrors] = useState<ErrorMessage[]>([]);
+  const [errors, setErrors] = useState<ErrorNotification[]>([]);
   const add = useCallback((err: ErrorMessage) => {
-    setErrors(old => old.concat(err));
+    setErrors(old => old.concat({
+      created: Date.now(),
+      message: err,
+    }));
   }, [setErrors]);
-  const remove = useCallback((err: ErrorMessage) => {
-    setErrors(old => old.filter(elm => elm != err));
+  const remove = useCallback((err: ErrorNotification) => {
+    setErrors(old => old.filter(elm => elm.created != err.created));
   }, [setErrors]);
 
   const api: ErrorsApi = { errors, add, remove };

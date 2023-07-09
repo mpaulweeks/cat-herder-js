@@ -1,6 +1,7 @@
 import { Attendence, EventOptionData, UserData, deepCopy, getAttendence } from "../lib";
 import { AttendenceIcon } from "./AttendenceIcon";
 import { useEffect, useState } from "react";
+import { useErrors } from "./ErrorsContext";
 
 export function ScheduleUser(props: {
   events: EventOptionData[];
@@ -13,11 +14,20 @@ export function ScheduleUser(props: {
   onCancel(): void;
 }) {
   const [draft, setDraft] = useState<UserData>(deepCopy(props.user));
+  const errorsApi = useErrors();
 
   // reset draft whenever editing is toggled
   useEffect(() => {
     setDraft(deepCopy(props.user));
   }, [props.user, props.isEditing]);
+
+  const trySave = () => {
+    if (!draft.label) {
+      return errorsApi.add(`Cannot save with empty name!`);
+    }
+    // else
+    props.onSave(draft);
+  };
 
   return (
     <tr>
@@ -60,7 +70,7 @@ export function ScheduleUser(props: {
       {props.isEditing ? (
         <td>
           <div style={{ flexDirection: 'row', }}>
-            <button onClick={() => props.onSave(draft)}>SAVE</button>
+            <button onClick={trySave}>SAVE</button>
             <button onClick={props.onCancel}>{props.isTemp ? 'RESET' : 'BACK'}</button>
             {!props.isTemp && <button onClick={props.onDelete}>DEL</button>}
           </div>
