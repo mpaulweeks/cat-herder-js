@@ -7,6 +7,8 @@ import { AdminView } from "./AdminView";
 import { ErrorsOverlay } from "./ErrorsOverlay";
 import { ErrorsProvider } from "./ErrorsContext";
 
+// thanks to this guide for clarifying memo and rendering for me
+// https://www.joshwcomeau.com/react/why-react-re-renders/#what-about-context-4
 const AppSwitcher = React.memo((props: {
   initialEventLookup: Partial<EventLookup>;
 }) => {
