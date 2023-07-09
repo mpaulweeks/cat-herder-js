@@ -1,8 +1,22 @@
 import { useEffect, useState } from "react";
 import { FirebaseApi } from "../lib/apiFirebase";
-import { EventLookup, generateUrl } from "../lib";
+import { EventDate, EventLookup, generateUrl } from "../lib";
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "./hooks/useTitle";
+
+function CategoryViewEventLink(props: {
+  eventLookup: EventLookup;
+  setEventLookup(newLookup: Partial<EventLookup>): void;
+}) {
+  const { eventLookup, setEventLookup } = props;
+  const eventDate = EventDate.fromEventID(eventLookup.eventID);
+  return (
+    <SmartLink
+      href={generateUrl(eventLookup)}
+      onClick={() => setEventLookup(eventLookup)}
+    >{eventDate.datePretty}</SmartLink>
+  )
+}
 
 export function CategoryView(props: {
   category: string;
@@ -26,10 +40,7 @@ export function CategoryView(props: {
       {events && (
         events.map(eventID => (
           <div key={eventID}>
-            <SmartLink
-              href={generateUrl({ category, eventID })}
-              onClick={() => setEventLookup({ category, eventID })}
-            >{eventID}</SmartLink>
+            <CategoryViewEventLink {...props} eventLookup={{ category, eventID }} />
           </div>
         ))
       )}

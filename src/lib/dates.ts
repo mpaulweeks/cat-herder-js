@@ -1,4 +1,4 @@
-import { EventDate } from "./time";
+import { EventDate } from "./eventDate";
 
 export function getDateStrings(ed: EventDate) {
   const { date } = ed;

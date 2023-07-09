@@ -12,6 +12,12 @@ export class EventDate {
   get date(): Date { return this._date; }
   get dateIso(): string { return this._date.toISOString(); }
   get dateStr(): string { return this._dateStr; }
+  get datePretty(): string { return this._date.toLocaleDateString('en-US', {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }); }
 
   isMonday() {
     return 'Monday' === this.date.toLocaleDateString('en-US', { weekday: 'long' });
@@ -59,5 +65,8 @@ export class EventDate {
     const date = new Date();
     date.setFullYear(yyyy, mm - 1, dd);
     return new EventDate(date, dateStr);
+  }
+  static fromEventID(dateStr: string) {
+    return this.fromStr(dateStr);
   }
 }

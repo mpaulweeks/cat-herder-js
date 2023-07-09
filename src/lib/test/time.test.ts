@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { EventDate } from "../time";
+import { EventDate } from "../eventDate";
 
 test('dateIso', () => {
     const ed = EventDate.now();
