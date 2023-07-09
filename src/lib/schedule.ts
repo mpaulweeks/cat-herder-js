@@ -35,7 +35,7 @@ export function createSchedule(init: EventLookup): EventScheduleData {
     });
     const { day, month, yyyy } = getDateStrings(monday);
     return {
-      name: 'EDH',
+      name: 'Elder Dragon Highlander',
       description: `Week of ${month} ${day}, ${yyyy}`,
       options,
       user: {},
