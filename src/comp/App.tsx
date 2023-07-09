@@ -4,8 +4,10 @@ import { useState } from "react";
 import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
 import { AdminView } from "./AdminView";
+import { ErrorsProvider } from "./ErrorsContext";
+import { ErrorsOverlay } from "./ErrorsOverlay";
 
-export function App() {
+function AppSwitcher() {
   const [eventLookup, setEventLookup] = useState(parseQueryParams(window.location.search));
   const { group, eventID } = eventLookup;
 
@@ -24,4 +26,13 @@ export function App() {
 
   // // else
   return <WelcomeView setEventLookup={setEventLookup} />
+}
+
+export function App() {
+  return (
+    <ErrorsProvider>
+      <AppSwitcher />
+      <ErrorsOverlay />
+    </ErrorsProvider>
+  );
 }
