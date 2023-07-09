@@ -1,14 +1,16 @@
 import { ScheduleView } from "./ScheduleView";
-import { EventApi, parseQueryParams } from '../lib';
-import { useState } from "react";
+import { EventApi, EventLookup, parseQueryParams } from '../lib';
+import React, { useCallback, useMemo, useState } from "react";
 import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
 import { AdminView } from "./AdminView";
-import { ErrorsProvider } from "./ErrorsContext";
 import { ErrorsOverlay } from "./ErrorsOverlay";
+import { ErrorMessage, ErrorNotification, ErrorReportContext, ErrorReporter, ErrorsApi, ErrorsApiContext, useErrorsProvider } from "./ErrorsContext";
 
-function AppSwitcher() {
-  const [eventLookup, setEventLookup] = useState(parseQueryParams(window.location.search));
+const AppSwitcher = React.memo((props: {
+  initialEventLookup: Partial<EventLookup>;
+}) => {
+  const [eventLookup, setEventLookup] = useState(props.initialEventLookup);
   const { group, eventID } = eventLookup;
 
   if (group === 'admin') {
@@ -26,13 +28,50 @@ function AppSwitcher() {
 
   // // else
   return <WelcomeView setEventLookup={setEventLookup} />
-}
+});
 
 export function App() {
-  return (
-    <ErrorsProvider>
-      <AppSwitcher />
-      <ErrorsOverlay />
-    </ErrorsProvider>
+  const initialEventLookup = useMemo(() => parseQueryParams(window.location.search), []);
+  const [errors, setErrors] = useState<ErrorNotification[]>([]);
+  const reportError = useCallback((err: ErrorMessage) => {
+    setErrors(old => old.concat({
+      created: Date.now(),
+      message: err,
+    }));
+  }, [setErrors]);
+  const remove = useCallback((err: ErrorNotification) => {
+    setErrors(old => old.filter(elm => elm.created != err.created));
+  }, [setErrors]);
+
+  const reporter: ErrorReporter = useMemo<ErrorReporter>(
+    () => ({ reportError }),
+    [reportError]
   );
+  const api: ErrorsApi = { reportError, errors, remove };
+
+  return (
+    <>
+      <ErrorReportContext.Provider value={reporter}>
+        <ErrorsApiContext.Provider value={api}>
+          <AppSwitcher initialEventLookup={initialEventLookup} />
+          <ErrorsOverlay />
+        </ErrorsApiContext.Provider>
+      </ErrorReportContext.Provider>
+    </>
+  );
+
+  // const {
+  //   ErrorReporterProvider,
+  //   ErrorsApiProvider,
+  // } = useErrorsProvider();
+  // return (
+  //   <>
+  //     <ErrorReporterProvider>
+  //       <AppSwitcher />
+  //     </ErrorReporterProvider>
+  //     <ErrorsApiProvider>
+  //       <ErrorsOverlay />
+  //     </ErrorsApiProvider>
+  //   </>
+  // );
 }

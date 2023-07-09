@@ -1,7 +1,7 @@
 import { Attendence, EventOptionData, UserData, deepCopy, getAttendence } from "../lib";
 import { AttendenceIcon } from "./AttendenceIcon";
 import { useEffect, useState } from "react";
-import { useErrors } from "./ErrorsContext";
+import { useErrorReporter } from "./ErrorsContext";
 
 export function ScheduleUser(props: {
   events: EventOptionData[];
@@ -14,7 +14,7 @@ export function ScheduleUser(props: {
   onCancel(): void;
 }) {
   const [draft, setDraft] = useState<UserData>(deepCopy(props.user));
-  const errorsApi = useErrors();
+  const { reportError } = useErrorReporter();
 
   // reset draft whenever editing is toggled
   useEffect(() => {
@@ -23,7 +23,7 @@ export function ScheduleUser(props: {
 
   const trySave = () => {
     if (!draft.label) {
-      return errorsApi.add(`Cannot save with empty name!`);
+      return reportError(`Cannot save with empty name!`);
     }
     // else
     props.onSave(draft);

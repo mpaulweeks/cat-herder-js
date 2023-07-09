@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useCallback, useContext, useState } from "react";
+import { PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 // inspired by context + reducer but simplified
 // https://react.dev/learn/scaling-up-with-reducer-and-context
@@ -8,26 +8,33 @@ export type ErrorNotification = {
   created: number;
   message: ErrorMessage;
 }
-
-type ErrorsApi = {
+export type ErrorReporter = {
+  reportError(err: ErrorMessage): void;
+}
+export type ErrorsApi = ErrorReporter & {
   errors: ErrorNotification[];
-  add(err: ErrorMessage): void;
   remove(err: ErrorNotification): void;
 }
 
-const ErrorsContext = createContext<ErrorsApi>({
+export const ErrorReportContext = createContext<ErrorReporter>({
+  reportError: console.log,
+});
+export const ErrorsApiContext = createContext<ErrorsApi>({
+  reportError: console.log,
   errors: [],
-  add: console.log,
   remove: console.log,
 });
 
-export function useErrors() {
-  return useContext(ErrorsContext);
+export function useErrorReporter() {
+  return useContext(ErrorReportContext);
+}
+export function useErrorsApi() {
+  return useContext(ErrorsApiContext);
 }
 
-export function ErrorsProvider(props: PropsWithChildren) {
+export function useErrorsProvider() {
   const [errors, setErrors] = useState<ErrorNotification[]>([]);
-  const add = useCallback((err: ErrorMessage) => {
+  const report = useCallback((err: ErrorMessage) => {
     setErrors(old => old.concat({
       created: Date.now(),
       message: err,
@@ -37,11 +44,24 @@ export function ErrorsProvider(props: PropsWithChildren) {
     setErrors(old => old.filter(elm => elm.created != err.created));
   }, [setErrors]);
 
-  const api: ErrorsApi = { errors, add, remove };
+  const reporter: ErrorReporter = { reportError: report };
+  const api: ErrorsApi = { reportError: report, errors, remove };
 
-  return (
-    <ErrorsContext.Provider value={api}>
+  const ErrorReporterProvider = useMemo<React.FC<React.PropsWithChildren>>(() => (
+    (props: React.PropsWithChildren) => (
+      <ErrorReportContext.Provider value={reporter}>
         {props.children}
-    </ErrorsContext.Provider>
-  );
+      </ErrorReportContext.Provider>
+    )
+  ), [reporter]);
+
+  const ErrorsApiProvider = useMemo<React.FC<React.PropsWithChildren>>(() => (
+    (props: React.PropsWithChildren) => (
+      <ErrorsApiContext.Provider value={api}>
+        {props.children}
+      </ErrorsApiContext.Provider>
+    )
+  ), [api]);
+
+  return { ErrorReporterProvider, ErrorsApiProvider };
 }

@@ -1,8 +1,8 @@
-import { useErrors } from "./ErrorsContext";
+import { useErrorsApi } from "./ErrorsContext";
 import styles from './ErrorsOverlay.module.css';
 
 export function ErrorsOverlay() {
-  const errorsApi = useErrors();
+  const errorsApi = useErrorsApi();
 
   const sorted = errorsApi.errors
     .concat()
