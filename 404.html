@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="image/svg+xml" href="./favicon.png">
+    <title>Cat Herder</title>
+    <style>
+      body {
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        margin: 0;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2.5em;
+        margin: 0.3em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cat Herder</h1>
+    <div>a tool for herding cats</div>
+    <p>
+      <i>
+        <!--googleoff: all-->
+        loading...
+        <!--googleon: all-->
+      </i>
+    </p>
+    <script>
+      // assuming root hosting
+      const path = window.location.pathname;
+      const newUrl = window.location.href.replace(path, `/#${path}`);
+      window.location.href = newUrl;
+    </script>
+</body>
+</html>
