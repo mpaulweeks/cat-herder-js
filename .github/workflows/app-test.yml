@@ -3,7 +3,7 @@ name: Unit Tests
 on:
   push:
     branches-ignore: main
-    paths: vite-app
+    paths-ignore: emailer
   workflow_dispatch:
 
 jobs:
