@@ -23,8 +23,8 @@ export class FirebaseApi {
   async listEmails(group: string): Promise<string[]> {
     const groupRef = FB.ref(this.database, `email/${group}`);
     const groupSnapshot = await FB.get(groupRef);
-    const groupData: string[] = await groupSnapshot.val();
-    return Object.values(groupData); // works on both array and record
+    const groupData: string[] | null = await groupSnapshot.val();
+    return Object.values(groupData ?? []); // works on both array and record
   }
 
   // this loads all events for that group

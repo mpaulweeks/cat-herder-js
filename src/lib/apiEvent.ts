@@ -5,6 +5,10 @@ import { EventLookup, EventOptionData, EventScheduleData, UserData, UserDraft } 
 export class EventApi {
   constructor(readonly init: EventLookup) {}
 
+  getEmails() {
+    return FirebaseApi.instance.listEmails(this.init.group);
+  }
+
   connect(cb: EventUpdate) {
     return FirebaseApi.instance.connect(this.init, this.defaultEvent, cb);
   }

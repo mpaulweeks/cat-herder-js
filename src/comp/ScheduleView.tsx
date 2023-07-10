@@ -6,7 +6,6 @@ import { SmartLink } from "./SmartLink";
 import { useTitle } from "../hooks/useTitle";
 import { ScheduleMobileTable } from "./ScheduleMobileTable";
 import { useKeyboardToggle } from "../hooks/useKeyboardToggle";
-import { useEmails } from "../hooks/useEmails";
 
 export function ScheduleView(props: {
   api: EventApi;
@@ -14,12 +13,13 @@ export function ScheduleView(props: {
 }) {
   const { admin } = useKeyboardToggle('Backquote');
   const [schedule, setSchedule] = useState<EventScheduleData | undefined>();
-  const emails = useEmails(props.api.init.group);
+  const [emails, setEmails] = useState<string[] | undefined>();
 
   useTitle(schedule?.name);
   useEffect(() => {
-    const promise = props.api.connect(ed => setSchedule(ed));
-    return () => { promise.then(unsub => unsub()) };
+    props.api.getEmails().then(setEmails);
+    const schedulePromise = props.api.connect(ed => setSchedule(ed));
+    return () => { schedulePromise.then(unsub => unsub()) };
   }, [props]);
 
   const parentLookup: Partial<EventLookup> = {

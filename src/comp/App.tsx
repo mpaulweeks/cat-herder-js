@@ -1,5 +1,5 @@
 import { ScheduleView } from "./ScheduleView";
-import { EventApi, EventLookup, generatePathUrl, generateQueryUrl, generateUrl, parseUrl } from '../lib';
+import { EventApi, EventLookup, generateUrl, parseUrl } from '../lib';
 import React, { useEffect, useMemo, useState } from "react";
 import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
@@ -14,8 +14,6 @@ const AppSwitcher = React.memo((props: {
 }) => {
   const [eventLookup, setEventLookup] = useState(props.initialEventLookup);
   useEffect(() => {
-    console.log(' path URL:', generatePathUrl(eventLookup));
-    console.log('query URL:', generateQueryUrl(eventLookup));
     window.history.pushState(null, '', generateUrl(eventLookup));
   }, [eventLookup]);
 

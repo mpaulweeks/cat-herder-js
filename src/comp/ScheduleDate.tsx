@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { createGcal, EventScheduleData, EventDate, EventOptionData, getDateStrings } from "../lib";
 
 function ScheduleDateSummary(props: {
