@@ -4,7 +4,7 @@ import { EventApi, EventDate, EventLookup, EventScheduleData, generateUrl } from
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "../hooks/useTitle";
-import { ScheduleMobile } from "./ScheduleMobile";
+import { ScheduleMobileTable } from "./ScheduleMobileTable";
 import { useKeyboardToggle } from "../hooks/useKeyboardToggle";
 
 export function ScheduleView(props: {
@@ -49,7 +49,7 @@ export function ScheduleView(props: {
             api={props.api}
             admin={admin}
           />
-          <ScheduleMobile
+          <ScheduleMobileTable
             schedule={schedule}
             api={props.api}
           />

@@ -2,7 +2,7 @@ import { EventApi, EventScheduleData } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
 import styles from './Schedule.module.css';
 
-export function ScheduleMobile(props: {
+export function ScheduleMobileTable(props: {
   schedule: EventScheduleData;
   api: EventApi;
 }) {
