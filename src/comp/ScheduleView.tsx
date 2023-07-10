@@ -1,20 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScheduleTable } from "./ScheduleTable";
 import { EventApi, EventDate, EventLookup, EventScheduleData, generateUrl } from "../lib";
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "../hooks/useTitle";
 import { ScheduleMobile } from "./ScheduleMobile";
-import { useKeyboard } from "../hooks/useKeyboard";
+import { useKeyboardToggle } from "../hooks/useKeyboardToggle";
 
 export function ScheduleView(props: {
   api: EventApi;
   setEventLookup(newLookup: Partial<EventLookup>): void;
 }) {
+  const { admin } = useKeyboardToggle('Backquote');
   const [schedule, setSchedule] = useState<EventScheduleData | undefined>();
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).schedule = schedule;
 
   useTitle(schedule?.name);
   useEffect(() => {
@@ -26,14 +24,8 @@ export function ScheduleView(props: {
     group: props.api.init.group,
   };
 
-  const [admin, setAdmin] = useState(false);
-  const listeningFor = useMemo(() => ['Backquote'], []);
-  const { pressed } = useKeyboard(listeningFor);
-  useEffect(() => {
-    if (pressed.includes('Backquote')) {
-      setAdmin(b => !b);
-    }
-  }, [pressed]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).schedule = schedule;
 
   return (
     <div className={styles.ScheduleView}>
