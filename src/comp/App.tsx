@@ -1,6 +1,6 @@
 import { ScheduleView } from "./ScheduleView";
-import { EventApi, EventLookup, parseUrl } from '../lib';
-import React, { useMemo, useState } from "react";
+import { EventApi, EventLookup, generatePathUrl, generateQueryUrl, generateUrl, parseUrl } from '../lib';
+import React, { useEffect, useMemo, useState } from "react";
 import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
 import { AdminView } from "./AdminView";
@@ -13,17 +13,20 @@ const AppSwitcher = React.memo((props: {
   initialEventLookup: Partial<EventLookup>;
 }) => {
   const [eventLookup, setEventLookup] = useState(props.initialEventLookup);
-  const { group, eventID } = eventLookup;
+  useEffect(() => {
+    console.log(' path URL:', generatePathUrl(eventLookup));
+    console.log('query URL:', generateQueryUrl(eventLookup));
+    window.history.pushState(null, '', generateUrl(eventLookup));
+  }, [eventLookup]);
 
+  const { group, eventID } = eventLookup;
   if (group === 'admin') {
     return <AdminView setEventLookup={setEventLookup} />
   }
-
   if (group && eventID) {
     const api = new EventApi({ group, eventID, });
     return <ScheduleView api={api} setEventLookup={setEventLookup} />;
   }
-
   if (group) {
     return <GroupView group={group} setEventLookup={setEventLookup} />;
   }

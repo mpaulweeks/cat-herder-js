@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EventLookup, generateUrl } from "../lib";
+import { EventLookup } from "../lib";
 import { useTitle } from "../hooks/useTitle";
 import styles from './App.module.css';
 
@@ -19,7 +19,6 @@ export function WelcomeView(props: {
       <form onSubmit={evt => {
         evt.preventDefault();
         const lookup: Partial<EventLookup> = { group: input, };
-        window.history.pushState(null, '', generateUrl(lookup));
         props.setEventLookup(lookup);
       }}>
         <input

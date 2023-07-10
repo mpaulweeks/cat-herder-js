@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { EventLookup } from '../types';
-import { generateUrl, parseUrl } from '../url';
+import { generatePathUrl, generateQueryUrl, parseUrl } from '../url';
 
 test('parseUrl', () => {
   expect(parseUrl('http://example.com/?foo=bar'))
@@ -18,16 +18,31 @@ test('parseUrl', () => {
     });
 });
 
-test('generateUrl', () => {
-  expect(generateUrl({}))
+test('generatePathUrl', () => {
+  expect(generatePathUrl({}))
+    .toBe('/');
+  expect(generatePathUrl({
+    group: 'example',
+  })).toBe('/example');
+  expect(generatePathUrl({
+    eventID: '20230101',
+  })).toBe('/');
+  expect(generatePathUrl({
+    group: 'example',
+    eventID: '20230101',
+  })).toBe('/example/20230101');
+});
+
+test('generateQueryUrl', () => {
+  expect(generateQueryUrl({}))
     .toBe('./?');
-  expect(generateUrl({
+  expect(generateQueryUrl({
     group: 'example',
   })).toBe('./?group=example');
-  expect(generateUrl({
+  expect(generateQueryUrl({
     eventID: '20230101',
-  })).toBe('./?event=20230101');
-  expect(generateUrl({
+  })).toBe('./?');
+  expect(generateQueryUrl({
     group: 'example',
     eventID: '20230101',
   })).toBe('./?group=example&event=20230101');

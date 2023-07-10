@@ -17,7 +17,6 @@ export function SmartLink(props: React.PropsWithChildren<{
     )
     if (isInternal) {
       evt.preventDefault();
-      window.history.pushState(null, '', props.href);
       props.onClick();
     } else {
       // do nothing, anchor tag will handle it
