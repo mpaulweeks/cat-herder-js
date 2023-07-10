@@ -1,4 +1,6 @@
-# cat-herder
+# cat-herder-js
+
+See also: [the original version built in Python](https://github.com/mpaulweeks/cat-herder)
 
 Now with VITE!
 
