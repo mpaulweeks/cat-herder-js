@@ -1,17 +1,17 @@
 import { expect, test } from 'vitest';
 import { EventLookup } from '../types';
-import { generateUrl, parseQueryParams } from '../url';
+import { generateUrl, parseUrl } from '../url';
 
-test('parseQueryParams', () => {
-  expect(parseQueryParams('?foo=bar'))
+test('parseUrl', () => {
+  expect(parseUrl('http://example.com/?foo=bar'))
     .toEqual<Partial<EventLookup>>({});
-  expect(parseQueryParams('?group=example'))
+  expect(parseUrl('http://example.com/?group=example'))
     .toEqual<Partial<EventLookup>>({
       group: 'example',
     });
-  expect(parseQueryParams('?event=20230101'))
+  expect(parseUrl('http://example.com/?event=20230101'))
     .toEqual<Partial<EventLookup>>({});
-  expect(parseQueryParams('?group=example&event=20230101'))
+  expect(parseUrl('http://example.com/?group=example&event=20230101'))
     .toEqual<Partial<EventLookup>>({
       group: 'example',
       eventID: '20230101',

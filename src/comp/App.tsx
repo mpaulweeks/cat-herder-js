@@ -1,5 +1,5 @@
 import { ScheduleView } from "./ScheduleView";
-import { EventApi, EventLookup, parseQueryParams } from '../lib';
+import { EventApi, EventLookup, parseUrl } from '../lib';
 import React, { useMemo, useState } from "react";
 import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
@@ -33,7 +33,7 @@ const AppSwitcher = React.memo((props: {
 });
 
 export function App() {
-  const initialEventLookup = useMemo(() => parseQueryParams(window.location.search), []);
+  const initialEventLookup = useMemo(() => parseUrl(window.location.href), []);
 
   return (
     <ErrorsProvider>

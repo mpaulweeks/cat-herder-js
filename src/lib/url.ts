@@ -11,8 +11,9 @@ export enum UrlQueryParams {
 * ?group=edh
 * ?group=edh&event=20201030
 */
-export function parseQueryParams(urlSearch: string): Partial<EventLookup> {
-  const query = new URLSearchParams(urlSearch.toLowerCase());
+export function parseUrl(url: string): Partial<EventLookup> {
+  const urlObj = new URL(url.toLocaleLowerCase());
+  const query = urlObj.searchParams;
 
   const id = query.get(UrlQueryParams.ID);
   if (id && id.split('-').length === 2) {
