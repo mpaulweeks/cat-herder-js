@@ -1,4 +1,4 @@
-# cat-herder-js web app
+# cat-herder-js vite-app
 
 Vite app goes here
 
