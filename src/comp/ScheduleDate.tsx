@@ -1,5 +1,4 @@
 import { createGcal, EventScheduleData, EventDate, EventOptionData, getDateStrings } from "../lib";
-import styles from './Schedule.module.css';
 
 function ScheduleDateSummary(props: {
   eventDate: EventDate;
