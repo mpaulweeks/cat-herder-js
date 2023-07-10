@@ -14,7 +14,7 @@ Single Page Apps that want to use arbitrary paths need custom routing to always 
 1. Our app parses the hash URL, does internal navigation, and then pushes the original path URL to the window
 1. User is now in the app with the pretty path URL
 
-Vite already serves index.html on any 404, skipping the redirect steps. To be safe, our App can parse urls using pathname, hash, and search.
+When running Vite locally for development, it already serves index.html on any 404, skipping the redirect steps. To handle both local and prod, the App parses urls using either pathname or hash. It also supports query parameters (for legacy links).
 
 ## TODO
 
