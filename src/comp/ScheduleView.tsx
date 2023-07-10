@@ -3,7 +3,7 @@ import { ScheduleTable } from "./ScheduleTable";
 import { EventApi, EventDate, EventLookup, EventScheduleData, generateUrl } from "../lib";
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
-import { useTitle } from "./hooks/useTitle";
+import { useTitle } from "../hooks/useTitle";
 
 export function ScheduleView(props: {
   api: EventApi;

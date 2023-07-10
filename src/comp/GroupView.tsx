@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FirebaseApi } from "../lib/apiFirebase";
 import { EventLookup, generateUrl } from "../lib";
 import { SmartLink } from "./SmartLink";
-import { useTitle } from "./hooks/useTitle";
+import { useTitle } from "../hooks/useTitle";
 import styles from './App.module.css';
 import { GroupEventLink } from "./GroupEventLink";
 

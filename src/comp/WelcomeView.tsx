@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EventLookup, generateUrl } from "../lib";
-import { useTitle } from "./hooks/useTitle";
+import { useTitle } from "../hooks/useTitle";
 import styles from './App.module.css';
 
 export function WelcomeView(props: {

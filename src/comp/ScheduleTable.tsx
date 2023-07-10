@@ -2,7 +2,7 @@ import { ScheduleUser } from "./ScheduleUser";
 import { useState } from "react";
 import { EventApi, EventOptionData, EventScheduleData, UserData, emptyUser } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
-import { useKeyboard } from "./hooks/useKeyboard";
+import { useKeyboard } from "../hooks/useKeyboard";
 import { STORAGE } from "./browser";
 import styles from './Schedule.module.css';
 

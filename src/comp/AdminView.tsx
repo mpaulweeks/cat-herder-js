@@ -2,7 +2,7 @@ import { EventLookup, generateUrl } from '../lib';
 import { FirebaseConfig } from '../lib/config';
 import styles from './App.module.css';
 import { SmartLink } from './SmartLink';
-import { useTitle } from './hooks/useTitle';
+import { useTitle } from '../hooks/useTitle';
 
 export function AdminView(props: {
   setEventLookup(newLookup: Partial<EventLookup>): void;

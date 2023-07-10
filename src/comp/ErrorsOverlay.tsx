@@ -1,5 +1,5 @@
 import { ErrorNotification } from "../lib";
-import { useErrorsApi } from "./hooks/useError";
+import { useErrorsApi } from "../hooks/useError";
 import styles from './ErrorsOverlay.module.css';
 
 function ErrorBoxClose(props: {
