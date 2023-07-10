@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ScheduleTable } from "./ScheduleTable";
+import { ScheduleDesktopTable } from "./ScheduleDesktopTable";
 import { EventApi, EventDate, EventLookup, EventScheduleData, generateUrl } from "../lib";
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
@@ -44,7 +44,7 @@ export function ScheduleView(props: {
               Today is {EventDate.now().datePretty}
             </div>
           </h3>
-          <ScheduleTable
+          <ScheduleDesktopTable
             schedule={schedule}
             api={props.api}
             admin={admin}

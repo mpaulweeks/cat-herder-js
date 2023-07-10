@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useErrorReporter } from "../hooks/useError";
 import styles from './Schedule.module.css';
 
-export function ScheduleUser(props: {
+export function ScheduleDesktopUser(props: {
   events: EventOptionData[];
   user: UserData;
   isEditing: boolean;

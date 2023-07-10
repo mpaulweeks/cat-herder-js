@@ -1,16 +1,15 @@
-import { ScheduleUser } from "./ScheduleUser";
+import { ScheduleDesktopUser } from "./ScheduleDesktopUser";
 import { useState } from "react";
 import { EventApi, EventOptionData, EventScheduleData, UserData, emptyUser } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
 import { STORAGE } from "./browser";
 import styles from './Schedule.module.css';
 
-export function ScheduleTable(props: {
+export function ScheduleDesktopTable(props: {
   schedule: EventScheduleData;
   api: EventApi;
   admin: boolean;
 }) {
-
   const [editing, setEditing] = useState<string | undefined>();
   const [temp, setTemp] = useState<UserData>(emptyUser());
 
@@ -26,7 +25,7 @@ export function ScheduleTable(props: {
   };
 
   return (
-    <div className={styles.ScheduleTable}>
+    <div className={styles.ScheduleDesktop}>
       <table>
         <thead>
           <tr>
@@ -56,7 +55,7 @@ export function ScheduleTable(props: {
         </thead>
         <tbody>
           {users.map(u => (
-            <ScheduleUser
+            <ScheduleDesktopUser
               key={u.uid}
               events={options}
               user={u}
@@ -74,7 +73,7 @@ export function ScheduleTable(props: {
               onCancel={() => setEditing(undefined)}
             />
           ))}
-          <ScheduleUser
+          <ScheduleDesktopUser
             events={options}
             user={temp}
             isEditing={true}

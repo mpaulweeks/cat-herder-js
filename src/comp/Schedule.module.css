@@ -16,42 +16,42 @@ table a {
 
 /* ScheduleTable */
 
-.ScheduleTable table input {
+.ScheduleDesktop table input {
   padding: 0.4em;
 }
 
-.ScheduleTable table button {
+.ScheduleDesktop table button {
   margin: 0.2em;
 }
 
-.ScheduleTable table {
+.ScheduleDesktop table {
   border-collapse: collapse;
 }
 
-.ScheduleTable tr {
+.ScheduleDesktop tr {
   height: 3.5em;
 }
 
-.ScheduleTable th {
+.ScheduleDesktop th {
   border-bottom: 2px solid grey;
 }
 
-.ScheduleTable th.Update {
+.ScheduleDesktop th.Update {
   width: 10em;
 }
 
-.ScheduleTable td {
+.ScheduleDesktop td {
   border-top: 1px solid grey;
 }
 
-.ScheduleTable th,
-.ScheduleTable td {
+.ScheduleDesktop th,
+.ScheduleDesktop td {
   padding: 0.5em;
   box-sizing: border-box;
 }
 
-.ScheduleTable th>div,
-.ScheduleTable td>div {
+.ScheduleDesktop th>div,
+.ScheduleDesktop td>div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,7 +94,7 @@ table a {
 }
 
 @media (max-width: 900px) {
-  .ScheduleTable {
+  .ScheduleDesktop {
     display: none;
   }
 
