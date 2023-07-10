@@ -26,6 +26,7 @@ export function WelcomeView(props: {
           value={input}
           onChange={evt => setInput(evt.target.value.toLowerCase())}
         />
+        {' '}
         <button type="submit">submit</button>
       </form>
     </div>

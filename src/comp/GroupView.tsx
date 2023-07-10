@@ -34,7 +34,7 @@ export function GroupView(props: {
       )}
       {error && (
         <div>
-          This category was not found.
+          This group was not found.
           {' '}
           <SmartLink
             href={generateUrl({})}
