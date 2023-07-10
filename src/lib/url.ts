@@ -15,16 +15,22 @@ export enum UrlQueryParams {
 export function parseUrl(url: string): Partial<EventLookup> {
   const urlObj = new URL(url.toLocaleLowerCase());
 
-  const hashSlug = urlObj.hash.split('#/')[1];
+  const hashSlug = urlObj.hash.startsWith('#/') && urlObj.hash.slice(2);
   if (hashSlug) {
     const [group, eventID] = hashSlug.split('/');
-    return { group, eventID };
+    return {
+      group: group || undefined,
+      eventID: eventID || undefined,
+    };
   }
 
-  const pathSlug = urlObj.pathname.split('/').slice(1).join('/');
+  const pathSlug = urlObj.pathname.startsWith('/') && urlObj.pathname.slice(1);
   if (pathSlug) {
     const [group, eventID] = pathSlug.split('/');
-    return { group, eventID };
+    return {
+      group: group || undefined,
+      eventID: eventID || undefined,
+    };
   }
 
   const query = urlObj.searchParams;

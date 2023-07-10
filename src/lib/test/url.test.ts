@@ -16,6 +16,30 @@ test('parseUrl', () => {
       group: 'example',
       eventID: '20230101',
     });
+
+  expect(parseUrl('http://example.com/'))
+    .toEqual<Partial<EventLookup>>({});
+  expect(parseUrl('http://example.com/example/'))
+    .toEqual<Partial<EventLookup>>({
+      group: 'example',
+    });
+  expect(parseUrl('http://example.com/example/20230101'))
+    .toEqual<Partial<EventLookup>>({
+      group: 'example',
+      eventID: '20230101',
+    });
+
+  expect(parseUrl('http://example.com/#'))
+    .toEqual<Partial<EventLookup>>({});
+  expect(parseUrl('http://example.com/#/example/'))
+    .toEqual<Partial<EventLookup>>({
+      group: 'example',
+    });
+  expect(parseUrl('http://example.com/#/example/20230101'))
+    .toEqual<Partial<EventLookup>>({
+      group: 'example',
+      eventID: '20230101',
+    });
 });
 
 test('generatePathUrl', () => {
