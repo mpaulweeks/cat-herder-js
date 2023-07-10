@@ -29,7 +29,7 @@ export function ScheduleDate(props: {
   const eventDate = EventDate.fromIso(props.option.isoStart);
   const gcal = createGcal(props.schedule, props.option);
   return (
-    <div className={styles.ScheduleDate}>
+    <div>
       {props.onToggle && (
         <div>
           <button onClick={props.onToggle}>

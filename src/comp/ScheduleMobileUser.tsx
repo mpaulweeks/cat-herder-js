@@ -10,6 +10,7 @@ export function ScheduleMobileUser(props: {
   user: UserData;
   isNew: boolean;
   onSave(user: UserData): void;
+  onDelete(): void;
   onExit(): void;
 }) {
   const [draft, setDraft] = useState<UserData>(deepCopy(props.user));
@@ -21,13 +22,12 @@ export function ScheduleMobileUser(props: {
     }
     // else
     props.onSave(draft);
-    props.onExit();
   };
 
   return (
     <div className={styles.ScheduleMobileOverlay} onClick={props.onExit}>
       <div className={styles.ScheduleMobileModal} onClick={evt => evt.stopPropagation()}>
-        <h1>{props.isNew ? 'New RSVP' : 'Edit RSVP'}</h1>
+        <h2>{props.isNew ? 'New RSVP' : 'Edit RSVP'}</h2>
         <div>
           <input
             placeholder="your name here"
@@ -37,6 +37,14 @@ export function ScheduleMobileUser(props: {
               label: evt.target.value,
             })}
           />
+        </div>
+        <div className={styles.ScheduleMobileButtonRow}>
+          <button onClick={trySave}>
+            Save
+          </button>
+          <button onClick={props.onExit}>
+            Cancel
+          </button>
         </div>
         <table>
           <thead>
@@ -60,26 +68,26 @@ export function ScheduleMobileUser(props: {
                   />
                 </td>
                 <td>
-                  <AttendenceIcon
-                    attendence={getAttendence(option, draft)}
-                    isEditing={true}
-                    onUpdate={attendence => setDraft(updateAttendence(option, draft, attendence))}
-                  />
+                  <div>
+                    {/* wrap in div to enable flexbox */}
+                    <AttendenceIcon
+                      attendence={getAttendence(option, draft)}
+                      isEditing={true}
+                      onUpdate={attendence => setDraft(updateAttendence(option, draft, attendence))}
+                    />
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div>
-          <button onClick={trySave}>
-            Save
-          </button>
-        </div>
-        <div>
-          <button onClick={props.onExit}>
-            Cancel
-          </button>
-        </div>
+        {!props.isNew && (
+          <div>
+            <button onClick={props.onDelete}>
+              Delete
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

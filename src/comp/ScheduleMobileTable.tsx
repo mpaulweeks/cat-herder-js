@@ -14,6 +14,12 @@ export function ScheduleMobileTable(props: {
 
   return (
     <div className={styles.ScheduleMobile}>
+      <div>
+        <button onClick={() => setShowEdit(true)}>
+          RSVP
+        </button>
+      </div>
+      <br/>
       <table>
         <thead>
           <tr>
@@ -55,11 +61,6 @@ export function ScheduleMobileTable(props: {
           ))}
         </tbody>
       </table>
-      <div>
-        <button onClick={() => setShowEdit(true)}>
-          User
-        </button>
-      </div>
       {showEdit && (
         <ScheduleMobileEdit {...props} onExit={() => setShowEdit(false)} />
       )}

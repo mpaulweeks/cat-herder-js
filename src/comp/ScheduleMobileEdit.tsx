@@ -17,7 +17,11 @@ export function ScheduleMobileEdit(props: {
         schedule={schedule}
         user={emptyUser()}
         isNew={true}
-        onSave={u => api.createUser(u)}
+        onSave={u => {
+          api.createUser(u);
+          onExit();
+        }}
+        onDelete={() => undefined}
         onExit={onExit}
       />
     );
@@ -27,7 +31,14 @@ export function ScheduleMobileEdit(props: {
         schedule={schedule}
         user={user}
         isNew={false}
-        onSave={u => api.updateUser(u)}
+        onSave={u => {
+          api.updateUser(u);
+          onExit();
+        }}
+        onDelete={() => {
+          api.removeUser(user);
+          onExit();
+        }}
         onExit={onExit}
       />
     );
@@ -37,27 +48,23 @@ export function ScheduleMobileEdit(props: {
   return (
     <div className={styles.ScheduleMobileOverlay} onClick={onExit}>
       <div className={styles.ScheduleMobileModal} onClick={evt => evt.stopPropagation()}>
-        <h1>RSVP</h1>
-        <div>
+        <h2>RSVP</h2>
+        <div className={styles.ScheduleMobileButtonRow}>
           <button onClick={() => setUser('new')}>
             Sign Up
           </button>
-        </div>
-        <hr/>
-        {users.map(u => (
-          <div key={u.created}>
-            <h3>{u.label}</h3>
-            <button onClick={() => setUser(u)}>
-              Edit
-            </button>
-          </div>
-        ))}
-        <hr/>
-        <div>
           <button onClick={onExit}>
             Cancel
           </button>
         </div>
+        <h2>Edit Existing</h2>
+        {users.map(u => (
+          <div key={u.created}>
+            <button onClick={() => setUser(u)}>
+              {u.label}
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
