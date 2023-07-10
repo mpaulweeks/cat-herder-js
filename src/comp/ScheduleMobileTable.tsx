@@ -7,6 +7,7 @@ import { ScheduleMobileEdit } from "./ScheduleMobileEdit";
 export function ScheduleMobileTable(props: {
   schedule: EventScheduleData;
   api: EventApi;
+  emails?: string[];
 }) {
   const [showEdit, setShowEdit] = useState(false);
   const options = props.schedule.options;
@@ -37,6 +38,7 @@ export function ScheduleMobileTable(props: {
               <td>
                 <ScheduleDate
                   schedule={props.schedule}
+                  emails={props.emails}
                   option={option}
                   shorten={true}
                 />

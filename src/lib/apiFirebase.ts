@@ -19,6 +19,7 @@ export class FirebaseApi {
     // must use static instance
   }
 
+  // todo move to using Google Group API? easier to manage?
   async listEmails(group: string): Promise<string[]> {
     const groupRef = FB.ref(this.database, `email/${group}`);
     const groupSnapshot = await FB.get(groupRef);

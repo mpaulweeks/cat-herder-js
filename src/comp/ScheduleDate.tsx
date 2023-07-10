@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createGcal, EventScheduleData, EventDate, EventOptionData, getDateStrings } from "../lib";
 
 function ScheduleDateSummary(props: {
@@ -22,11 +23,13 @@ function ScheduleDateSummary(props: {
 export function ScheduleDate(props: {
   schedule: EventScheduleData;
   option: EventOptionData;
+  emails?: string[];
   onToggle?: () => void;
   shorten?: boolean;
 }) {
   const eventDate = EventDate.fromIso(props.option.isoStart);
-  const gcal = createGcal(props.schedule, props.option);
+  const gcal = createGcal({ ...props, guests: props.emails ?? [], });
+
   return (
     <div>
       {props.onToggle && (

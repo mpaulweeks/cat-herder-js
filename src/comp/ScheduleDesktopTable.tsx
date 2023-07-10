@@ -9,6 +9,7 @@ export function ScheduleDesktopTable(props: {
   schedule: EventScheduleData;
   api: EventApi;
   admin: boolean;
+  emails?: string[];
 }) {
   const [editing, setEditing] = useState<string | undefined>();
   const [temp, setTemp] = useState<UserData>(emptyUser());
@@ -40,6 +41,7 @@ export function ScheduleDesktopTable(props: {
                 }>
                 <ScheduleDate
                   schedule={props.schedule}
+                  emails={props.emails}
                   option={option}
                   onToggle={props.admin ? (() => onToggleOption(option)) : undefined}
                 />
