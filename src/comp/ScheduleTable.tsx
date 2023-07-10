@@ -2,15 +2,15 @@ import { ScheduleUser } from "./ScheduleUser";
 import { useState } from "react";
 import { EventApi, EventOptionData, EventScheduleData, UserData, emptyUser } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
-import { useKeyboard } from "../hooks/useKeyboard";
 import { STORAGE } from "./browser";
 import styles from './Schedule.module.css';
 
 export function ScheduleTable(props: {
   schedule: EventScheduleData;
   api: EventApi;
+  admin: boolean;
 }) {
-  const pressed = useKeyboard();
+
   const [editing, setEditing] = useState<string | undefined>();
   const [temp, setTemp] = useState<UserData>(emptyUser());
 
@@ -38,7 +38,7 @@ export function ScheduleTable(props: {
                 <ScheduleDate
                   schedule={props.schedule}
                   option={option}
-                  showHighlightToggle={pressed.includes('Backquote')}
+                  showHighlightToggle={props.admin}
                   onToggle={() => onToggleOption(option)}
                 />
               </th>

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ScheduleTable } from "./ScheduleTable";
 import { EventApi, EventDate, EventLookup, EventScheduleData, generateUrl } from "../lib";
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "../hooks/useTitle";
 import { ScheduleMobile } from "./ScheduleMobile";
+import { useKeyboard } from "../hooks/useKeyboard";
 
 export function ScheduleView(props: {
   api: EventApi;
@@ -25,10 +26,20 @@ export function ScheduleView(props: {
     group: props.api.init.group,
   };
 
+  const [admin, setAdmin] = useState(false);
+  const listeningFor = useMemo(() => ['Backquote'], []);
+  const { pressed } = useKeyboard(listeningFor);
+  useEffect(() => {
+    if (pressed.includes('Backquote')) {
+      setAdmin(b => !b);
+    }
+  }, [pressed]);
+
   return (
     <div className={styles.ScheduleView}>
       {schedule === undefined ? <h1>loading...</h1> : (
         <>
+          {admin && <h2 style={{ color: 'red', }}>ADMIN ENABLED</h2>}
           <h1>
             <SmartLink
               href={generateUrl(parentLookup)}
@@ -44,6 +55,7 @@ export function ScheduleView(props: {
           <ScheduleTable
             schedule={schedule}
             api={props.api}
+            admin={admin}
           />
           <ScheduleMobile
             schedule={schedule}
