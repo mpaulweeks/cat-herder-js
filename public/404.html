@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" type="image/svg+xml" href="./favicon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>Cat Herder</title>
     <style>
       body {
@@ -28,6 +28,8 @@
     </p>
     <script>
       // assuming root hosting
+      // redirect to root/index.html with path encoding in hash
+      // SPA will read the hash and re-org
       const path = window.location.pathname;
       const newUrl = window.location.href.replace(path, `/#${path}`);
       window.location.href = newUrl;
