@@ -28,7 +28,7 @@ const AppSwitcher = React.memo((props: {
     return <GroupView group={group} setEventLookup={setEventLookup} />;
   }
 
-  // // else
+  // else
   return <WelcomeView setEventLookup={setEventLookup} />
 });
 

@@ -7,4 +7,8 @@ export default defineConfig({
 
   // defaults to absolute paths, breaks on github hosting
   base: "./",
+
+  server: {
+    host: true, // to enable access from phone on wifi
+  },
 })
