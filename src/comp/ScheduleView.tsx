@@ -4,6 +4,7 @@ import { EventApi, EventDate, EventLookup, EventScheduleData, generateUrl } from
 import styles from './Schedule.module.css';
 import { SmartLink } from "./SmartLink";
 import { useTitle } from "../hooks/useTitle";
+import { ScheduleMobile } from "./ScheduleMobile";
 
 export function ScheduleView(props: {
   api: EventApi;
@@ -41,6 +42,10 @@ export function ScheduleView(props: {
             </div>
           </h3>
           <ScheduleTable
+            schedule={schedule}
+            api={props.api}
+          />
+          <ScheduleMobile
             schedule={schedule}
             api={props.api}
           />

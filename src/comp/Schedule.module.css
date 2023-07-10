@@ -5,53 +5,91 @@
   align-items: center;
 }
 
-table.ScheduleTable {
-  border-collapse: collapse;
-}
-
-table.ScheduleTable input {
+.ScheduleTable input {
   padding: 0.4em;
 }
 
-table.ScheduleTable button {
+.ScheduleTable button {
   margin: 0.2em;
 }
 
-table.ScheduleTable tr {
+.ScheduleTable table {
+  border-collapse: collapse;
+}
+
+.ScheduleTable tr {
   height: 3.5em;
 }
 
-table.ScheduleTable th {
+.ScheduleTable th {
   border-bottom: 2px solid grey;
 }
 
-table.ScheduleTable th.EventTime {
+.ScheduleTable th.EventTime {
   width: 5em;
 }
 
-table.ScheduleTable th.Update {
+.ScheduleTable th.Update {
   width: 10em;
 }
 
-table.ScheduleTable th a {
+.ScheduleTable th a {
   color: initial;
   text-decoration: initial;
 }
 
-table.ScheduleTable td {
+.ScheduleTable td {
   border-top: 1px solid grey;
 }
 
-table.ScheduleTable th,
-table.ScheduleTable td {
+.ScheduleTable th,
+.ScheduleTable td {
   padding: 0.5em;
   box-sizing: border-box;
 }
 
-table.ScheduleTable th>div,
-table.ScheduleTable td>div {
+.ScheduleTable th>div,
+.ScheduleTable td>div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.ScheduleMobile {
+  display: none;
+  padding: 1em;
+}
+
+.ScheduleMobile table {
+  border-collapse: collapse;
+}
+
+.ScheduleMobile th,
+.ScheduleMobile td {
+  padding: 0.5em;
+  box-sizing: border-box;
+  border-left: 1px solid lightgray;
+}
+
+.ScheduleMobile tr>*:first-child {
+  border-left: none;
+}
+
+.ScheduleMobile th {
+  border-bottom: 2px solid grey;
+}
+
+.ScheduleMobile td {
+  border-top: 1px solid grey;
+}
+
+@media (max-width: 600px) {
+  .ScheduleTable {
+    display: none;
+  }
+
+  .ScheduleMobile {
+    display: initial;
+  }
 }

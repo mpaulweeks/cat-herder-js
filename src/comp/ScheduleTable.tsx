@@ -26,63 +26,65 @@ export function ScheduleTable(props: {
   };
 
   return (
-    <table className={styles.ScheduleTable}>
-      <thead>
-        <tr>
-          <th>
-            Name
-          </th>
-          {options.map(option => (
-            <th key={option.isoStart} className={styles.EventTime}>
-              <ScheduleDate
-                schedule={props.schedule}
-                option={option}
-                showHighlightToggle={pressed.includes('Backquote')}
-                onToggle={() => onToggleOption(option)}
-              />
+    <div className={styles.ScheduleTable}>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Name
             </th>
+            {options.map(option => (
+              <th key={option.isoStart} className={styles.EventTime}>
+                <ScheduleDate
+                  schedule={props.schedule}
+                  option={option}
+                  showHighlightToggle={pressed.includes('Backquote')}
+                  onToggle={() => onToggleOption(option)}
+                />
+              </th>
+            ))}
+            <th className={styles.Update}>
+              <div>
+                Update?
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(u => (
+            <ScheduleUser
+              key={u.uid}
+              events={options}
+              user={u}
+              isEditing={u.uid === editing}
+              isTemp={false}
+              onEdit={() => setEditing(u.uid)}
+              onDelete={() => props.api.removeUser(u)}
+              onSave={newUser => {
+                setEditing(undefined);
+                if (u.label !== newUser.label) {
+                  STORAGE.userLabel.set(newUser.label);
+                }
+                props.api.updateUser(newUser);
+              }}
+              onCancel={() => setEditing(undefined)}
+            />
           ))}
-          <th className={styles.Update}>
-            <div>
-              Update?
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map(u => (
           <ScheduleUser
-            key={u.uid}
             events={options}
-            user={u}
-            isEditing={u.uid === editing}
-            isTemp={false}
-            onEdit={() => setEditing(u.uid)}
-            onDelete={() => props.api.removeUser(u)}
-            onSave={newUser => {
-              setEditing(undefined);
-              if (u.label !== newUser.label) {
-                STORAGE.userLabel.set(newUser.label);
-              }
-              props.api.updateUser(newUser);
+            user={temp}
+            isEditing={true}
+            isTemp={true}
+            onEdit={() => undefined} // inaccessible
+            onDelete={() => undefined} // inaccessible
+            onSave={user => {
+              setTemp(emptyUser());
+              props.api.createUser(user);
             }}
-            onCancel={() => setEditing(undefined)}
+            onCancel={() => setTemp(emptyUser())}
           />
-        ))}
-        <ScheduleUser
-          events={options}
-          user={temp}
-          isEditing={true}
-          isTemp={true}
-          onEdit={() => undefined} // inaccessible
-          onDelete={() => undefined} // inaccessible
-          onSave={user => {
-            setTemp(emptyUser());
-            props.api.createUser(user);
-          }}
-          onCancel={() => setTemp(emptyUser())}
-        />
-      </tbody>
-    </table>
-  )
+        </tbody>
+      </table>
+    </div>
+  );
 }
