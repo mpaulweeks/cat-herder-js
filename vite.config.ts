@@ -8,6 +8,9 @@ export default defineConfig({
   // defaults to absolute paths, breaks on github hosting
   base: "./",
 
+  // https://vitejs.dev/config/shared-options.html#apptype
+  appType: 'spa',
+
   server: {
     host: true, // to enable access from phone on wifi
   },
