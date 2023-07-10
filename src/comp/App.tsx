@@ -5,7 +5,7 @@ import { GroupView } from "./GroupView";
 import { WelcomeView } from "./WelcomeView";
 import { AdminView } from "./AdminView";
 import { ErrorsOverlay } from "./ErrorsOverlay";
-import { ErrorsProvider } from "./ErrorsContext";
+import { ErrorsProvider } from "./ErrorsProvider";
 
 // thanks to this guide for clarifying memo and rendering for me
 // https://www.joshwcomeau.com/react/why-react-re-renders/#what-about-context-4

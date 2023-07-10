@@ -1,7 +1,7 @@
 import { Attendence, EventOptionData, UserData, deepCopy, getAttendence } from "../lib";
 import { AttendenceIcon } from "./AttendenceIcon";
 import { useEffect, useState } from "react";
-import { useErrorReporter } from "./ErrorsContext";
+import { useErrorReporter } from "./hooks/useError";
 
 export function ScheduleUser(props: {
   events: EventOptionData[];
