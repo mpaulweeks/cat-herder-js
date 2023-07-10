@@ -30,18 +30,18 @@ export function ScheduleMobile(props: {
                 />
               </td>
               <td>
-                <div>
+                <ul>
                   {users.filter(u => u.attending.includes(option.isoStart)).map(u => (
-                    <div key={[option.isoStart, u.uid, 'attending'].join('-')}>
-                    <b>{u.label}</b>
-                  </div>
+                    <li key={[option.isoStart, u.uid, 'attending'].join('-')}>
+                      {u.label}
+                    </li>
                   ))}
                   {users.filter(u => u.maybe.includes(option.isoStart)).map(u => (
-                    <div key={[option.isoStart, u.uid, 'maybe'].join('-')}>
+                    <li key={[option.isoStart, u.uid, 'maybe'].join('-')}>
                       <i>{u.label}</i>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </td>
             </tr>
           ))}

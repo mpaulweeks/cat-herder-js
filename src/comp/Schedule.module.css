@@ -5,12 +5,22 @@
   align-items: center;
 }
 
-.ScheduleTable input {
+.ScheduleDate {
+  padding: 0.3em;
+}
+
+/* ScheduleTable */
+
+.ScheduleTable table input {
   padding: 0.4em;
 }
 
-.ScheduleTable button {
+.ScheduleTable table button {
   margin: 0.2em;
+}
+
+.ScheduleTable table a {
+  text-decoration: initial;
 }
 
 .ScheduleTable table {
@@ -25,17 +35,8 @@
   border-bottom: 2px solid grey;
 }
 
-.ScheduleTable th.EventTime {
-  width: 5em;
-}
-
 .ScheduleTable th.Update {
   width: 10em;
-}
-
-.ScheduleTable th a {
-  color: initial;
-  text-decoration: initial;
 }
 
 .ScheduleTable td {
@@ -44,7 +45,7 @@
 
 .ScheduleTable th,
 .ScheduleTable td {
-  padding: 0.5em;
+  padding: 0.3em;
   box-sizing: border-box;
 }
 
@@ -55,6 +56,8 @@
   justify-content: center;
   align-items: center;
 }
+
+/* ScheduleMobile */
 
 .ScheduleMobile {
   display: none;
@@ -82,6 +85,11 @@
 
 .ScheduleMobile td {
   border-top: 1px solid grey;
+}
+
+.ScheduleMobile table ul {
+  padding-inline-start: 2em;
+  text-align: left;
 }
 
 @media (max-width: 600px) {
