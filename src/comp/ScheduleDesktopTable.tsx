@@ -41,7 +41,7 @@ export function ScheduleDesktopTable(props: {
                 <ScheduleDate
                   schedule={props.schedule}
                   option={option}
-                  onToggle={() => onToggleOption(option)}
+                  onToggle={props.admin ? (() => onToggleOption(option)) : undefined}
                 />
               </th>
             ))}
