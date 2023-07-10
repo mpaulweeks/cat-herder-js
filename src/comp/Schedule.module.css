@@ -5,8 +5,13 @@
   align-items: center;
 }
 
-.ScheduleDate {
-  padding: 0.3em;
+.ScheduleHighlight {
+  background-color: lightgreen;
+}
+
+table a {
+  color: inherit;
+  text-decoration: initial;
 }
 
 /* ScheduleTable */
@@ -17,10 +22,6 @@
 
 .ScheduleTable table button {
   margin: 0.2em;
-}
-
-.ScheduleTable table a {
-  text-decoration: initial;
 }
 
 .ScheduleTable table {
@@ -45,7 +46,7 @@
 
 .ScheduleTable th,
 .ScheduleTable td {
-  padding: 0.3em;
+  padding: 0.5em;
   box-sizing: border-box;
 }
 
@@ -92,7 +93,7 @@
   text-align: left;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .ScheduleTable {
     display: none;
   }

@@ -5,6 +5,7 @@ export function getDateStrings(ed: EventDate) {
   return {
     time: date.toLocaleString('en-US', { hour: 'numeric', hour12: true }),
     dayOfWeek: date.toLocaleDateString('en-US', { weekday: 'long' }),
+    dayOfWeekAbbr: date.toLocaleDateString('en-US', { weekday: 'short' }),
     month: date.toLocaleString('default', { month: 'long' }),
     day: (date.getDate()).toString(),
     yyyy: date.getFullYear().toString(),

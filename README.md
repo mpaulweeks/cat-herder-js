@@ -7,5 +7,5 @@ Now with VITE!
 TODO
 
 - Polish gcal
-- Adjust CSS for desktop and mobile
+- Adjust CSS for mobile
 - Figure out automated emailer

@@ -2,6 +2,7 @@ import { Attendence, EventOptionData, UserData, deepCopy, getAttendence } from "
 import { AttendenceIcon } from "./AttendenceIcon";
 import { useEffect, useState } from "react";
 import { useErrorReporter } from "../hooks/useError";
+import styles from './Schedule.module.css';
 
 export function ScheduleUser(props: {
   events: EventOptionData[];
@@ -50,7 +51,10 @@ export function ScheduleUser(props: {
         </div>
       </td>
       {props.events.map(et => (
-        <td key={et.isoStart}>
+        <td key={et.isoStart} className={
+          (et.highlight ? [styles.ScheduleHighlight] : [])
+            .join(' ')
+        }>
           <div>
             <AttendenceIcon
               attendence={getAttendence(et, draft)}

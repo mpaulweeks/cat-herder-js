@@ -3,12 +3,13 @@ import styles from './Schedule.module.css';
 
 function ScheduleDateSummary(props: {
   eventDate: EventDate;
+  shorten?: boolean;
 }) {
-  const {dayOfWeek, dd, mm, time} = getDateStrings(props.eventDate);
+  const {dayOfWeek, dayOfWeekAbbr, dd, mm, time} = getDateStrings(props.eventDate);
   return (
     <div>
       <div>
-        {dayOfWeek}
+        {props.shorten ? dayOfWeekAbbr : dayOfWeek}
       </div>
       <div>
         {mm}/{dd}
@@ -24,13 +25,12 @@ export function ScheduleDate(props: {
   option: EventOptionData;
   showHighlightToggle: boolean;
   onToggle(): void;
+  shorten?: boolean;
 }) {
   const eventDate = EventDate.fromIso(props.option.isoStart);
   const gcal = createGcal(props.schedule, props.option);
   return (
-    <div className={styles.ScheduleDate} style={{
-      backgroundColor: props.option.highlight ? '#eee' : 'initial',
-    }}>
+    <div className={styles.ScheduleDate}>
       {props.showHighlightToggle && (
         <div>
           <button onClick={props.onToggle}>
@@ -40,10 +40,10 @@ export function ScheduleDate(props: {
       )}
       {props.option.highlight ? (
         <a href={gcal}>
-          <ScheduleDateSummary eventDate={eventDate} />
+          <ScheduleDateSummary eventDate={eventDate} shorten={props.shorten} />
         </a>
       ) : (
-        <ScheduleDateSummary eventDate={eventDate} />
+        <ScheduleDateSummary eventDate={eventDate} shorten={props.shorten} />
       )}
     </div>
   );

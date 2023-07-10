@@ -20,13 +20,18 @@ export function ScheduleMobile(props: {
         </thead>
         <tbody>
           {options.map(option => (
-            <tr key={option.isoStart} className={styles.ScheduleMobileRow}>
+            <tr key={option.isoStart} className={
+              [styles.ScheduleMobileRow]
+                .concat(option.highlight ? [styles.ScheduleHighlight] : [])
+                .join(' ')
+            }>
               <td>
                 <ScheduleDate
                   schedule={props.schedule}
                   option={option}
                   showHighlightToggle={false}
                   onToggle={() => undefined}
+                  shorten={true}
                 />
               </td>
               <td>

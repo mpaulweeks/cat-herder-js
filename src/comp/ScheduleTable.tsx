@@ -34,7 +34,11 @@ export function ScheduleTable(props: {
               Name
             </th>
             {options.map(option => (
-              <th key={option.isoStart} className={styles.EventTime}>
+              <th key={option.isoStart} className={
+                [styles.EventTime]
+                  .concat(option.highlight ? [styles.ScheduleHighlight] : [])
+                  .join(' ')
+                }>
                 <ScheduleDate
                   schedule={props.schedule}
                   option={option}
