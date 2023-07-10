@@ -1,11 +1,11 @@
-import { Attendence, EventOptionData, UserData, deepCopy, getAttendence } from "../lib";
+import { EventOptionData, UserData, deepCopy, getAttendence, updateAttendence } from "../lib";
 import { AttendenceIcon } from "./AttendenceIcon";
 import { useEffect, useState } from "react";
 import { useErrorReporter } from "../hooks/useError";
 import styles from './Schedule.module.css';
 
 export function ScheduleDesktopUser(props: {
-  events: EventOptionData[];
+  options: EventOptionData[];
   user: UserData;
   isEditing: boolean;
   isTemp: boolean;
@@ -50,23 +50,16 @@ export function ScheduleDesktopUser(props: {
           )}
         </div>
       </td>
-      {props.events.map(et => (
-        <td key={et.isoStart} className={
-          (et.highlight ? [styles.ScheduleHighlight] : [])
+      {props.options.map(option => (
+        <td key={option.isoStart} className={
+          (option.highlight ? [styles.ScheduleHighlight] : [])
             .join(' ')
         }>
           <div>
             <AttendenceIcon
-              attendence={getAttendence(et, draft)}
+              attendence={getAttendence(option, draft)}
               isEditing={props.isEditing}
-              onUpdate={attendence => {
-                const newUser = { ...draft, };
-                newUser.attending = newUser.attending.filter(iso => iso !== et.isoStart);
-                newUser.maybe = newUser.maybe.filter(iso => iso !== et.isoStart);
-                if (attendence === Attendence.Yes) { newUser.attending.push(et.isoStart); }
-                if (attendence === Attendence.Maybe) { newUser.maybe.push(et.isoStart); }
-                setDraft(newUser);
-              }}
+              onUpdate={attendence => setDraft(updateAttendence(option, draft, attendence))}
             />
           </div>
         </td>

@@ -23,15 +23,14 @@ function ScheduleDateSummary(props: {
 export function ScheduleDate(props: {
   schedule: EventScheduleData;
   option: EventOptionData;
-  showHighlightToggle: boolean;
-  onToggle(): void;
+  onToggle?: () => void;
   shorten?: boolean;
 }) {
   const eventDate = EventDate.fromIso(props.option.isoStart);
   const gcal = createGcal(props.schedule, props.option);
   return (
     <div className={styles.ScheduleDate}>
-      {props.showHighlightToggle && (
+      {props.onToggle && (
         <div>
           <button onClick={props.onToggle}>
             toggle

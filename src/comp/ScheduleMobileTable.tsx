@@ -1,11 +1,14 @@
 import { EventApi, EventScheduleData } from "../lib";
 import { ScheduleDate } from "./ScheduleDate";
 import styles from './Schedule.module.css';
+import { useState } from "react";
+import { ScheduleMobileEdit } from "./ScheduleMobileEdit";
 
 export function ScheduleMobileTable(props: {
   schedule: EventScheduleData;
   api: EventApi;
 }) {
+  const [showEdit, setShowEdit] = useState(false);
   const options = props.schedule.options;
   const users = Object.values(props.schedule.user).sort((a, b) => a.created < b.created ? -1 : 1);
 
@@ -29,18 +32,18 @@ export function ScheduleMobileTable(props: {
                 <ScheduleDate
                   schedule={props.schedule}
                   option={option}
-                  showHighlightToggle={false}
-                  onToggle={() => undefined}
                   shorten={true}
                 />
               </td>
               <td>
-                <ul>
+                <ol>
                   {users.filter(u => u.attending.includes(option.isoStart)).map(u => (
                     <li key={[option.isoStart, u.uid, 'attending'].join('-')}>
                       {u.label}
                     </li>
                   ))}
+                </ol>
+                <ul>
                   {users.filter(u => u.maybe.includes(option.isoStart)).map(u => (
                     <li key={[option.isoStart, u.uid, 'maybe'].join('-')}>
                       <i>{u.label}</i>
@@ -52,6 +55,14 @@ export function ScheduleMobileTable(props: {
           ))}
         </tbody>
       </table>
+      <div>
+        <button onClick={() => setShowEdit(true)}>
+          User
+        </button>
+      </div>
+      {showEdit && (
+        <ScheduleMobileEdit {...props} onExit={() => setShowEdit(false)} />
+      )}
     </div>
   )
 }

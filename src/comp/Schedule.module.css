@@ -88,9 +88,28 @@ table a {
   border-top: 1px solid grey;
 }
 
+.ScheduleMobile table ol,
 .ScheduleMobile table ul {
   padding-inline-start: 2em;
   text-align: left;
+}
+
+.ScheduleMobileOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+
+  padding: 3em;
+  box-sizing: border-box;
+
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.ScheduleMobileModal {
+  padding: 1em;
+  background-color: rgb(193, 236, 240);
 }
 
 @media (max-width: 900px) {

@@ -41,7 +41,6 @@ export function ScheduleDesktopTable(props: {
                 <ScheduleDate
                   schedule={props.schedule}
                   option={option}
-                  showHighlightToggle={props.admin}
                   onToggle={() => onToggleOption(option)}
                 />
               </th>
@@ -57,7 +56,7 @@ export function ScheduleDesktopTable(props: {
           {users.map(u => (
             <ScheduleDesktopUser
               key={u.uid}
-              events={options}
+              options={options}
               user={u}
               isEditing={u.uid === editing}
               isTemp={false}
@@ -74,7 +73,7 @@ export function ScheduleDesktopTable(props: {
             />
           ))}
           <ScheduleDesktopUser
-            events={options}
+            options={options}
             user={temp}
             isEditing={true}
             isTemp={true}
