@@ -1,0 +1,21 @@
+{
+  "name": "cat-herder-emailer",
+  "private": true,
+  "version": "0.0.0",
+  "author": "mpaulweeks",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "watch": "nodemon --exec 'npm run start'"
+  },
+  "dependencies": {
+    "@toughlovearena/updater": "^2.1.4",
+    "node-cron": "^3.0.2",
+    "node-mailer": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.1.6"
+  }
+}
