@@ -14,6 +14,5 @@ export function useKeyboard() {
     };
   });
 
-  console.log('pressed', pressed);
   return pressed;
 }

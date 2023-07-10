@@ -15,7 +15,9 @@ export class FirebaseApi {
   app = initializeApp(FirebaseConfig);
   analytics = getAnalytics(this.app);
   database = FB.getDatabase(this.app);
-  private constructor() {}
+  private constructor() {
+    // must use static instance
+  }
 
   async listEmails(group: string): Promise<string[]> {
     const groupRef = FB.ref(this.database, `email/${group}`);

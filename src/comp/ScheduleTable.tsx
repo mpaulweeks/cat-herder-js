@@ -74,8 +74,8 @@ export function ScheduleTable(props: {
           user={temp}
           isEditing={true}
           isTemp={true}
-          onEdit={() => {}} // inaccessible
-          onDelete={() => {}} // inaccessible
+          onEdit={() => undefined} // inaccessible
+          onDelete={() => undefined} // inaccessible
           onSave={user => {
             setTemp(emptyUser());
             props.api.createUser(user);

@@ -4,10 +4,12 @@ import { App } from './comp/App.tsx'
 import './index.css'
 import { FirebaseApi } from './lib/apiFirebase.ts'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).FirebaseApi = FirebaseApi;
 
 // makes the back/forward button work with my pushState meddling
 window.addEventListener('popstate', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as any).location = window.location.href;
 });
 

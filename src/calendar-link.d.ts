@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+// node_modules/calendar-link/dist/interfaces.d.ts
 declare module 'calendar-link' {
-  // node_modules/calendar-link/dist/interfaces.d.ts
   import * as dayjs from "dayjs";
   interface CalendarEvent {
       title: string;

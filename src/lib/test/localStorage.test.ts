@@ -21,7 +21,7 @@ test('StorageEntry string', () => {
 
 test('StorageEntry object', () => {
   const db = new MockStorage();
-  const sut = new StorageEntry<{ hello: String; }>(db, 'testkey');
+  const sut = new StorageEntry<{ hello: string; }>(db, 'testkey');
   expect(sut.get()).toBe(null);
   sut.set({ hello: 'world', });
   expect(sut.get()).toEqual({ hello: 'world', });

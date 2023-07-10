@@ -4,7 +4,7 @@ export enum UrlQueryParams {
   ID = 'id',
   Group = 'group',
   EventID = 'event',
-};
+}
 
 /* Examples
 * ?id=edh-20201030
