@@ -21,7 +21,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: vite-app.nvmrc
+          node-version-file: vite-app/.nvmrc
 
       - name: Setup env
         shell: bash
