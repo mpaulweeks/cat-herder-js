@@ -3,11 +3,16 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: main
+    paths-ignore: emailer
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: vite-app
 
     steps:
       - name: Checkout code
@@ -16,7 +21,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: .nvmrc
+          node-version-file: vite-app/.nvmrc
 
       - name: Setup env
         shell: bash
@@ -40,4 +45,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: dist # The folder the action should deploy.
+          FOLDER: vite-app/dist # The folder the action should deploy.

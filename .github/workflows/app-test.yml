@@ -3,11 +3,16 @@ name: Unit Tests
 on:
   push:
     branches-ignore: main
+    paths-ignore: emailer
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: vite-app
 
     steps:
       - name: Checkout code
@@ -16,7 +21,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: .nvmrc
+          node-version-file: vite-app/.nvmrc
 
       - name: npm install
         run: npm install
