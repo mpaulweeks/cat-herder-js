@@ -3,13 +3,11 @@ import cron from 'node-cron';
 import { WebServer } from "./server.js";
 import { sendForNextMonday } from "./task.js";
 
-console.log('starting WebServer');
-new WebServer(3001);
-console.log('starting Updater');
-new Updater().cron();
+const updater = new Updater();
+new WebServer(updater).listen(3001);
+updater.cron();
 
 // cron
-console.log('starting Cron');
 const cronName = 'CatHerderEmailer';
 const cronTasks = cron.getTasks();
 if (cronTasks.has(cronName)) {
