@@ -1,45 +1,51 @@
 import fetch from 'node-fetch';
 import { EmailArgs } from './types';
+import { getEventID, getPrettyDate } from './date';
 
-type EventData = {
+type GroupData = {
   name: string;
-  description: string;
 };
 
 export class EmailAuthor {
   constructor(
     readonly projectId: string,
-    readonly group: string,
+    readonly groupId: string,
   ) { }
 
-  async getEmailArgs(eventID: string): Promise<EmailArgs> {
-    const dataUrl = `https://${this.projectId}-default-rtdb.firebaseio.com/db/${this.group}/${eventID}.json`;
-    const resp = await fetch(dataUrl);
-    const data = await resp.json() as EventData;
+  async getEmailArgs(date: Date): Promise<EmailArgs> {
+    const groupData = await this.getGroupData();
 
+    const prettyDate = getPrettyDate(date);
+    const eventID = getEventID(date);
     return {
       to: await this.getRecipients(),
-      subject: [data.name, data.description].join(' - '),
-      body: this.getEmailBody(eventID, data),
+      subject: `[Cat Herder] ${groupData.name} - ${prettyDate}`,
+      body: this.getEmailBody(groupData, eventID),
     };
+  }
+
+  private async getGroupData(): Promise<GroupData> {
+    const groupUrl = `https://${this.projectId}-default-rtdb.firebaseio.com/group/${this.groupId}.json`;
+    const resp = await fetch(groupUrl);
+    const data = await resp.json() as GroupData;
+    return data;
   }
 
   private async getRecipients(): Promise<string[]> {
     const emailUrl = `https://${this.projectId}-default-rtdb.firebaseio.com/email.json`;
     const resp = await fetch(emailUrl);
     const data = await resp.json() as Record<string, string[]>;
-    const groupEmails = data[this.group];
+    const groupEmails = data[this.groupId];
     console.log('emails', groupEmails);
     // todo for temp testing
     return ['mpaulweeks@gmail.com'];
   }
 
-  private getEmailBody(eventID: string, data: EventData): string {
-    const eventUrl = `https://cat-herder-js.mpaulweeks.com/${this.group}/${eventID}`;
+  private getEmailBody(group: GroupData, eventID: string): string {
+    const herderUrl = `https://cat-herder-js.mpaulweeks.com/${this.groupId}/${eventID}`;
     return `
-      <h1>${data.name}</h1>
-      <p>${data.description}</p>
-      <p>${eventUrl}</p>
+      <h1>${group.name}</h1>
+      <p>RSVP here: ${herderUrl}</p>
       <p>To unsubscribe from this list, please email mpaulweeks@gmail.com</p>
     `.trim().split('\n').map(line => line.trim()).join('\n');
   }
