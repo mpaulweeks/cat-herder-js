@@ -14,3 +14,9 @@ export function getPrettyDate(date: Date) {
     year: "numeric",
   });
 }
+
+export function getNextMonday(oldDate: Date): Date {
+  const newDate = new Date(oldDate);
+  newDate.setDate(oldDate.getDate() + 7 - (oldDate.getDay() + 6) % 7);
+  return newDate;
+}

@@ -27,6 +27,7 @@ export class EmailAuthor {
   private async getGroupData(): Promise<GroupData> {
     const groupUrl = `https://${this.projectId}-default-rtdb.firebaseio.com/group/${this.groupId}.json`;
     const resp = await fetch(groupUrl);
+    if (!resp.ok) { throw new Error(resp.status + ' EmailAuthor.getGroupData()'); };
     const data = await resp.json() as GroupData;
     return data;
   }
@@ -34,6 +35,7 @@ export class EmailAuthor {
   private async getRecipients(): Promise<string[]> {
     const emailUrl = `https://${this.projectId}-default-rtdb.firebaseio.com/email.json`;
     const resp = await fetch(emailUrl);
+    if (!resp.ok) { throw new Error(resp.status + ' EmailAuthor.getRecipients()'); };
     const data = await resp.json() as Record<string, string[]>;
     const groupEmails = data[this.groupId];
     console.log('emails', groupEmails);
@@ -42,7 +44,7 @@ export class EmailAuthor {
   }
 
   private getEmailBody(group: GroupData, eventID: string): string {
-    const herderUrl = `https://cat-herder-js.mpaulweeks.com/${this.groupId}/${eventID}`;
+    const herderUrl = `https://cat-herder.mpaulweeks.com/${this.groupId}/${eventID}`;
     return `
       <h1>${group.name}</h1>
       <p>RSVP here: ${herderUrl}</p>
