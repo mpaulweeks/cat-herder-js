@@ -19,7 +19,7 @@ export class WebServer {
       const { group } = req.params;
       const env = process.env as EnvConfig;
       const author = new EmailAuthor(env.projectId, group);
-      const emailArgs = await author.getEmailArgs('20230703');
+      const emailArgs = await author.getEmailArgs(new Date()); // todo
       const ses = new AwsSes(env);
       await ses.send(emailArgs);
       res.send(emailArgs);
