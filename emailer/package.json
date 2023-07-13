@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
-    "watch": "nodemon --exec 'npm run start'"
+    "watch": "nodemon --exec 'npm run start'",
+    "test": "jest"
   },
   "dependencies": {
     "@toughlovearena/updater": "^2.1.4",

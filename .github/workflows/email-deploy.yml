@@ -1,0 +1,44 @@
+name: Deploy to Prod
+
+on:
+  push:
+    branches: main
+    paths-ignore: emailer
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: emailer
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: emailer/.nvmrc
+
+      - name: Setup env
+        shell: bash
+        env:
+          VITE_ENV: ${{ secrets.ENV }}
+        run: echo "$VITE_ENV" > .env.local
+
+      - name: npm install
+        run: npm install
+
+      - name: Build site
+        env:
+          CI: false
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Deploy to prod branch
+        run: git push -f origin HEAD:prod
