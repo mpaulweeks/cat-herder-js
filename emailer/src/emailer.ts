@@ -12,6 +12,8 @@ export class AwsSes {
   }
 
   async send(args: EmailArgs) {
+    console.log(this.config);
+    if (Date.now() > 0) { return; } // todo temp
     return new Promise<void>((resolve, reject) => {
       this.sesClient.sendEmail(
         {
@@ -23,7 +25,7 @@ export class AwsSes {
         (err, data, res) => {
           if (err) {
             // tslint:disable-next-line: no-console
-            // console.log('ses err:', err);
+            console.log('ses err:', err);
             reject(err);
           } else {
             // tslint:disable-next-line: no-console
@@ -33,12 +35,5 @@ export class AwsSes {
         },
       );
     });
-  }
-
-  // todo read from env?
-  static fromFile(): AwsSes {
-    const buffer = fs.readFileSync('auth.json');
-    const config: AwsSesConfig = JSON.parse(buffer.toString());
-    return new AwsSes(config);
   }
 }

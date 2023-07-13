@@ -7,8 +7,8 @@ type EventData = {
 };
 
 export class EmailAuthor {
-  projectId = 'todo'; // todo read from env?
   constructor(
+    readonly projectId: string,
     readonly group: string,
   ) { }
 
@@ -29,7 +29,7 @@ export class EmailAuthor {
     const resp = await fetch(emailUrl);
     const data = await resp.json() as Record<string, string[]>;
     const groupEmails = data[this.group];
-    console.log(groupEmails);
+    console.log('emails', groupEmails);
     // todo for temp testing
     return ['mpaulweeks@gmail.com'];
   }

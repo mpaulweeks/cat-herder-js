@@ -3,6 +3,9 @@ export type AwsSesConfig = {
   key: string;
   secret: string;
 }
+export type EnvConfig = AwsSesConfig & {
+  projectId: string;
+}
 
 export type EmailArgs = {
   to: string | string[];
