@@ -38,9 +38,7 @@ export class EmailAuthor {
     if (!resp.ok) { throw new Error(resp.status + ' EmailAuthor.getRecipients()'); };
     const data = await resp.json() as Record<string, string[]>;
     const groupEmails = data[this.groupId];
-    console.log('emails', groupEmails);
-    // todo for temp testing
-    return ['mpaulweeks@gmail.com'];
+    return groupEmails;
   }
 
   private getEmailBody(group: GroupData, eventID: string): string {
