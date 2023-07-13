@@ -35,15 +35,12 @@ export class EmailAuthor {
   }
 
   private getEmailBody(eventID: string, data: EventData): string {
-    const eventUrl = `https://cat-herder-js.mpaulweeks.com/${this.group}/${eventID}.json`;
+    const eventUrl = `https://cat-herder-js.mpaulweeks.com/${this.group}/${eventID}`;
     return `
-<h1>${data.name}</h1>
-
-${data.description}
-
-${eventUrl}
-
-To unsubscribe from this list, please email mpaulweeks@gmail.com
-    `.trim();
+      <h1>${data.name}</h1>
+      <p>${data.description}</p>
+      <p>${eventUrl}</p>
+      <p>To unsubscribe from this list, please email mpaulweeks@gmail.com</p>
+    `.trim().split('\n').map(line => line.trim()).join('\n');
   }
 }

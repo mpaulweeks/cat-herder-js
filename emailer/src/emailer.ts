@@ -1,19 +1,16 @@
 import ses from 'node-ses';
-import fs from 'fs';
 import { AwsSesConfig, EmailArgs } from './types';
 
 export class AwsSes {
   private readonly sesClient: ses.Client;
   constructor(private readonly config: AwsSesConfig) {
     this.sesClient = ses.createClient({
-      key: config.key,
-      secret: config.secret,
+      key: config.awsKey,
+      secret: config.awsSecret,
     });
   }
 
   async send(args: EmailArgs) {
-    console.log(this.config);
-    if (Date.now() > 0) { return; } // todo temp
     return new Promise<void>((resolve, reject) => {
       this.sesClient.sendEmail(
         {

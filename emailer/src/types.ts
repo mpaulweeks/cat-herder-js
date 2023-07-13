@@ -1,7 +1,7 @@
 export type AwsSesConfig = {
   from: string;
-  key: string;
-  secret: string;
+  awsKey: string;
+  awsSecret: string;
 }
 export type EnvConfig = AwsSesConfig & {
   projectId: string;
