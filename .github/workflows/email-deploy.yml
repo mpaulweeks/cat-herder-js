@@ -3,7 +3,7 @@ name: Deploy to Prod
 on:
   push:
     branches: main
-    paths-ignore: emailer
+    paths-ignore: vite-app
   workflow_dispatch:
 
 jobs:
