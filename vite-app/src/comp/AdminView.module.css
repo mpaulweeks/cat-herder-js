@@ -1,0 +1,10 @@
+.EmailPreview {
+  text-align: left;
+  margin: 1em;
+  padding: 1em;
+  border: 1px solid black;
+}
+.EmailPreview iframe {
+  margin: 1em 0;
+  width: 600px;
+}

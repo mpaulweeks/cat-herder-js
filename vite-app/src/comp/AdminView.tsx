@@ -1,9 +1,11 @@
 import { EventLookup, generateUrl } from '../lib';
 import { FirebaseConfig } from '../lib/config';
-import styles from './App.module.css';
+import appStyles from './App.module.css';
+import adminStyles from './AdminView.module.css';
 import { SmartLink } from './SmartLink';
 import { useTitle } from '../hooks/useTitle';
 import { useCallback, useState } from 'react';
+import { useErrorReporter } from '../hooks/useError';
 
 type EmailArgs = {
   to: string | string[];
@@ -16,20 +18,27 @@ export function AdminView(props: {
 }) {
   const [group, setGroup] = useState('');
   const [emailArgs, setEmailArgs] = useState<EmailArgs | undefined>();
+
   useTitle('Admin');
+  const { reportError } = useErrorReporter();
 
   const postPreview = useCallback((id: string) => {
     (async () => {
       const resp = await fetch(`https://cat-herder-api.mpaulweeks.com/preview/${id}`, {
         method: 'POST',
       });
-      const args: EmailArgs = await resp.json();
-      setEmailArgs(args);
+      if (resp.ok) {
+        const args: EmailArgs = await resp.json();
+        setEmailArgs(args);
+      } else {
+        setEmailArgs(undefined);
+        reportError(`preview fetch failed with ${resp.status}`);
+      }
     })();
   }, [setEmailArgs]);
 
   return (
-    <div className={styles.BasicView}>
+    <div className={appStyles.BasicView}>
       <h1>Admin</h1>
       <section>
         <div>
@@ -61,14 +70,17 @@ export function AdminView(props: {
         </form>
       </section>
       {emailArgs && (
-        <section>
+        <section className={adminStyles.EmailPreview}>
           <div>
-            To: {emailArgs.to.toString()}
+            <b>Subject:</b> {emailArgs.subject}
           </div>
           <div>
-            Subject: {emailArgs.subject}
+            <b>To:</b>
           </div>
-          <div style={{ border: '1px solid black', padding: '1em', }} dangerouslySetInnerHTML={{ __html: emailArgs.body }} />
+          {([] as string[]).concat(emailArgs.to).map(email => (
+            <div key={email}>{email}</div>
+          ))}
+          <iframe srcDoc={emailArgs.body} />
         </section>
       )}
     </div>
