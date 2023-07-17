@@ -16,6 +16,9 @@ export class WebServer {
   private setRoutes() {
     const { app } = this;
     const { updater } = this;
+    app.get('/', (req, res) => {
+      res.redirect(302, req.baseUrl + '/health');
+    });
     app.get('/health', async (req, res) => {
       const gitHash = await updater.gitter.hash();
       const data = {
