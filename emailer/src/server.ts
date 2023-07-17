@@ -1,6 +1,9 @@
 import express from 'express';
 import { sendForNextMonday } from './task';
 import { Updater } from '@toughlovearena/updater';
+import { EnvConfig } from './types';
+import { EmailAuthor } from './author';
+import { getNextMonday } from './date';
 
 export class WebServer {
   readonly app = express();
@@ -22,7 +25,14 @@ export class WebServer {
       };
       res.send(data);
     });
-    app.get('/email/:group', async (req, res, next) => {
+    app.post('/preview/:group', async (req, res, next) => {
+      const { group } = req.params;
+      const env = process.env as EnvConfig;
+      const author = new EmailAuthor(env.projectId, group);
+      const emailArgs = await author.getEmailArgs(getNextMonday(new Date));
+      res.send(emailArgs);
+    });
+    app.post('/email/:group', async (req, res, next) => {
       const { group } = req.params;
       try {
         const emailArgs = sendForNextMonday(group);
