@@ -43,9 +43,14 @@ export class EmailAuthor {
 
   private getEmailBody(group: GroupData, eventID: string): string {
     const herderUrl = `https://cat-herder.mpaulweeks.com/${this.groupId}/${eventID}`;
+    const prettyUrl = herderUrl.replace('https://', '');
     return `
       <h1>${group.name}</h1>
-      <p>RSVP here: ${herderUrl}</p>
+      <p>RSVP here: <a
+        href="${herderUrl}"
+        rel="noopener noreferrer"
+        target="_blank"
+      >${prettyUrl}</a></p>
       <p>To unsubscribe from this list, please email mpaulweeks@gmail.com</p>
     `.trim().split('\n').map(line => line.trim()).join('\n');
   }
