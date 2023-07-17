@@ -6,7 +6,7 @@ Vite app goes here
 
 Single Page Apps that want to use arbitrary paths need custom routing to always return `index.html`. GitHub pages does not support this. However, they do support the user providing a custom `404` response page.
 
-1. User visits `example.com/slug` and gets a 404, which serves [404.html](public/404.html)
+1. User visits `example.com/slug` and gets a 404, which serves [public/404.html](public/404.html)
 1. Our custom 404 page reads the path and does a JS redirect to `example.com/#/slug`
 1. GitHub Pages server ignores everything after the hash, so it serves [index.html](index.html) which loads the app
 1. Our app parses the hash URL, does internal navigation, and then pushes the original path URL to the window
