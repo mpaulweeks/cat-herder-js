@@ -1,6 +1,11 @@
-import { getDateStrings } from "./dates";
-import { EventDate } from "./eventDate";
-import { EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
+import { getDateStrings } from './dates';
+import { EventDate } from './eventDate';
+import {
+  EventLookup,
+  EventOptionData,
+  EventScheduleData,
+  UserData,
+} from './types';
 import { range } from './util';
 
 export function emptyUser(): UserData {
@@ -13,7 +18,7 @@ export function emptyUser(): UserData {
     label: '',
     attending: [],
     maybe: [],
-  }
+  };
 }
 
 export function createSchedule(init: EventLookup): EventScheduleData {
@@ -39,7 +44,7 @@ export function createSchedule(init: EventLookup): EventScheduleData {
       description: `Week of ${month} ${day}, ${yyyy}`,
       options,
       user: {},
-    }
+    };
   }
   // else
   throw new Error('unsupported group');
