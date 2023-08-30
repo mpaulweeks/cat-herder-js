@@ -1,4 +1,5 @@
 import { createGcal, EventScheduleData, EventDate, EventOptionData, getDateStrings } from "../lib";
+import { ZoneDate } from "../lib/zoneDate";
 
 function ScheduleDateSummary(props: {
   eventDate: EventDate;
@@ -26,7 +27,7 @@ export function ScheduleDate(props: {
   onToggle?: () => void;
   shorten?: boolean;
 }) {
-  const eventDate = EventDate.fromIso(props.option.isoStart);
+  const eventDate = EventDate.fromIso(props.option.isoStart, ZoneDate.Default);
   const gcal = createGcal({ ...props, guests: props.emails ?? [], });
 
   return (

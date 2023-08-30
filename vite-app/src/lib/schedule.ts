@@ -1,7 +1,13 @@
-import { getDateStrings } from "./dates";
-import { EventDate } from "./eventDate";
-import { EventLookup, EventOptionData, EventScheduleData, UserData } from "./types";
+import { getDateStrings } from './dates';
+import { EventDate } from './eventDate';
+import {
+  EventLookup,
+  EventOptionData,
+  EventScheduleData,
+  UserData,
+} from './types';
 import { range } from './util';
+import { ZoneDate } from './zoneDate';
 
 export function emptyUser(): UserData {
   return {
@@ -13,17 +19,17 @@ export function emptyUser(): UserData {
     label: '',
     attending: [],
     maybe: [],
-  }
+  };
 }
 
 export function createSchedule(init: EventLookup): EventScheduleData {
-  const ed = EventDate.fromStr(init.eventID);
+  const ed = EventDate.fromStr(init.eventID, ZoneDate.Default);
   if (init.group === 'edh') {
     const monday = ed.getPreviousMonday();
     const options = range(7).map<EventOptionData>(i => {
       const newDate = new Date(monday.date);
       newDate.setDate(newDate.getDate() + i);
-      const newEd = EventDate.fromDate(newDate).getDateAtHour({
+      const newEd = EventDate.fromDate(newDate, ed.timeZone).getDateAtHour({
         hours: 18,
         minutes: 0,
       });
@@ -39,7 +45,7 @@ export function createSchedule(init: EventLookup): EventScheduleData {
       description: `Week of ${month} ${day}, ${yyyy}`,
       options,
       user: {},
-    }
+    };
   }
   // else
   throw new Error('unsupported group');
