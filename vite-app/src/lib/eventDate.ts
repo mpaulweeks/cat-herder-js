@@ -20,7 +20,7 @@ export class EventDate {
   get dateIso(): string {
     return this.date.toISOString();
   }
-  get datePretty(): string {
+  get localPretty(): string {
     return this.date.toLocaleDateString('en-US', {
       weekday: 'long',
       month: 'long',
@@ -28,7 +28,7 @@ export class EventDate {
       year: 'numeric',
     });
   }
-  get local(): LocalData {
+  get localData(): LocalData {
     return {
       year: Number(this.dateStr.slice(0, 4)),
       month: Number(this.dateStr.slice(4, 6)),
@@ -49,9 +49,9 @@ export class EventDate {
   getDateAtHour(args: TimeArgs): EventDate {
     const newDate = ZoneDate.from(
       this.timeZone,
-      this.local.year,
-      this.local.month,
-      this.local.day,
+      this.localData.year,
+      this.localData.month,
+      this.localData.day,
       args.hours,
       args.minutes,
     ).date;

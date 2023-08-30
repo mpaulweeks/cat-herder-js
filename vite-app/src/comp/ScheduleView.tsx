@@ -44,7 +44,7 @@ export function ScheduleView(props: {
           <h3>
             <div>{schedule.description}</div>
             <div style={{ color: '#444' }}>
-              Today is {EventDate.now(ZoneDate.Local).datePretty}
+              Today is {EventDate.now(ZoneDate.Local).localPretty}
             </div>
           </h3>
           <ScheduleDesktopTable

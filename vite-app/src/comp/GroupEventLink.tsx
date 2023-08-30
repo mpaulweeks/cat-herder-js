@@ -12,6 +12,6 @@ export function GroupEventLink(props: {
     <SmartLink
       href={generateUrl(eventLookup)}
       onClick={() => setEventLookup(eventLookup)}
-    >{eventDate.datePretty}</SmartLink>
+    >{eventDate.localPretty}</SmartLink>
   )
 }
