@@ -6,6 +6,7 @@ import { SmartLink } from "./SmartLink";
 import { useTitle } from "../hooks/useTitle";
 import { ScheduleMobileTable } from "./ScheduleMobileTable";
 import { useKeyboardToggle } from "../hooks/useKeyboardToggle";
+import { ZoneDate } from "../lib/zoneDate";
 
 export function ScheduleView(props: {
   api: EventApi;
@@ -43,7 +44,7 @@ export function ScheduleView(props: {
           <h3>
             <div>{schedule.description}</div>
             <div style={{ color: '#444' }}>
-              Today is {EventDate.now().datePretty}
+              Today is {EventDate.now(ZoneDate.Local).datePretty}
             </div>
           </h3>
           <ScheduleDesktopTable

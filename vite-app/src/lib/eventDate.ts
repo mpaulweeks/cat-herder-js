@@ -12,22 +12,16 @@ type LocalData = Readonly<{
 
 export class EventDate {
   private constructor(
-    private readonly _date: Date,
-    private readonly _dateStr: string,
-    private readonly _timeZone: string,
+    private readonly date: Date,
+    private readonly dateStr: string,
+    readonly timeZone: string,
   ) {}
 
-  get date(): Date {
-    return this._date;
-  }
   get dateIso(): string {
-    return this._date.toISOString();
-  }
-  get dateStr(): string {
-    return this._dateStr;
+    return this.date.toISOString();
   }
   get datePretty(): string {
-    return this._date.toLocaleDateString('en-US', {
+    return this.date.toLocaleDateString('en-US', {
       weekday: 'long',
       month: 'long',
       day: 'numeric',
@@ -36,9 +30,9 @@ export class EventDate {
   }
   get local(): LocalData {
     return {
-      year: parseFloat(this._dateStr.substring(0, 4)),
-      month: parseFloat(this._dateStr.substring(4, 6)),
-      day: parseFloat(this._dateStr.substring(6, 8)),
+      year: Number(this.dateStr.slice(0, 4)),
+      month: Number(this.dateStr.slice(4, 6)),
+      day: Number(this.dateStr.slice(6, 8)),
     };
   }
 
@@ -50,18 +44,18 @@ export class EventDate {
   getPreviousMonday(): EventDate {
     const newDate = new Date(this.date);
     newDate.setDate(this.date.getDate() - ((this.date.getDay() + 6) % 7));
-    return EventDate.fromDate(newDate);
+    return EventDate.fromDate(newDate, this.timeZone);
   }
   getDateAtHour(args: TimeArgs): EventDate {
     const newDate = ZoneDate.from(
-      this._timeZone,
+      this.timeZone,
       this.local.year,
       this.local.month,
       this.local.day,
       args.hours,
       args.minutes,
     ).date;
-    return EventDate.fromDate(newDate);
+    return EventDate.fromDate(newDate, this.timeZone);
   }
 
   equals(other: EventDate) {
@@ -72,11 +66,10 @@ export class EventDate {
     );
   }
 
-  static defaultZone = ZoneDate.Eastern;
-  static now() {
-    return this.fromDate(new Date());
+  static now(timeZone: string) {
+    return this.fromDate(new Date(), timeZone);
   }
-  static fromDate(date: Date, timeZone = this.defaultZone) {
+  static fromDate(date: Date, timeZone: string) {
     const dateStr = [
       date.getFullYear().toString(),
       (date.getMonth() + 1).toString().padStart(2, '0'),
@@ -84,10 +77,10 @@ export class EventDate {
     ].join('');
     return new EventDate(date, dateStr, timeZone);
   }
-  static fromIso(dateIso: string) {
-    return this.fromDate(new Date(dateIso));
+  static fromIso(dateIso: string, timeZone: string) {
+    return this.fromDate(new Date(dateIso), timeZone);
   }
-  static fromStr(dateStr: string, timeZone = this.defaultZone) {
+  static fromStr(dateStr: string, timeZone: string) {
     const yyyy = Number(dateStr.slice(0, 4));
     const mm = Number(dateStr.slice(4, 6));
     const dd = Number(dateStr.slice(6, 8));
@@ -95,7 +88,7 @@ export class EventDate {
     date.setFullYear(yyyy, mm - 1, dd);
     return new EventDate(date, dateStr, timeZone);
   }
-  static fromEventID(dateStr: string) {
-    return this.fromStr(dateStr);
+  static fromEventID(dateStr: string, timeZone: string) {
+    return this.fromStr(dateStr, timeZone);
   }
 }

@@ -1,5 +1,9 @@
 export class ZoneDate {
-  static readonly Eastern = 'America/New_York';
+  static readonly Default = 'America/New_York';
+  static get Local() {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  }
+
   private constructor(readonly date: Date, readonly timeZone: string) {}
 
   // https://stackoverflow.com/a/57842203
@@ -17,8 +21,7 @@ export class ZoneDate {
       date.toLocaleString('en-US', { timeZone: timeZone }),
     );
     const offset = utcDate.getTime() - tzDate.getTime();
-    const shifted = new Date(date);
-    shifted.setTime(date.getTime() + offset);
-    return new ZoneDate(date, timeZone);
+    const shifted = new Date(date.getTime() + offset);
+    return new ZoneDate(shifted, timeZone);
   }
 }
