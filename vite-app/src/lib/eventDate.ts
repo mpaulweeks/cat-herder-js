@@ -12,8 +12,8 @@ type LocalData = Readonly<{
 
 export class EventDate {
   private constructor(
-    private readonly date: Date,
-    private readonly dateStr: string,
+    readonly date: Date,
+    readonly dateStr: string,
     readonly timeZone: string,
   ) {}
 
