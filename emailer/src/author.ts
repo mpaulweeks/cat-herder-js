@@ -55,7 +55,7 @@ export class EmailAuthor {
         rel="noopener noreferrer"
         target="_blank"
       >${prettyUrl}</a></p>
-      <p>To unsubscribe from this list, please email mpaulweeks@gmail.com</p>
+      <p>This email cannot receive replies. To unsubscribe from this list, please email mpaulweeks@gmail.com</p>
     `);
   }
 }

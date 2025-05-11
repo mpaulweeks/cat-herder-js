@@ -42,6 +42,7 @@ export class WebServer {
         subject: `[Cat Herder] Test Email`,
         body: trimStr(`
           test email invoked ${new Date()}
+          <br/>
           git hash: ${gitHash}
         `),
       };
