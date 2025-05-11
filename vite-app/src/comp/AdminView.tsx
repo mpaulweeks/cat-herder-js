@@ -1,11 +1,11 @@
-import { EventLookup, generateUrl } from '../lib';
-import { FirebaseConfig } from '../lib/config';
-import appStyles from './App.module.css';
-import adminStyles from './AdminView.module.css';
-import { SmartLink } from './SmartLink';
-import { useTitle } from '../hooks/useTitle';
 import { useCallback, useState } from 'react';
 import { useErrorReporter } from '../hooks/useError';
+import { useTitle } from '../hooks/useTitle';
+import { EventLookup, generateUrl } from '../lib';
+import { FirebaseConfig } from '../lib/config';
+import adminStyles from './AdminView.module.css';
+import appStyles from './App.module.css';
+import { SmartLink } from './SmartLink';
 
 type EmailArgs = {
   to: string | string[];
@@ -18,6 +18,7 @@ export function AdminView(props: {
 }) {
   const [group, setGroup] = useState('');
   const [emailArgs, setEmailArgs] = useState<EmailArgs | undefined>();
+  const [readyForSend, setReadyForSend] = useState<boolean>(false);
 
   useTitle('Admin');
   const { reportError } = useErrorReporter();
@@ -30,12 +31,27 @@ export function AdminView(props: {
       if (resp.ok) {
         const args: EmailArgs = await resp.json();
         setEmailArgs(args);
+        setReadyForSend(true);
       } else {
         setEmailArgs(undefined);
+        setReadyForSend(false);
         reportError(`preview fetch failed with ${resp.status}`);
       }
     })();
-  }, [setEmailArgs]);
+  }, [setEmailArgs, setReadyForSend]);
+
+  const postEmail = useCallback((id: string) => {
+    (async () => {
+      const resp = await fetch(`https://cat-herder-api.mpaulweeks.com/email/${id}`, {
+        method: 'POST',
+      });
+      if (resp.ok) {
+        setReadyForSend(false);
+      } else {
+        reportError(`preview fetch failed with ${resp.status}`);
+      }
+    })();
+  }, [setEmailArgs, setReadyForSend]);
 
   return (
     <div className={appStyles.BasicView}>
@@ -65,7 +81,10 @@ export function AdminView(props: {
           evt.preventDefault();
           postPreview(group);
         }}>
-          <input value={group} onChange={evt => setGroup(evt.target.value.toLocaleLowerCase())} />
+          <input value={group} onChange={evt => {
+            setGroup(evt.target.value.toLocaleLowerCase());
+            setReadyForSend(false);
+          }} />
           <button type="submit">preview</button>
         </form>
       </section>
@@ -81,6 +100,11 @@ export function AdminView(props: {
             <div key={email}>{email}</div>
           ))}
           <iframe srcDoc={emailArgs.body} />
+        </section>
+      )}
+      {readyForSend && (
+        <section>
+          <button onClick={() => postEmail(group)}>send</button>
         </section>
       )}
     </div>
