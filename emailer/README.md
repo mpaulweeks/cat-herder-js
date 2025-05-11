@@ -1,6 +1,6 @@
 # cat-herder-js emailer
 
-Node process to send out periodic emails for cat-herder
+Node process to send out periodic emails for cat-herder. Currently hosted at [cat-herder-api.mpaulweeks.com](https://cat-herder-api.mpaulweeks.com)
 
 ## dev
 

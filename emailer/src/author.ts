@@ -1,10 +1,14 @@
 import fetch from 'node-fetch';
-import { EmailArgs } from './types';
 import { getEventID, getPrettyDate } from './date';
+import { EmailArgs } from './types';
 
 type GroupData = {
   name: string;
 };
+
+export function trimStr(str: string): string {
+  return str.trim().split('\n').map(line => line.trim()).join('\n');
+}
 
 export class EmailAuthor {
   constructor(
@@ -44,7 +48,7 @@ export class EmailAuthor {
   private getEmailBody(group: GroupData, eventID: string): string {
     const herderUrl = `https://cat-herder.mpaulweeks.com/${this.groupId}/${eventID}`;
     const prettyUrl = herderUrl.replace('https://', '');
-    return `
+    return trimStr(`
       <h1>${group.name}</h1>
       <p>RSVP here: <a
         href="${herderUrl}"
@@ -52,6 +56,6 @@ export class EmailAuthor {
         target="_blank"
       >${prettyUrl}</a></p>
       <p>To unsubscribe from this list, please email mpaulweeks@gmail.com</p>
-    `.trim().split('\n').map(line => line.trim()).join('\n');
+    `);
   }
 }

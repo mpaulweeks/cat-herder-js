@@ -1,9 +1,10 @@
-import express from 'express';
-import { sendForNextMonday } from './task';
 import { Updater } from '@toughlovearena/updater';
-import { EnvConfig } from './types';
-import { EmailAuthor } from './author';
+import express from 'express';
+import { EmailAuthor, trimStr } from './author';
 import { getNextMonday } from './date';
+import { AwsSes } from './emailer';
+import { sendForNextMonday } from './task';
+import { EmailArgs, EnvConfig } from './types';
 
 export class WebServer {
   readonly app = express();
@@ -27,6 +28,25 @@ export class WebServer {
         testVer: 0,
       };
       res.send(data);
+    });
+    app.get('/test', async (req, res) => {
+      const target = req.query.email;
+      if (!target || typeof target !== 'string') {
+        return res.send('please specify an email with ?email=[todo]');
+      }
+      const gitHash = await updater.gitter.hash();
+      const env = process.env as EnvConfig;
+      const ses = new AwsSes(env);
+      const emailArgs: EmailArgs = {
+        to: target,
+        subject: `[Cat Herder] Test Email`,
+        body: trimStr(`
+          test email invoked ${new Date()}
+          git hash: ${gitHash}
+        `),
+      };
+      await ses.send(emailArgs);
+      res.send(emailArgs);
     });
     app.post('/preview/:group', async (req, res, next) => {
       const { group } = req.params;
