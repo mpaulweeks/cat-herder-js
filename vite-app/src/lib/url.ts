@@ -11,13 +11,14 @@ export enum UrlQueryParams {
 * ?group=edh
 * ?group=edh&event=20201030
 * #/edh/20201030
+* /edh/20201030
 */
 export function parseUrl(url: string): Partial<EventLookup> {
   const urlObj = new URL(url.toLocaleLowerCase());
 
   const hashSlug = urlObj.hash.startsWith('#/') && urlObj.hash.slice(2);
   if (hashSlug) {
-    const [group, eventID] = hashSlug.split('/');
+    const [group, eventID] = hashSlug.split('?')[0].split('/');
     return {
       group: group || undefined,
       eventID: eventID || undefined,
@@ -26,7 +27,7 @@ export function parseUrl(url: string): Partial<EventLookup> {
 
   const pathSlug = urlObj.pathname.startsWith('/') && urlObj.pathname.slice(1);
   if (pathSlug) {
-    const [group, eventID] = pathSlug.split('/');
+    const [group, eventID] = pathSlug.split('?')[0].split('/');
     return {
       group: group || undefined,
       eventID: eventID || undefined,
