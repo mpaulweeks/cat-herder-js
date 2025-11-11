@@ -2,6 +2,10 @@
 
 Vite app goes here
 
+## Development
+
+To update prod, just push to `main` to trigger a GitHub action.
+
 ## Single Page App Trickery
 
 Single Page Apps that want to use arbitrary paths need custom routing to always return `index.html`. GitHub pages does not support this. However, they do support the user providing a custom `404` response page.

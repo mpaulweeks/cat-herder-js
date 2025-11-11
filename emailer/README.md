@@ -2,6 +2,10 @@
 
 Node process to send out periodic emails for cat-herder. Currently hosted at [cat-herder-api.mpaulweeks.com](https://cat-herder-api.mpaulweeks.com)
 
+## Development
+
+To update prod, just push to `main` to trigger a GitHub action.
+
 ## dev
 
 Secrets stored in `.env`
